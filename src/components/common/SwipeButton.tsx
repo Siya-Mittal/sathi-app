@@ -74,19 +74,19 @@ export const SwipeButton: React.FC<SwipeButtonProps> = ({
   return (
     <div
       ref={trackRef}
-      className={`relative w-full h-15 rounded-full bg-white dark:bg-slate-900 backdrop-blur-md border border-slate-300 dark:border-indigo-900/60 p-1.5 shadow-lg select-none overflow-hidden ${className}`}
+      className={`relative w-full h-15 rounded-full bg-[#FFFDFB] dark:bg-purple-950/80 backdrop-blur-md border border-[#E8DEF3] p-1.5 shadow-lg select-none overflow-hidden ${className}`}
       style={{ touchAction: 'none' }}
     >
       {/* Background completed fill */}
       <div
-        className="absolute left-0 top-0 bottom-0 bg-indigo-500/20 rounded-full transition-all duration-75"
+        className="absolute left-0 top-0 bottom-0 bg-[#E8DDFB]/60 rounded-full transition-all duration-75"
         style={{ width: `${Math.max(10, dragProgress * 100)}%` }}
       />
 
       {/* Center Label */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <span
-          className="text-xs font-black tracking-wider text-slate-900 dark:text-white transition-opacity duration-200"
+          className="text-xs font-bold tracking-wider text-[#2A1637] dark:text-[#FAF4FE] transition-opacity duration-200"
           style={{ opacity: Math.max(0.2, 1 - dragProgress * 1.5) }}
         >
           {label}
@@ -94,7 +94,7 @@ export const SwipeButton: React.FC<SwipeButtonProps> = ({
       </div>
 
       {/* Chevrons background hints */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center text-indigo-400 pointer-events-none">
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center text-[#8A5CA8] pointer-events-none">
         <ChevronsRight className="w-5 h-5 animate-pulse" />
       </div>
 
@@ -102,7 +102,7 @@ export const SwipeButton: React.FC<SwipeButtonProps> = ({
       <div
         onMouseDown={handleTouchStart}
         onTouchStart={handleTouchStart}
-        className="relative z-10 w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing active:scale-95 transition-transform"
+        className="relative z-10 w-12 h-12 rounded-full bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing active:scale-95 transition-transform"
         style={{
           transform: `translateX(${thumbOffset}px)`,
           transition: isDragging ? 'none' : 'transform 0.25s ease-out',

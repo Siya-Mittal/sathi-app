@@ -213,16 +213,16 @@ export const SafetyToolsScreen: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setActiveTab('dashboard')}
-            className="h-10 px-4 rounded-2xl glass-panel flex items-center gap-1.5 text-xs font-black text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition shadow-xs border border-slate-200 dark:border-indigo-900/40 cursor-pointer"
+            className="h-10 px-4 rounded-2xl glass-panel flex items-center gap-1.5 text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] hover:bg-purple-50/70 active:scale-95 transition shadow-xs border border-[#E8DEF3] cursor-pointer"
           >
-            <ChevronLeft className="w-4 h-4 text-indigo-600" />
-            <span>Dashboard</span>
+            <ChevronLeft className="w-4 h-4 text-[#6C3A82]" />
+            <span>Command Hub</span>
           </button>
           <div>
-            <h1 className="text-base lg:text-xl font-black text-slate-900 dark:text-white tracking-tight">
-              Safety Defense Toolkit
+            <h1 className="text-base lg:text-xl font-extrabold text-[#2A1637] dark:text-[#FAF4FE] tracking-tight">
+              Safety Tools &amp; Tactical Alibis
             </h1>
-            <span className="text-xs font-bold text-slate-700 dark:text-slate-300 hidden sm:inline">
+            <span className="text-xs font-medium text-[#7A6588] dark:text-purple-300 hidden sm:inline">
               Tactical alibis, camera video evidence recording, and vocal distress recognition
             </span>
           </div>
@@ -231,27 +231,27 @@ export const SafetyToolsScreen: React.FC = () => {
 
       {/* Active Safe-Walk Banner */}
       {safeWalkRemainingSeconds !== null && (
-        <div className="glass-panel-dark rounded-[32px] p-6 shadow-xl border border-indigo-500/30 animate-fadeIn flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="rounded-[32px] p-6 shadow-md bg-gradient-to-br from-[#FFF5F8] via-[#FAF2FD] to-[#F0F4FE] border border-purple-200/80 animate-fadeIn flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
-              <span className="text-xs font-black uppercase tracking-widest text-amber-300">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+              <span className="text-xs font-extrabold uppercase tracking-widest text-[#6C3A82]">
                 Safe-Walk Timer Active
               </span>
             </div>
-            <h2 className="text-2xl font-black text-white">
+            <h2 className="text-2xl font-extrabold text-[#2A1637] tabular-nums">
               {formatTimer(safeWalkRemainingSeconds)} Left
             </h2>
-            <p className="text-xs font-bold text-slate-200 mt-1">
+            <p className="text-xs font-medium text-[#493356] mt-1">
               Check in upon safe arrival. If unstopped, emergency SOS initiates automatically.
             </p>
           </div>
 
           <button
             onClick={cancelSafeWalk}
-            className="h-12 px-6 rounded-full bg-white text-slate-900 font-black text-xs flex items-center justify-center gap-2 shadow-lg hover:bg-slate-100 transition shrink-0 cursor-pointer"
+            className="h-12 px-6 rounded-full bg-[#2A1637] hover:bg-[#3D254C] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md transition shrink-0 cursor-pointer border border-white/20"
           >
-            <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
             <span>I Arrived Safely (Stop Timer)</span>
           </button>
         </div>
@@ -263,25 +263,25 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 1: Camera Video Evidence Recorder */}
         <div
           onClick={handleOpenVideoTool}
-          className="glass-panel rounded-[32px] p-6 border border-slate-200 dark:border-indigo-900/50 hover:bg-white dark:hover:bg-slate-800/80 active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
+          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-indigo-600/15 text-indigo-700 dark:text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-indigo-500/20">
-              <Video className="w-6 h-6 stroke-[2.4]" />
+            <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6C3A82] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-purple-200/60">
+              <Video className="w-6 h-6 stroke-[2.2]" />
             </div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-black text-slate-900 dark:text-white">Camera Video Recorder</h3>
+              <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">Camera Video Recorder</h3>
               {isCameraRecording && (
-                <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-600 text-white animate-pulse">
+                <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#DF4B5E] text-white animate-pulse">
                   REC
                 </span>
               )}
             </div>
-            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-1.5 leading-relaxed">
+            <p className="text-xs font-medium text-[#7A6588] mt-1.5 leading-relaxed">
               Capture video and audio evidence. Automatically validated for non-zero size, sealed with SHA-256, and stored securely in local IndexedDB and cloud storage.
             </p>
           </div>
-          <span className="text-xs font-black text-indigo-600 dark:text-indigo-400 mt-4 pt-3 border-t border-slate-200 dark:border-indigo-900/40 flex items-center justify-between">
+          <span className="text-xs font-bold text-[#6C3A82] mt-4 pt-3 border-t border-[#F0E8F8] flex items-center justify-between">
             <span>{isCameraRecording ? 'Active Recording' : 'Open Camera Recorder'}</span>
             <span>&rarr;</span>
           </span>
@@ -290,18 +290,18 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 2: Safe-Walk Timer */}
         <div
           onClick={() => setActiveToolModal('safewalk')}
-          className="glass-panel rounded-[32px] p-6 border border-slate-200 dark:border-indigo-900/50 hover:bg-white dark:hover:bg-slate-800/80 active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
+          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-indigo-600/15 text-indigo-700 dark:text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-indigo-500/20">
-              <Timer className="w-6 h-6 stroke-[2.4]" />
+            <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6C3A82] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-purple-200/60">
+              <Timer className="w-6 h-6 stroke-[2.2]" />
             </div>
-            <h3 className="text-base font-black text-slate-900 dark:text-white">Safe-Walk Timer</h3>
-            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-1.5 leading-relaxed">
+            <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">Safe-Walk Timer</h3>
+            <p className="text-xs font-medium text-[#7A6588] mt-1.5 leading-relaxed">
               Configurable countdown for solo transit. Automatically triggers emergency SOS if check-in fails.
             </p>
           </div>
-          <span className="text-xs font-black text-indigo-600 dark:text-indigo-400 mt-4 pt-3 border-t border-slate-200 dark:border-indigo-900/40 flex items-center justify-between">
+          <span className="text-xs font-bold text-[#6C3A82] mt-4 pt-3 border-t border-[#F0E8F8] flex items-center justify-between">
             <span>Configure Timer</span>
             <span>&rarr;</span>
           </span>
@@ -330,25 +330,25 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 4: Voice Keyword Trigger */}
         <div
           onClick={() => setActiveToolModal('voicetrigger')}
-          className="glass-panel rounded-[32px] p-6 border border-slate-200 dark:border-indigo-900/50 hover:bg-white dark:hover:bg-slate-800/80 active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
+          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-blue-600/15 text-blue-700 dark:text-blue-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-blue-500/20">
-              <Mic className={`w-6 h-6 stroke-[2.4] ${isVoiceMonitoringActive ? 'text-red-500 animate-pulse' : ''}`} />
+            <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6C3A82] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-purple-200/60">
+              <Mic className={`w-6 h-6 stroke-[2.2] ${isVoiceMonitoringActive ? 'text-[#DF4B5E] animate-pulse' : ''}`} />
             </div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-black text-slate-900 dark:text-white">Voice Trigger Sentry</h3>
+              <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">Voice Trigger Sentry</h3>
               {isVoiceMonitoringActive && (
-                <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-600 text-white animate-pulse">
+                <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#6C3A82] text-white animate-pulse">
                   Active
                 </span>
               )}
             </div>
-            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-1.5 leading-relaxed">
+            <p className="text-xs font-medium text-[#7A6588] mt-1.5 leading-relaxed">
               Hands-free microphone detection listening for <strong>"{settings.voicePhrase || 'SafeJourney, Help'}"</strong> even when shouted or distorted.
             </p>
           </div>
-          <span className="text-xs font-black text-indigo-600 dark:text-indigo-400 mt-4 pt-3 border-t border-slate-200 dark:border-indigo-900/40 flex items-center justify-between">
+          <span className="text-xs font-bold text-[#6C3A82] mt-4 pt-3 border-t border-[#F0E8F8] flex items-center justify-between">
             <span>{isVoiceMonitoringActive ? 'Active (Tap to Stop)' : 'Start Sentry'}</span>
             <span>&rarr;</span>
           </span>
@@ -357,18 +357,18 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 5: Anonymous Incident Reporter */}
         <div
           onClick={() => setActiveToolModal('report')}
-          className="glass-panel rounded-[32px] p-6 border border-slate-200 dark:border-indigo-900/50 hover:bg-white dark:hover:bg-slate-800/80 active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
+          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-700 dark:text-amber-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-amber-500/20">
-              <AlertTriangle className="w-6 h-6 stroke-[2.4]" />
+            <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-amber-200">
+              <AlertTriangle className="w-6 h-6 stroke-[2.2]" />
             </div>
-            <h3 className="text-base font-black text-slate-900 dark:text-white">Hazard Reporter</h3>
-            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-1.5 leading-relaxed">
+            <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">Hazard Reporter</h3>
+            <p className="text-xs font-medium text-[#7A6588] mt-1.5 leading-relaxed">
               Flag harassment hotspots, dark alleys, and broken streetlights with coordinates.
             </p>
           </div>
-          <span className="text-xs font-black text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-indigo-900/40 flex items-center justify-between">
+          <span className="text-xs font-bold text-amber-800 mt-4 pt-3 border-t border-[#F0E8F8] flex items-center justify-between">
             <span>File Report</span>
             <span>&rarr;</span>
           </span>
@@ -377,22 +377,22 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 6: Legal Rights Handbook */}
         <div
           onClick={() => setActiveToolModal('legalguide')}
-          className="glass-panel rounded-[32px] p-6 border border-slate-200 dark:border-indigo-900/50 hover:bg-white dark:hover:bg-slate-800/80 active:scale-98 transition cursor-pointer shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-violet-600/15 text-violet-700 dark:text-violet-400 flex items-center justify-center shrink-0 border border-violet-500/20">
-              <BookOpen className="w-6 h-6 stroke-[2.4]" />
+            <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6C3A82] flex items-center justify-center shrink-0 border border-purple-200/60">
+              <BookOpen className="w-6 h-6 stroke-[2.2]" />
             </div>
             <div>
-              <h3 className="text-base font-black text-slate-900 dark:text-white">
-                Legal Rights & Self-Defense
+              <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">
+                Legal Rights &amp; Self-Defense
               </h3>
-              <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-1 leading-relaxed max-w-lg">
+              <p className="text-xs font-medium text-[#7A6588] mt-1 leading-relaxed max-w-lg">
                 Understand Zero FIR provisions, confidential statements, and electronic evidence admissibility.
               </p>
             </div>
           </div>
-          <span className="text-xs font-black text-indigo-600 dark:text-indigo-400 shrink-0 self-end sm:self-center">
+          <span className="text-xs font-bold text-[#6C3A82] shrink-0 self-end sm:self-center">
             Read &rarr;
           </span>
         </div>
@@ -402,24 +402,24 @@ export const SafetyToolsScreen: React.FC = () => {
       {/* MODAL: Camera Video Evidence Recorder */}
       {activeToolModal === 'camerarecord' && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fadeIn">
-          <div className="glass-panel-elevated w-full max-w-lg rounded-[32px] p-6 lg:p-7 shadow-2xl border border-slate-200 dark:border-indigo-900/60 overflow-hidden">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-indigo-900/40">
+          <div className="glass-panel-elevated w-full max-w-lg rounded-[32px] p-6 lg:p-7 shadow-2xl border border-purple-200 overflow-hidden">
+            <div className="flex items-center justify-between pb-3 border-b border-[#F0E8F8]">
               <div className="flex items-center gap-2">
-                <Video className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                <h3 className="text-base font-black text-slate-900 dark:text-white">
+                <Video className="w-5 h-5 text-[#6C3A82]" />
+                <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">
                   Camera Video Evidence Recorder
                 </h3>
               </div>
               <button
                 onClick={handleCloseVideoModal}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#7A6588] hover:bg-purple-50 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Video Viewfinder Container */}
-            <div className="mt-4 relative w-full h-56 rounded-2xl bg-black overflow-hidden flex items-center justify-center border border-slate-300 dark:border-indigo-900/50">
+            <div className="mt-4 relative w-full h-56 rounded-2xl bg-black overflow-hidden flex items-center justify-center border border-purple-200">
               <video
                 ref={cameraVideoRef}
                 autoPlay
@@ -433,14 +433,14 @@ export const SafetyToolsScreen: React.FC = () => {
                   <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-2">
                     <VideoOff className="w-5 h-5 text-amber-300" />
                   </div>
-                  <span className="text-xs font-black text-white">Camera Access Denied</span>
+                  <span className="text-xs font-extrabold text-white">Camera Access Denied</span>
                   <p className="text-[11px] text-slate-300 mt-1 max-w-xs leading-relaxed">
                     Camera access was blocked by your browser. Please allow camera and microphone permissions in browser settings to record video evidence.
                   </p>
                   <button
                     type="button"
                     onClick={handleStartManualVideo}
-                    className="mt-3 px-4 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black flex items-center gap-1.5 transition active:scale-95 shadow-md cursor-pointer"
+                    className="mt-3 px-4 py-2 rounded-full bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold flex items-center gap-1.5 transition active:scale-95 shadow-md cursor-pointer border border-white/20"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     <span>Retry Camera Access</span>

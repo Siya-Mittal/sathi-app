@@ -13,9 +13,8 @@ import {
   KeyRound,
   User,
   ChevronDown,
-  Sparkles,
   Smartphone,
-  ExternalLink,
+  Sparkles,
 } from 'lucide-react';
 import { useSafety } from '../../context/SafetyContext';
 import {
@@ -25,7 +24,6 @@ import {
   verifyPhoneOtp,
   sendPasswordResetEmail,
   isSupabaseConfigured,
-  getCleanSupabaseUrl,
 } from '../../lib/supabase';
 import { soundManager } from '../../utils/audio';
 
@@ -59,7 +57,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
   onSkip,
   initialMode = 'signin',
 }) => {
-  const { showToast, theme, deviceView } = useSafety();
+  const { showToast } = useSafety();
 
   // Mode: 'email' or 'phone'
   const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('email');
@@ -139,36 +137,30 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
           );
           setIsSignUp(false);
         } else if (session || user) {
-          showToast(`Welcome to SafeJourney, ${name.trim() || 'Traveler'}!`);
+          showToast('Welcome to SafeSaathi!');
           if (onSuccess) onSuccess();
         }
       } else {
         const { user, session, error } = await signInWithEmail(cleanEmail, password);
         if (error) {
-          if (error.message.toLowerCase().includes('email not confirmed')) {
-            setErrorMessage(
-              'Your email has not been confirmed yet. Please click the verification link in your inbox, or request a password reset.'
-            );
-          } else {
-            setErrorMessage(error.message || 'Invalid email or password.');
-          }
+          setErrorMessage(error.message || 'Invalid email or password.');
           setLoading(false);
           return;
         }
 
         if (session || user) {
-          showToast('Signed in successfully!');
+          showToast('Welcome back to SafeSaathi!');
           if (onSuccess) onSuccess();
         }
       }
     } catch (err: any) {
-      setErrorMessage(err?.message || 'An unexpected authentication error occurred.');
+      setErrorMessage(err?.message || 'Authentication failed. Please retry.');
     } finally {
       setLoading(false);
     }
   };
 
-  // 2. Handle Forgot Password
+  // 2. Handle Password Reset
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
@@ -176,21 +168,22 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
 
     const cleanEmail = email.trim().toLowerCase();
     if (!cleanEmail || !cleanEmail.includes('@')) {
-      setErrorMessage('Please enter your account email to receive reset instructions.');
+      setErrorMessage('Please enter your account email.');
       return;
     }
 
     setLoading(true);
+    soundManager.triggerHaptic(20);
+
     try {
       const res = await sendPasswordResetEmail(cleanEmail);
       if (res.success) {
         setInfoMessage(res.message);
-        setIsForgotPassword(false);
       } else {
         setErrorMessage(res.message);
       }
     } catch (err: any) {
-      setErrorMessage(err?.message || 'Failed to send reset link.');
+      setErrorMessage(err?.message || 'Could not send reset link.');
     } finally {
       setLoading(false);
     }
@@ -219,10 +212,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
         setCooldownSeconds(60);
         setInfoMessage(res.message);
       } else {
-        // Helpful diagnostic message for user if SMS provider isn't enabled in Supabase yet
         if (res.error?.message?.toLowerCase().includes('sms provider') || res.error?.message?.toLowerCase().includes('not enabled')) {
           setErrorMessage(
-            `Supabase SMS Provider Not Enabled: In your Supabase dashboard, go to Authentication > Providers > Phone, and configure Twilio or MessageBird to send real SMS.`
+            `Supabase SMS Provider Not Enabled: In your Supabase dashboard, configure Phone provider to send real SMS.`
           );
         } else {
           setErrorMessage(res.message);
@@ -270,19 +262,17 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
     }
   };
 
-  const isDark = theme === 'dark';
-
   return (
     <div className="w-full max-w-md mx-auto py-6 px-4 sm:px-0 animate-fadeIn select-none">
       {/* Brand Header */}
       <div className="text-center mb-6">
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-3xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-slate-950 text-white shadow-xl shadow-indigo-600/30 border border-indigo-400/40 mb-3 animate-float">
-          <Shield className="w-7 h-7 fill-indigo-400/20 stroke-[2.4]" />
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-3xl bg-gradient-to-br from-[#6C3A82] to-[#55276B] text-white shadow-xl shadow-purple-900/20 border border-purple-200/50 mb-3 animate-float">
+          <Shield className="w-7 h-7 fill-white/20 stroke-[2.4]" />
         </div>
-        <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-          SafeJourney Guard
+        <h1 className="text-2xl font-extrabold text-[#2A1637] dark:text-[#FAF4FE] tracking-tight">
+          SafeSaathi Guard
         </h1>
-        <p className="text-xs font-bold text-slate-600 dark:text-slate-400 mt-1">
+        <p className="text-xs font-semibold text-[#62566F] dark:text-purple-300 mt-1">
           {isForgotPassword
             ? 'Reset your account security access'
             : isSignUp
@@ -291,17 +281,17 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
         </p>
       </div>
 
-      {/* Main Glass Panel */}
-      <div className="glass-panel-elevated rounded-[36px] p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-indigo-900/50 relative overflow-hidden">
+      {/* Main Clay Panel */}
+      <div className="clay-card-elevated rounded-[36px] p-6 sm:p-8 shadow-2xl border border-[#E8DEF3] relative overflow-hidden bg-[#FFFDFB] dark:bg-purple-950/40">
         {/* Supabase Connection Pill */}
-        <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-200 dark:border-indigo-900/40">
+        <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#E8DEF3]">
           <div className="flex items-center gap-2">
             <span
               className={`w-2.5 h-2.5 rounded-full ${
-                isSupabaseConfigured ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
+                isSupabaseConfigured ? 'bg-emerald-500 animate-pulse' : 'bg-purple-400'
               }`}
             />
-            <span className="text-[11px] font-black text-slate-700 dark:text-slate-300">
+            <span className="text-[11px] font-bold text-[#62566F] dark:text-purple-300">
               {isSupabaseConfigured ? 'Supabase Auth Online' : 'Local Sandbox Mode'}
             </span>
           </div>
@@ -309,7 +299,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
             <button
               type="button"
               onClick={onSkip}
-              className="text-[11px] font-black text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
+              className="text-[11px] font-bold text-[#6C3A82] dark:text-purple-300 hover:underline cursor-pointer"
             >
               Continue Offline →
             </button>
@@ -318,7 +308,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
 
         {/* Auth Method Tabs (Email vs Phone OTP) */}
         {!isForgotPassword && (
-          <div className="grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800/80 mb-6 border border-slate-200 dark:border-indigo-950">
+          <div className="grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-[#FFF8F4] dark:bg-purple-900/50 mb-6 border border-[#E8DEF3]">
             <button
               type="button"
               onClick={() => {
@@ -326,14 +316,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                 setErrorMessage(null);
                 setInfoMessage(null);
               }}
-              className={`py-2 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                 authMethod === 'email'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                  : 'text-slate-700 dark:text-slate-300 hover:text-indigo-600'
+                  ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white shadow-xs'
+                  : 'text-[#62566F] dark:text-purple-300 hover:text-[#6C3A82]'
               }`}
             >
               <Mail className="w-3.5 h-3.5" />
-              <span>Email & Password</span>
+              <span>Email &amp; Password</span>
             </button>
 
             <button
@@ -343,10 +333,10 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                 setErrorMessage(null);
                 setInfoMessage(null);
               }}
-              className={`py-2 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                 authMethod === 'phone'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                  : 'text-slate-700 dark:text-slate-300 hover:text-indigo-600'
+                  ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white shadow-xs'
+                  : 'text-[#62566F] dark:text-purple-300 hover:text-[#6C3A82]'
               }`}
             >
               <Smartphone className="w-3.5 h-3.5" />
@@ -357,14 +347,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
 
         {/* Feedback Alerts */}
         {errorMessage && (
-          <div className="mb-4 p-3 rounded-2xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900/60 text-red-700 dark:text-red-300 text-xs flex items-start gap-2.5">
-            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
+          <div className="mb-4 p-3 rounded-2xl bg-red-50 text-[#C62845] border border-red-200 text-xs flex items-start gap-2.5">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
             <span className="leading-relaxed font-bold">{errorMessage}</span>
           </div>
         )}
 
         {infoMessage && (
-          <div className="mb-4 p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-900/60 text-emerald-800 dark:text-emerald-300 text-xs flex items-start gap-2.5">
+          <div className="mb-4 p-3 rounded-2xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs flex items-start gap-2.5">
             <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600" />
             <span className="leading-relaxed font-bold">{infoMessage}</span>
           </div>
@@ -377,29 +367,29 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
           <form onSubmit={handleEmailAuth} className="space-y-4">
             {isSignUp && (
               <div>
-                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#2A1637] dark:text-[#FAF4FE] mb-1.5">
                   Full Name
                 </label>
                 <div className="relative">
-                  <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <User className="w-4 h-4 text-[#7A6588] absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Aanya Sharma"
                     required={isSignUp}
-                    className="w-full h-11 pl-10 pr-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-900/50 text-xs font-bold text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 shadow-inner"
+                    className="w-full h-11 pl-10 pr-3.5 rounded-2xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#6C3A82]/40 shadow-inner"
                   />
                 </div>
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#2A1637] dark:text-[#FAF4FE] mb-1.5">
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-[#7A6588] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
                   value={email}
@@ -407,14 +397,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                   placeholder="name@example.com"
                   required
                   autoComplete="email"
-                  className="w-full h-11 pl-10 pr-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-900/50 text-xs font-bold text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 shadow-inner"
+                  className="w-full h-11 pl-10 pr-3.5 rounded-2xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#6C3A82]/40 shadow-inner"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#2A1637] dark:text-[#FAF4FE]">
                   Password
                 </label>
                 {!isSignUp && (
@@ -425,14 +415,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                       setErrorMessage(null);
                       setInfoMessage(null);
                     }}
-                    className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
+                    className="text-[11px] font-bold text-[#6C3A82] dark:text-purple-300 hover:underline cursor-pointer"
                   >
                     Forgot password?
                   </button>
                 )}
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-[#7A6588] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
@@ -440,12 +430,12 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                   placeholder="••••••••••••"
                   required
                   autoComplete={isSignUp ? 'new-password' : 'current-password'}
-                  className="w-full h-11 pl-10 pr-10 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-900/50 text-xs font-bold text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 shadow-inner"
+                  className="w-full h-11 pl-10 pr-10 rounded-2xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#6C3A82]/40 shadow-inner"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#7A6588] hover:text-[#2A1637] cursor-pointer"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -456,13 +446,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-12 mt-2 rounded-2xl bg-indigo-600 text-white text-xs font-black tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 active:scale-98 transition disabled:opacity-50 cursor-pointer"
+              className="w-full h-12 mt-2 rounded-2xl bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-purple-900/20 hover:opacity-95 active:scale-98 transition disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <RefreshCw className="w-4 h-4 animate-spin" />
               ) : (
                 <>
-                  <span>{isSignUp ? 'Create SafeJourney Account' : 'Sign In with Email'}</span>
+                  <span>{isSignUp ? 'Create SafeSaathi Account' : 'Sign In with Email'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -470,7 +460,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
 
             {/* Toggle Sign In / Sign Up */}
             <div className="text-center pt-2">
-              <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+              <span className="text-xs font-semibold text-[#7A6588] dark:text-purple-300">
                 {isSignUp ? 'Already have an account? ' : "Don't have an account? "}
               </span>
               <button
@@ -480,7 +470,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                   setErrorMessage(null);
                   setInfoMessage(null);
                 }}
-                className="text-xs font-black text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
+                className="text-xs font-bold text-[#6C3A82] dark:text-purple-200 hover:underline cursor-pointer"
               >
                 {isSignUp ? 'Sign In' : 'Sign Up Free'}
               </button>
@@ -494,18 +484,18 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
         {isForgotPassword && (
           <form onSubmit={handleForgotPassword} className="space-y-4">
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#2A1637] dark:text-[#FAF4FE] mb-1.5">
                 Account Email Address
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-[#7A6588] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
                   required
-                  className="w-full h-11 pl-10 pr-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-900/50 text-xs font-bold text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 shadow-inner"
+                  className="w-full h-11 pl-10 pr-3.5 rounded-2xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#6C3A82]/40 shadow-inner"
                 />
               </div>
             </div>
@@ -513,7 +503,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-12 rounded-2xl bg-indigo-600 text-white text-xs font-black tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 active:scale-98 transition disabled:opacity-50 cursor-pointer"
+              className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-purple-900/20 hover:opacity-95 active:scale-98 transition disabled:opacity-50 cursor-pointer"
             >
               {loading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <span>Send Reset Instructions</span>}
             </button>
@@ -524,7 +514,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                 setIsForgotPassword(false);
                 setErrorMessage(null);
               }}
-              className="w-full text-xs font-black text-slate-600 dark:text-slate-400 hover:underline text-center cursor-pointer"
+              className="w-full text-xs font-bold text-[#7A6588] dark:text-purple-300 hover:underline text-center cursor-pointer"
             >
               ← Back to Sign In
             </button>
@@ -540,8 +530,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
               // Step 3A: Enter Phone Number
               <form onSubmit={handleSendPhoneOtp} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                    Select Country & Mobile Number
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#2A1637] dark:text-[#FAF4FE] mb-1.5">
+                    Select Country &amp; Mobile Number
                   </label>
 
                   <div className="flex gap-2">
@@ -553,7 +543,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                           const c = COUNTRY_CODES.find((x) => x.code === e.target.value);
                           if (c) setSelectedCountry(c);
                         }}
-                        className="h-11 pl-3 pr-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-900/50 text-xs font-black text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 shadow-inner appearance-none cursor-pointer"
+                        className="h-11 pl-3 pr-8 rounded-2xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#6C3A82]/40 shadow-inner appearance-none cursor-pointer"
                       >
                         {COUNTRY_CODES.map((c) => (
                           <option key={c.code} value={c.code}>
@@ -561,23 +551,23 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                           </option>
                         ))}
                       </select>
-                      <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <ChevronDown className="w-3.5 h-3.5 text-[#7A6588] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     </div>
 
                     {/* Number Input */}
                     <div className="relative flex-1">
-                      <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                      <Phone className="w-4 h-4 text-[#7A6588] absolute left-3.5 top-1/2 -translate-y-1/2" />
                       <input
                         type="tel"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         placeholder="98765 43210"
                         required
-                        className="w-full h-11 pl-10 pr-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-900/50 text-xs font-bold text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 shadow-inner"
+                        className="w-full h-11 pl-10 pr-3.5 rounded-2xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#6C3A82]/40 shadow-inner"
                       />
                     </div>
                   </div>
-                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mt-1 block">
+                  <span className="text-[11px] font-semibold text-[#7A6588] dark:text-purple-300 mt-1 block">
                     Full international format: {getFullPhoneE164()}
                   </span>
                 </div>
@@ -585,7 +575,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full h-12 mt-2 rounded-2xl bg-indigo-600 text-white text-xs font-black tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 active:scale-98 transition disabled:opacity-50 cursor-pointer"
+                  className="w-full h-12 mt-2 rounded-2xl bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-purple-900/20 hover:opacity-95 active:scale-98 transition disabled:opacity-50 cursor-pointer"
                 >
                   {loading ? (
                     <RefreshCw className="w-4 h-4 animate-spin" />
@@ -600,10 +590,10 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
             ) : (
               // Step 3B: Verify 6-digit OTP
               <form onSubmit={handleVerifyOtp} className="space-y-4">
-                <div className="p-3 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/50 flex items-center justify-between">
+                <div className="p-3 rounded-2xl bg-[#FFF8F4] dark:bg-purple-900/40 border border-[#E8DEF3] flex items-center justify-between">
                   <div className="text-xs">
-                    <span className="font-bold text-slate-600 dark:text-slate-400 block">Sent OTP to</span>
-                    <span className="font-black text-indigo-600 dark:text-indigo-400 font-mono">
+                    <span className="font-semibold text-[#62566F] dark:text-purple-300 block">Sent OTP to</span>
+                    <span className="font-bold text-[#6C3A82] dark:text-purple-200 font-mono">
                       {getFullPhoneE164()}
                     </span>
                   </div>
@@ -614,18 +604,18 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                       setOtpCode('');
                       setErrorMessage(null);
                     }}
-                    className="text-xs font-black text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
+                    className="text-xs font-bold text-[#6C3A82] dark:text-purple-300 hover:underline cursor-pointer"
                   >
                     Edit Phone
                   </button>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#2A1637] dark:text-[#FAF4FE] mb-1.5">
                     Enter 6-Digit Verification Code
                   </label>
                   <div className="relative">
-                    <KeyRound className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <KeyRound className="w-4 h-4 text-[#7A6588] absolute left-3.5 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       maxLength={6}
@@ -634,7 +624,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                       placeholder="123456"
                       required
                       autoFocus
-                      className="w-full h-12 pl-10 pr-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-900/50 text-base font-black tracking-widest text-center text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 shadow-inner font-mono"
+                      className="w-full h-12 pl-10 pr-3.5 rounded-2xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-base font-bold tracking-widest text-center text-[#2A1637] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#6C3A82]/40 shadow-inner font-mono"
                     />
                   </div>
                 </div>
@@ -642,13 +632,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                 <button
                   type="submit"
                   disabled={loading || otpCode.length < 6}
-                  className="w-full h-12 rounded-2xl bg-indigo-600 text-white text-xs font-black tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 active:scale-98 transition disabled:opacity-50 cursor-pointer"
+                  className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-purple-900/20 hover:opacity-95 active:scale-98 transition disabled:opacity-50 cursor-pointer"
                 >
                   {loading ? (
                     <RefreshCw className="w-4 h-4 animate-spin" />
                   ) : (
                     <>
-                      <span>Verify & Enter SafeJourney</span>
+                      <span>Verify &amp; Enter SafeSaathi</span>
                       <CheckCircle2 className="w-4 h-4" />
                     </>
                   )}
@@ -657,7 +647,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                 {/* Resend Cooldown */}
                 <div className="text-center pt-1">
                   {cooldownSeconds > 0 ? (
-                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+                    <span className="text-xs font-semibold text-[#7A6588] dark:text-purple-300">
                       Resend code in {cooldownSeconds}s
                     </span>
                   ) : (
@@ -665,7 +655,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                       type="button"
                       onClick={handleSendPhoneOtp}
                       disabled={loading}
-                      className="text-xs font-black text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
+                      className="text-xs font-bold text-[#6C3A82] dark:text-purple-300 hover:underline cursor-pointer"
                     >
                       Resend SMS OTP
                     </button>
@@ -679,8 +669,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
 
       {/* Security Privacy Notice */}
       <div className="text-center mt-5">
-        <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 flex items-center justify-center gap-1.5">
-          <Shield className="w-3.5 h-3.5 text-indigo-500" />
+        <p className="text-[11px] font-semibold text-[#7A6588] dark:text-purple-300 flex items-center justify-center gap-1.5">
+          <Shield className="w-3.5 h-3.5 text-[#6C3A82]" />
           <span>AES-256 encrypted transit corridors • RLS protected profile data</span>
         </p>
       </div>

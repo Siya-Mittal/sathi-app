@@ -2,257 +2,512 @@
 
 @layer base {
   :root {
-    --primary: #1E1B4B;
-    --primary-deep: #0F172A;
-    --primary-light: #3730A3;
-    --secondary: #4F46E5;
-    --secondary-soft: #EEF2FF;
-    --accent-royal: #2563EB;
-    --accent-royal-soft: #DBEAFE;
-    --accent-amber: #F59E0B;
-    --accent-amber-soft: #FEF3C7;
-    --emergency: #DC2626;
-    --charcoal: #0F172A;
-    --muted-grey: #334155;
-    --border-light: rgba(203, 213, 225, 0.85);
+    /* SafeSaathi Warm Editorial Design System */
+    --warm-cream: #FFF5E9;
+    --pale-peach: #FFE0CC;
+    --warm-sand: #E9D0B7;
+    --butter-yellow: #F6D879;
+    
+    --vibrant-coral: #F26F61;
+    --terracotta: #C85B49;
+    --warm-rose: #D98DA5;
+    --muted-sage: #A9BFA5;
+    --forest-green: #31594B;
+    
+    --deep-berry: #642D48;
+    --dark-aubergine: #392635;
+    --text-primary: #30262B;
+    --text-secondary: #65565A;
+    --pure-white: #FFFFFF;
+    --emergency-red: #B4233D;
+
+    /* Legacy backward-compat aliases */
+    --warm-ivory: #FFF5E9;
+    --pearl-cream: #FFF8F0;
+    --soft-lavender: #FFE0CC;
+    --periwinkle: #E9D0B7;
+    --blush-pink: #FAD4DF;
+    --dusty-rose: #D98DA5;
+    --rich-plum: #642D48;
+    --deep-aubergine: #392635;
   }
 
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: #0F172A;
+    color: var(--text-primary);
+    background-color: var(--warm-cream);
     -webkit-tap-highlight-color: transparent;
     overflow-x: hidden;
     font-weight: 500;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--dark-aubergine);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Atmospheric Ambient Textured Background — Warm Cream & Pale Peach with Subtle Terracotta & Sage Reflections */
+.ambient-bg-light {
+  background-color: #FFF5E9;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 224, 204, 0.7) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(246, 216, 121, 0.3) 0px, transparent 50%),
+    radial-gradient(at 50% 25%, rgba(255, 245, 233, 0.95) 0px, transparent 65%),
+    radial-gradient(at 100% 100%, rgba(217, 141, 165, 0.28) 0px, transparent 55%),
+    radial-gradient(at 0% 100%, rgba(169, 191, 165, 0.25) 0px, transparent 50%),
+    radial-gradient(rgba(100, 45, 72, 0.038) 1.2px, transparent 1.2px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 24px 24px;
+  background-attachment: fixed;
+  color: #30262B;
+}
+
+.ambient-bg-dark {
+  background-color: #1E121B;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(100, 45, 72, 0.45) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(200, 91, 73, 0.3) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(30, 18, 27, 0.9) 0px, transparent 65%),
+    radial-gradient(at 100% 100%, rgba(15, 9, 14, 0.98) 0px, transparent 60%),
+    radial-gradient(rgba(233, 208, 183, 0.06) 1.2px, transparent 1.2px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 24px 24px;
+  background-attachment: fixed;
+  color: #FFF5E9;
+}
+
+/* ================= CLAYMORPHIC DESIGN SYSTEM ================= */
+
+/* Standard Clay Card: Pillowy sculpted surface, warm sand framing, dual inner light */
+.clay-card {
+  background: #FFFDF9;
+  border: 1.5px solid #E9D0B7;
+  border-radius: 28px;
+  box-shadow: 
+    0 12px 28px -6px rgba(57, 38, 53, 0.08),
+    0 4px 12px -2px rgba(57, 38, 53, 0.04),
+    inset 0 3px 5px rgba(255, 255, 255, 1),
+    inset 0 -3px 5px rgba(100, 45, 72, 0.04);
+  color: #30262B;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clay-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 18px 36px -8px rgba(57, 38, 53, 0.12),
+    0 6px 14px -3px rgba(57, 38, 53, 0.05),
+    inset 0 3px 5px rgba(255, 255, 255, 1),
+    inset 0 -3px 5px rgba(100, 45, 72, 0.06);
+}
+
+.ambient-bg-dark .clay-card {
+  background: rgba(45, 28, 40, 0.92);
+  border: 1.5px solid rgba(233, 208, 183, 0.25);
+  box-shadow: 
+    0 16px 36px -10px rgba(0, 0, 0, 0.55),
+    inset 0 1px 2px rgba(255, 255, 255, 0.14),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+  color: #FFF5E9;
+}
+
+/* Elevated Hero Clay Card: Maximum sculptural presence & layered warm lighting */
+.clay-card-elevated {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FFF5E9 45%, #FFE0CC 100%);
+  border: 1.5px solid #E9D0B7;
+  border-radius: 36px;
+  box-shadow: 
+    0 24px 52px -12px rgba(100, 45, 72, 0.12),
+    0 8px 20px -4px rgba(200, 91, 73, 0.06),
+    inset 0 4px 6px rgba(255, 255, 255, 1),
+    inset 0 -4px 7px rgba(100, 45, 72, 0.07);
+  color: #30262B;
+}
+
+.ambient-bg-dark .clay-card-elevated {
+  background: linear-gradient(145deg, #361F2E 0%, #261521 100%);
+  border: 1.5px solid rgba(233, 208, 183, 0.3);
+  box-shadow: 
+    0 24px 56px -12px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.16),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+  color: #FFF5E9;
+}
+
+/* Deep Berry Clay Card: Rich editorial contrast surface */
+.clay-card-berry,
+.clay-card-plum {
+  background: linear-gradient(135deg, #642D48 0%, #392635 100%);
+  border: 1.5px solid rgba(217, 141, 165, 0.45);
+  border-radius: 32px;
+  box-shadow: 
+    0 22px 48px -10px rgba(57, 38, 53, 0.45),
+    inset 0 2px 4px rgba(255, 255, 255, 0.28),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+  color: #FFFFFF;
+}
+
+/* Terracotta Editorial Clay Card */
+.clay-card-terracotta {
+  background: linear-gradient(135deg, #C85B49 0%, #A84736 100%);
+  border: 1.5px solid rgba(255, 224, 204, 0.45);
+  border-radius: 32px;
+  box-shadow: 
+    0 20px 45px -10px rgba(200, 91, 73, 0.35),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+  color: #FFFFFF;
+}
+
+/* Soft Peach Clay Card */
+.clay-card-peach {
+  background: linear-gradient(135deg, #FFFDF9 0%, #FFE0CC 100%);
+  border: 1.5px solid #E9D0B7;
+  border-radius: 28px;
+  box-shadow: 
+    0 10px 24px -5px rgba(200, 91, 73, 0.08),
+    inset 0 2px 4px rgba(255, 255, 255, 1),
+    inset 0 -2px 4px rgba(100, 45, 72, 0.04);
+  color: #30262B;
+}
+
+/* ================= RAISED CLAYMORPHIC BUTTONS ================= */
+
+/* Primary Button: Terracotta / Coral Editorial Gradient */
+.clay-btn-primary {
+  background: linear-gradient(135deg, #C85B49 0%, #B44A39 100%);
+  color: #FFFFFF !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 1.25rem;
+  font-weight: 700;
+  box-shadow: 
+    0 8px 22px -4px rgba(200, 91, 73, 0.45),
+    inset 0 2px 3px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.clay-btn-primary:hover {
+  background: linear-gradient(135deg, #D46654 0%, #BD503F 100%);
+  transform: translateY(-1.5px);
+  box-shadow: 
+    0 12px 28px -4px rgba(200, 91, 73, 0.52),
+    inset 0 2px 3px rgba(255, 255, 255, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.clay-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0 4px 10px -2px rgba(200, 91, 73, 0.38),
+    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Secondary Button: Warm Cream Clay Surface */
+.clay-btn-secondary {
+  background: linear-gradient(135deg, #FFFDF9 0%, #FFF5E9 100%);
+  color: #30262B !important;
+  border: 1.5px solid #E9D0B7;
+  border-radius: 1.25rem;
+  font-weight: 700;
+  box-shadow: 
+    0 6px 16px -3px rgba(57, 38, 53, 0.08),
+    inset 0 2px 3px rgba(255, 255, 255, 1),
+    inset 0 -2px 3px rgba(100, 45, 72, 0.04);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.clay-btn-secondary:hover {
+  background: #FFFFFF;
+  border-color: #D98DA5;
+  color: #642D48 !important;
+  transform: translateY(-1.5px);
+  box-shadow: 
+    0 10px 22px -4px rgba(57, 38, 53, 0.12),
+    inset 0 2px 3px rgba(255, 255, 255, 1),
+    inset 0 -2px 3px rgba(100, 45, 72, 0.05);
+}
+
+.clay-btn-secondary:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0 3px 8px -2px rgba(57, 38, 53, 0.08),
+    inset 0 2px 3px rgba(100, 45, 72, 0.08);
+}
+
+/* Deep Berry Hero Button */
+.clay-btn-berry {
+  background: linear-gradient(135deg, #642D48 0%, #4D1F35 100%);
+  color: #FFFFFF !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1.25rem;
+  font-weight: 700;
+  box-shadow: 
+    0 8px 22px -4px rgba(100, 45, 72, 0.42),
+    inset 0 2px 3px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.clay-btn-berry:hover {
+  background: linear-gradient(135deg, #743454 0%, #5B2540 100%);
+  transform: translateY(-1.5px);
+  box-shadow: 0 12px 26px -4px rgba(100, 45, 72, 0.5);
+}
+
+/* Emergency Button: Vibrant Crimson Red */
+.clay-btn-emergency {
+  background: linear-gradient(135deg, #D42B49 0%, #B4233D 100%);
+  color: #FFFFFF !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  border-radius: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  box-shadow: 
+    0 10px 26px -4px rgba(180, 35, 61, 0.48),
+    inset 0 2px 3px rgba(255, 255, 255, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.clay-btn-emergency:hover {
+  background: linear-gradient(135deg, #E23856 0%, #C32843 100%);
+  transform: translateY(-1.5px);
+  box-shadow: 
+    0 14px 32px -4px rgba(180, 35, 61, 0.55),
+    inset 0 2px 3px rgba(255, 255, 255, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.clay-btn-emergency:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0 4px 12px -2px rgba(180, 35, 61, 0.4),
+    inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* ================= IMMERSIVE GLASSMORPHISM ================= */
+
+/* Genuine Frosted Glass Panel with Multilayered Light Sheen */
+.glass-panel,
+.glass-card {
+  background: rgba(255, 253, 249, 0.82);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  outline: 1px solid rgba(233, 208, 183, 0.65);
+  border-radius: 28px;
+  box-shadow: 
+    0 14px 32px -6px rgba(57, 38, 53, 0.08),
+    0 4px 12px -2px rgba(57, 38, 53, 0.03),
+    inset 0 2px 4px rgba(255, 255, 255, 0.95),
+    inset 0 -2px 3px rgba(100, 45, 72, 0.03);
+  color: #30262B;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 
+    0 18px 38px -8px rgba(57, 38, 53, 0.12),
+    inset 0 2px 4px rgba(255, 255, 255, 1);
+}
+
+.ambient-bg-dark .glass-panel,
+.ambient-bg-dark .glass-card {
+  background: rgba(38, 24, 34, 0.85);
+  border: 1.5px solid rgba(233, 208, 183, 0.25);
+  outline: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 16px 36px -10px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.14);
+  color: #FFF5E9;
+}
+
+/* Elevated Glass Panel with Radial Specular Highlight */
+.glass-panel-elevated {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 245, 233, 0.85) 50%, rgba(255, 224, 204, 0.78) 100%);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  outline: 1px solid rgba(233, 208, 183, 0.7);
+  border-radius: 32px;
+  box-shadow: 
+    0 22px 48px -10px rgba(100, 45, 72, 0.12),
+    0 8px 18px -3px rgba(200, 91, 73, 0.05),
+    inset 0 3px 5px rgba(255, 255, 255, 1),
+    inset 0 -3px 5px rgba(100, 45, 72, 0.05);
+  color: #30262B;
+}
+
+.ambient-bg-dark .glass-panel-elevated {
+  background: rgba(45, 28, 40, 0.9);
+  border: 1.5px solid rgba(233, 208, 183, 0.35);
+  box-shadow: 
+    0 22px 52px -12px rgba(0, 0, 0, 0.65),
+    inset 0 1px 2px rgba(255, 255, 255, 0.16);
+  color: #FFF5E9;
+}
+
+/* Warm Navigation Glass Dock */
+.clay-nav-dock,
+.glass-nav-dock {
+  background: rgba(255, 245, 233, 0.94);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  border: 1.5px solid #E9D0B7;
+  border-radius: 28px;
+  box-shadow: 
+    0 16px 38px -8px rgba(57, 38, 53, 0.16),
+    0 4px 14px rgba(57, 38, 53, 0.06),
+    inset 0 2px 3px rgba(255, 255, 255, 1),
+    inset 0 -2px 3px rgba(100, 45, 72, 0.04);
+}
+
+.ambient-bg-dark .clay-nav-dock,
+.ambient-bg-dark .glass-nav-dock {
+  background: rgba(30, 18, 27, 0.94);
+  border: 1.5px solid rgba(233, 208, 183, 0.3);
+  box-shadow: 
+    0 20px 48px -8px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Backward-compatible plum card mapping to deep berry */
+.plum-card {
+  background: linear-gradient(135deg, #642D48 0%, #392635 100%);
+  border: 1.5px solid rgba(217, 141, 165, 0.45);
+  box-shadow: 
+    0 20px 45px -10px rgba(57, 38, 53, 0.45),
+    inset 0 2px 4px rgba(255, 255, 255, 0.28),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.35);
+  color: #FFFFFF;
 }
 
 /* PIN Keypad Numeric Button Styles - Anti-Inheritance & High Contrast */
 .pin-digit-btn {
-  background-color: #F0F2FF !important;
-  border: 1px solid #D8DDF0 !important;
-  color: #1E2B5B !important;
-  -webkit-text-fill-color: #1E2B5B !important;
-  font-size: 18px !important;
-  font-weight: 600 !important;
+  background-color: #FFFDF9 !important;
+  border: 1.5px solid #E9D0B7 !important;
+  color: #30262B !important;
+  -webkit-text-fill-color: #30262B !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
   line-height: 1 !important;
   opacity: 1 !important;
   visibility: visible !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  border-radius: 1rem !important;
-  box-shadow: 0 1px 3px rgba(30, 43, 91, 0.08) !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 
+    0 5px 12px rgba(57, 38, 53, 0.08),
+    inset 0 2px 3px #FFFFFF !important,
+    inset 0 -2px 3px rgba(100, 45, 72, 0.04) !important;
   transition: all 0.15s ease-in-out !important;
   cursor: pointer !important;
   user-select: none !important;
 }
 
 .pin-digit-btn:hover {
-  background-color: #E2E7FC !important;
-  border-color: #C0C8E8 !important;
+  background-color: #FFE0CC !important;
+  border-color: #C85B49 !important;
+  color: #642D48 !important;
+  -webkit-text-fill-color: #642D48 !important;
 }
 
 .pin-digit-btn:active {
-  background-color: #D6DCF8 !important;
+  background-color: #F6D879 !important;
   transform: scale(0.96) !important;
 }
 
 .pin-control-btn {
-  background-color: #F4F6FF !important;
-  border: 1px solid #D8DDF0 !important;
-  color: #1E2B5B !important;
-  -webkit-text-fill-color: #1E2B5B !important;
+  background-color: #FFF5E9 !important;
+  border: 1.5px solid #E9D0B7 !important;
+  color: #642D48 !important;
+  -webkit-text-fill-color: #642D48 !important;
   font-size: 13px !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
   letter-spacing: 0.02em !important;
   opacity: 1 !important;
   visibility: visible !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  border-radius: 1rem !important;
-  box-shadow: 0 1px 2px rgba(30, 43, 91, 0.05) !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 
+    0 4px 10px rgba(57, 38, 53, 0.06),
+    inset 0 1px 2px #FFFFFF !important;
   transition: all 0.15s ease-in-out !important;
   cursor: pointer !important;
   user-select: none !important;
 }
 
 .pin-control-btn:hover {
-  background-color: #E8ECFB !important;
-  border-color: #C0C8E8 !important;
+  background-color: #FFE0CC !important;
+  border-color: #D98DA5 !important;
 }
 
 .pin-control-btn:active {
-  background-color: #D6DCF8 !important;
+  background-color: #E9D0B7 !important;
   transform: scale(0.96) !important;
 }
 
 .pin-control-btn svg {
-  color: #1E2B5B !important;
-  stroke: #1E2B5B !important;
-}
-
-/* Atmospheric Ambient Textured Background (High Contrast, Professional Indigo-Navy Micro-Grid) */
-.ambient-bg-light {
-  background-color: #F8FAFC;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(37, 99, 235, 0.10) 0px, transparent 45%),
-    radial-gradient(at 50% 30%, rgba(255, 255, 255, 0.85) 0px, transparent 65%),
-    radial-gradient(at 100% 100%, rgba(30, 27, 75, 0.08) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(79, 70, 229, 0.10) 0px, transparent 45%),
-    radial-gradient(rgba(30, 41, 59, 0.06) 1.2px, transparent 1.2px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 20px 20px;
-  background-attachment: fixed;
-}
-
-.ambient-bg-dark {
-  background-color: #0A0E1A;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.20) 0px, transparent 55%),
-    radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.16) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.7) 0px, transparent 65%),
-    radial-gradient(at 100% 100%, rgba(8, 12, 24, 0.95) 0px, transparent 60%),
-    radial-gradient(at 0% 100%, rgba(124, 58, 237, 0.14) 0px, transparent 50%),
-    radial-gradient(rgba(148, 163, 184, 0.10) 1.2px, transparent 1.2px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 20px 20px;
-  background-attachment: fixed;
-  color: #F8FAFC;
-}
-
-/* Premium Liquid Glassmorphism Surface Tokens with Crisp Contrast */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(226, 232, 240, 0.95);
-  box-shadow: 
-    0 12px 32px -8px rgba(15, 23, 42, 0.08), 
-    0 2px 8px rgba(15, 23, 42, 0.03), 
-    inset 0 1px 1px rgba(255, 255, 255, 1);
-}
-
-.ambient-bg-dark .glass-panel {
-  background: rgba(17, 24, 39, 0.85);
-  border: 1px solid rgba(79, 70, 229, 0.28);
-  box-shadow: 
-    0 18px 40px -10px rgba(0, 0, 0, 0.55),
-    inset 0 1px 1px rgba(255, 255, 255, 0.12);
-  color: #F8FAFC;
-}
-
-.glass-panel-elevated {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(203, 213, 225, 0.95);
-  box-shadow: 
-    0 20px 48px -12px rgba(30, 27, 75, 0.15), 
-    0 4px 16px rgba(15, 23, 42, 0.05),
-    inset 0 1px 2px rgba(255, 255, 255, 1);
-}
-
-.ambient-bg-dark .glass-panel-elevated {
-  background: rgba(24, 33, 54, 0.92);
-  border: 1px solid rgba(99, 102, 241, 0.40);
-  box-shadow: 
-    0 24px 60px -14px rgba(0, 0, 0, 0.7),
-    inset 0 1px 1px rgba(255, 255, 255, 0.18);
-  color: #FFFFFF;
-}
-
-.glass-panel-dark {
-  background: linear-gradient(135deg, rgba(30, 27, 75, 0.98), rgba(15, 23, 42, 0.99));
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(99, 102, 241, 0.42);
-  box-shadow: 
-    0 24px 56px -14px rgba(15, 23, 42, 0.6), 
-    inset 0 1px 1.5px rgba(255, 255, 255, 0.22);
-  color: #FFFFFF;
-}
-
-.glass-panel-emergency {
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.96), rgba(185, 28, 28, 0.98));
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  box-shadow: 
-    0 22px 48px -10px rgba(220, 38, 38, 0.55), 
-    inset 0 1px 2px rgba(255, 255, 255, 0.6);
-}
-
-.glass-nav-mobile {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(226, 232, 240, 0.95);
-  box-shadow: 
-    0 16px 40px -8px rgba(15, 23, 42, 0.16), 
-    inset 0 1px 2px rgba(255, 255, 255, 0.95);
-}
-
-.ambient-bg-dark .glass-nav-mobile {
-  background: rgba(15, 23, 42, 0.95);
-  border: 1px solid rgba(99, 102, 241, 0.38);
-  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.75);
-}
-
-/* Shimmer Sheen */
-@keyframes shineSweep {
-  0% { left: -100%; }
-  100% { left: 150%; }
-}
-
-.glass-sheen {
-  position: relative;
-  overflow: hidden;
-}
-
-.glass-sheen::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-  transform: skewX(-20deg);
-  animation: shineSweep 6s infinite ease-in-out;
-  pointer-events: none;
-}
-
-/* Animations */
-@keyframes floatSubtle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-.animate-float {
-  animation: floatSubtle 4s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.05); }
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 3s ease-in-out infinite;
+  color: #642D48 !important;
+  stroke: #642D48 !important;
 }
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.4);
+  background: rgba(200, 91, 73, 0.28);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(79, 70, 229, 0.7);
+  background: rgba(200, 91, 73, 0.48);
+}
+
+/* CSS 3D Transforms Animations & Utilities */
+@keyframes orbital-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes clay-levitate {
+  0%, 100% {
+    transform: translateY(0px) rotateZ(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotateZ(0.5deg);
+  }
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
 }

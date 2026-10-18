@@ -38,7 +38,6 @@ export const Header: React.FC = () => {
     deviceView,
     setDeviceView,
     setShowAuthModal,
-    signOutAction,
   } = useSafety();
 
   const handleQuickSos = () => {
@@ -59,39 +58,38 @@ export const Header: React.FC = () => {
   const isDark = theme === 'dark';
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl border-b border-slate-200 dark:border-indigo-950/60 shadow-xs transition-colors select-none">
+    <header className="sticky top-0 z-40 bg-[#FAF7F2]/90 dark:bg-[#1A1024]/90 backdrop-blur-2xl border-b border-[#E8DFF5]/80 dark:border-purple-950/60 shadow-xs transition-colors select-none">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between gap-3">
           
-          {/* Brand Logo & Active Guard Indicator */}
+          {/* Brand Logo & Protective Status */}
           <div className="flex items-center gap-2.5 shrink-0">
             <button
               onClick={() => setActiveTab('dashboard')}
               className="flex items-center gap-3 text-left group cursor-pointer"
+              title="SafeSaathi — Return to Command Hub"
             >
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-700 via-indigo-800 to-slate-900 flex items-center justify-center text-white shadow-md shadow-indigo-600/20 group-hover:scale-105 transition-transform border border-indigo-400/30">
-                <Shield className="w-5 h-5 fill-indigo-400/20 stroke-[2.4]" />
+              <div className="w-10 h-10 rounded-2xl overflow-hidden p-0.5 bg-gradient-to-br from-rose-200 via-purple-200 to-indigo-200 shadow-sm border border-purple-200/60 group-hover:scale-105 transition-transform flex items-center justify-center">
+                <img
+                  src="/src/assets/images/safesaathi_app_icon_1792355765489.jpg"
+                  alt="SafeSaathi Icon"
+                  className="w-full h-full object-cover rounded-[14px]"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-base font-black tracking-tight text-slate-900 dark:text-white">
-                    SafeJourney
-                  </span>
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/40">
-                    Pro
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700 dark:text-slate-300">
-                  <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
-                  <span className="hidden sm:inline">Active Escort Armed</span>
-                  <span className="sm:hidden">Protected</span>
-                </div>
+                <span className="text-base sm:text-lg font-extrabold tracking-tight text-[#2A1637] dark:text-[#FAF4FE] block">
+                  SafeSaathi
+                </span>
+                <span className="text-[11px] font-medium text-[#7A6588] dark:text-purple-300 block">
+                  Autonomous Journey Escort
+                </span>
               </div>
             </button>
           </div>
 
           {/* Desktop Web Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1.5">
+          <nav className="hidden lg:flex items-center gap-1 p-1 rounded-2xl bg-white/70 dark:bg-purple-950/40 border border-[#E8DFF5]/70 shadow-xs">
             {navLinks.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -104,36 +102,36 @@ export const Header: React.FC = () => {
                     soundManager.triggerHaptic(15);
                     setActiveTab(item.id as typeof activeTab);
                   }}
-                  className={`relative px-3.5 py-2 rounded-xl text-xs font-extrabold flex items-center gap-2 transition-all cursor-pointer ${
+                  className={`relative px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/25'
-                      : 'text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
+                      ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white shadow-sm'
+                      : 'text-[#493356] dark:text-purple-200 hover:text-[#6C3A82] dark:hover:text-white hover:bg-purple-50/70 dark:hover:bg-purple-900/40'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-indigo-600 dark:text-indigo-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#7A6588] dark:text-purple-300'}`} />
                   <span className="whitespace-nowrap tracking-wide">{item.label}</span>
                   {hasJourneyIndicator && (
-                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                    <span className="w-2 h-2 rounded-full bg-amber-400" />
                   )}
                 </button>
               );
             })}
           </nav>
 
-          {/* Right Action Bar: Device Mode Switcher, Theme Toggle, Siren, SOS, Profile */}
+          {/* Right Action Bar */}
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
             
             {/* Dual Web / Mobile View Toggle */}
-            <div className="hidden sm:flex items-center p-1 rounded-2xl glass-panel shadow-xs border border-slate-200 dark:border-slate-800">
+            <div className="hidden sm:flex items-center p-1 rounded-2xl glass-panel shadow-xs border border-[#E8DFF5]/80">
               <button
                 onClick={() => {
                   soundManager.triggerHaptic(15);
                   setDeviceView('web');
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   deviceView === 'web'
-                    ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'text-slate-700 dark:text-slate-300 hover:text-indigo-600'
+                    ? 'bg-[#6C3A82] text-white shadow-xs'
+                    : 'text-[#5E486D] dark:text-purple-300 hover:text-[#6C3A82]'
                 }`}
                 title="Full Web App Mode"
               >
@@ -145,10 +143,10 @@ export const Header: React.FC = () => {
                   soundManager.triggerHaptic(15);
                   setDeviceView('mobile');
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   deviceView === 'mobile'
-                    ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'text-slate-700 dark:text-slate-300 hover:text-indigo-600'
+                    ? 'bg-[#6C3A82] text-white shadow-xs'
+                    : 'text-[#5E486D] dark:text-purple-300 hover:text-[#6C3A82]'
                 }`}
                 title="Interactive Mobile App Simulation"
               >
@@ -163,34 +161,34 @@ export const Header: React.FC = () => {
                 soundManager.triggerHaptic(20);
                 setTheme(isDark ? 'light' : 'dark');
               }}
-              className="w-9 h-9 rounded-2xl glass-panel flex items-center justify-center text-slate-800 dark:text-slate-100 shadow-xs hover:scale-105 transition cursor-pointer"
-              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className="w-9 h-9 rounded-2xl glass-panel flex items-center justify-center text-[#493356] dark:text-purple-200 shadow-xs hover:scale-105 transition cursor-pointer border border-[#E8DFF5]/80"
+              title={isDark ? 'Switch to Warm Ivory Light Mode' : 'Switch to Evening Mode'}
               aria-label="Toggle Theme"
             >
-              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-700" />}
+              {isDark ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-[#6C3A82]" />}
             </button>
 
             {/* Siren Alarm Trigger */}
             <button
               onClick={toggleSiren}
-              className={`w-9 h-9 rounded-2xl flex items-center justify-center transition-all cursor-pointer ${
+              className={`w-9 h-9 rounded-2xl flex items-center justify-center transition-all cursor-pointer border ${
                 isSirenPlaying
-                  ? 'glass-panel-emergency text-white animate-bounce shadow-md'
-                  : 'glass-panel text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-white shadow-xs'
+                  ? 'bg-rose-500 text-white animate-bounce shadow-md border-rose-400'
+                  : 'glass-panel text-[#5E486D] dark:text-purple-200 hover:text-[#6C3A82] border-[#E8DFF5]/80'
               }`}
-              title={isSirenPlaying ? 'Mute Siren Alarm' : 'Sound Emergency Siren'}
+              title={isSirenPlaying ? 'Mute Siren Alarm' : 'Sound Deterrent Siren'}
               aria-label="Toggle Siren"
             >
               {isSirenPlaying ? <Siren className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4" />}
             </button>
 
-            {/* Emergency SOS Button */}
+            {/* Emergency SOS Button (Coral-Crimson Genuine Action) */}
             <button
               onClick={handleQuickSos}
-              className="h-9 px-4 rounded-2xl glass-panel-emergency text-white text-xs font-black tracking-wider flex items-center gap-1.5 shadow-md shadow-red-600/25 active:scale-95 transition-transform cursor-pointer"
+              className="h-9 px-4 rounded-2xl bg-gradient-to-r from-[#DF4B5E] to-[#C82B3E] hover:from-[#E65669] hover:to-[#D23347] text-white text-xs font-black tracking-wider flex items-center gap-1.5 shadow-md shadow-rose-600/20 active:scale-95 transition-transform cursor-pointer border border-white/30"
               aria-label="Emergency SOS"
             >
-              <ShieldAlert className="w-4 h-4 animate-pulse stroke-[2.5]" />
+              <ShieldAlert className="w-4 h-4 stroke-[2.5]" />
               <span>SOS</span>
             </button>
 
@@ -198,10 +196,10 @@ export const Header: React.FC = () => {
             {user.isLoggedIn ? (
               <button
                 onClick={() => setActiveTab('profile')}
-                className="flex items-center gap-2 p-1 rounded-2xl glass-panel hover:bg-slate-100 dark:hover:bg-slate-800 transition shadow-xs group cursor-pointer"
+                className="flex items-center gap-2 p-1 rounded-2xl glass-panel hover:bg-purple-50/60 dark:hover:bg-purple-900/40 transition shadow-xs group cursor-pointer border border-[#E8DFF5]/80"
                 title="View Profile & Cloud Settings"
               >
-                <div className="w-8 h-8 rounded-xl overflow-hidden bg-gradient-to-br from-indigo-600 to-slate-900 text-white flex items-center justify-center font-black text-xs shadow-xs border border-indigo-400/30">
+                <div className="w-8 h-8 rounded-xl overflow-hidden bg-gradient-to-br from-[#6C3A82] to-[#472656] text-white flex items-center justify-center font-bold text-xs shadow-xs border border-purple-300/40">
                   {user.avatarUrl ? (
                     <img
                       src={user.avatarUrl}
@@ -213,7 +211,7 @@ export const Header: React.FC = () => {
                     user.name.charAt(0) || 'U'
                   )}
                 </div>
-                <span className="hidden xl:inline text-xs font-black text-slate-900 dark:text-white pr-2">
+                <span className="hidden xl:inline text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] pr-2">
                   {user.name.split(' ')[0]}
                 </span>
               </button>
@@ -223,7 +221,7 @@ export const Header: React.FC = () => {
                   soundManager.triggerHaptic(20);
                   setShowAuthModal(true);
                 }}
-                className="h-9 px-3.5 rounded-2xl bg-indigo-600 text-white text-xs font-black flex items-center gap-1.5 shadow-md shadow-indigo-600/25 hover:bg-indigo-700 active:scale-95 transition cursor-pointer"
+                className="h-9 px-3.5 rounded-2xl bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold flex items-center gap-1.5 shadow-sm hover:opacity-95 active:scale-95 transition cursor-pointer"
                 title="Sign In to Sync Journeys & Evidence"
               >
                 <LogIn className="w-3.5 h-3.5" />

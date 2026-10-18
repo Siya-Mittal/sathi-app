@@ -209,10 +209,10 @@ export const EmergencySosScreen: React.FC = () => {
               <AlertOctagon className="w-4 h-4 text-white" />
             </div>
             <div>
-              <span className="text-xs font-black uppercase tracking-widest text-red-300 block">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-red-300 block">
                 Active Emergency
               </span>
-              <h1 className="text-base font-black text-white">SafeJourney SOS Beacon</h1>
+              <h1 className="text-base font-extrabold text-white">SafeSaathi Emergency SOS Beacon</h1>
             </div>
           </div>
 
@@ -306,7 +306,7 @@ export const EmergencySosScreen: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleRetryCamera}
-                  className="mt-2.5 px-3.5 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black flex items-center gap-1.5 transition active:scale-95 shadow-md cursor-pointer"
+                  className="mt-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-[#6C3A82] to-[#55276B] hover:opacity-95 text-white text-xs font-extrabold flex items-center gap-1.5 transition active:scale-95 shadow-md cursor-pointer border border-white/20"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>Retry Camera Access</span>
@@ -473,9 +473,9 @@ export const EmergencySosScreen: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleDispatchWhatsApp(contact)}
-                    className={`h-9 px-3 rounded-xl text-xs font-black flex items-center gap-1.5 transition cursor-pointer ${
+                    className={`h-9 px-3 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer ${
                       sentAlerts[contact.id]
-                        ? 'bg-indigo-600 text-white'
+                        ? 'bg-[#6C3A82] text-white'
                         : 'bg-white/20 hover:bg-white/30 text-white'
                     }`}
                   >
