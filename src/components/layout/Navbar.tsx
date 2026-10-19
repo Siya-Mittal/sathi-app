@@ -34,7 +34,7 @@ export const Navbar: React.FC<{ forceShow?: boolean }> = ({ forceShow = false })
     <div className={containerClass}>
       <nav
         aria-label="Mobile Bottom Navigation"
-        className="pointer-events-auto w-full max-w-md glass-nav-dock rounded-[28px] p-1.5 shadow-xl border border-[#E8DFF5]/80 transition-all duration-300"
+        className="pointer-events-auto w-full max-w-md glass-nav-dock rounded-[28px] p-1.5 shadow-xl border border-[#E9DFD2] dark:border-[#E99583]/30 transition-all duration-300"
       >
         <div className="grid grid-cols-6 items-center gap-1">
           {NAV_ITEMS.map((item) => {
@@ -48,21 +48,21 @@ export const Navbar: React.FC<{ forceShow?: boolean }> = ({ forceShow = false })
                 onClick={() => handleTabClick(item.id)}
                 className={`relative flex flex-col items-center justify-center min-h-[48px] rounded-2xl transition-all duration-200 select-none cursor-pointer ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white shadow-sm scale-102'
-                    : 'text-[#493356] dark:text-purple-200 hover:text-[#6C3A82] hover:bg-purple-50/60 dark:hover:bg-purple-900/40'
+                    ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white shadow-sm'
+                    : 'text-[#29252D] dark:text-[#FAF5EF] hover:text-[#702E46] hover:bg-white/80 dark:hover:bg-[#351A2E]'
                 }`}
                 aria-label={item.label}
               >
                 <div className="relative flex items-center justify-center">
                   <Icon
                     className={`w-4 h-4 transition-transform duration-200 ${
-                      isActive ? 'stroke-[2.5] text-white' : 'stroke-[2] text-[#6C3A82] dark:text-purple-300'
+                      isActive ? 'stroke-[2.5] text-white' : 'stroke-[2] text-[#62566F] dark:text-[#E99583]'
                     }`}
                   />
 
                   {/* Active journey alert indicator */}
                   {hasJourneyIndicator && !isActive && (
-                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-white" />
+                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#C86650] ring-2 ring-white" />
                   )}
                 </div>
                 <span className="text-[10px] font-bold mt-0.5 tracking-tight truncate max-w-[48px]">

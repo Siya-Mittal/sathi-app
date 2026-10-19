@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlertTriangle, ShieldCheck, Siren, Lock, StopCircle, Delete } from 'lucide-react';
+import { AlertTriangle, Lock, Delete, Siren } from 'lucide-react';
 import { useSafety } from '../../context/SafetyContext';
 import { soundManager } from '../../utils/audio';
 
@@ -44,58 +44,58 @@ export const CountdownDialog: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-fadeIn">
-      <div className="glass-panel-elevated w-full max-w-sm rounded-[32px] p-6 shadow-2xl border border-slate-200 dark:border-indigo-900/60 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/85 backdrop-blur-xl animate-fadeIn">
+      <div className="clay-card-elevated w-full max-w-sm rounded-[32px] p-6 shadow-2xl border-2 border-[#E9DFD2] dark:border-[#E9DFD2]/25 overflow-hidden">
         {/* Urgent Alert Banner */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-11 h-11 rounded-2xl bg-red-600/15 flex items-center justify-center text-red-600 shrink-0 border border-red-500/20">
+          <div className="w-11 h-11 rounded-2xl bg-[#BA223C]/15 flex items-center justify-center text-[#BA223C] shrink-0 border border-[#BA223C]/30">
             <AlertTriangle className="w-6 h-6 animate-pulse" />
           </div>
           <div>
-            <h2 className="text-lg font-black text-slate-900 dark:text-white leading-tight">Are You Safe?</h2>
-            <p className="text-xs font-bold text-slate-700 dark:text-slate-300">Journey Guard Anomaly Verification</p>
+            <h2 className="text-lg font-extrabold text-[#45263F] dark:text-[#FAF5EF] leading-tight">Are You Safe?</h2>
+            <p className="text-xs font-semibold text-[#62566F] dark:text-[#E9DFD2]">Journey Guard Anomaly Verification</p>
           </div>
         </div>
 
         {/* Reason card */}
-        <div className="glass-panel rounded-2xl p-3.5 mb-3 border border-slate-200 dark:border-indigo-900/40 bg-white dark:bg-slate-800/80">
-          <span className="text-[10px] font-black uppercase tracking-wider text-indigo-700 dark:text-indigo-400 block mb-0.5">
+        <div className="p-3.5 mb-3 rounded-2xl bg-[#FAF5EF] dark:bg-[#3A1F33] border border-[#E9DFD2] dark:border-[#E9DFD2]/25">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#702E46] dark:text-[#E99583] block mb-0.5">
             PROACTIVE TRIGGER
           </span>
-          <p className="text-xs font-bold text-slate-900 dark:text-white">{deviationReason}</p>
+          <p className="text-xs font-bold text-[#29252D] dark:text-[#FAF5EF]">{deviationReason}</p>
         </div>
 
         {/* 30s Countdown Display */}
         <div className="text-center py-1 mb-2">
           <div className="inline-flex items-center justify-center relative">
-            <div className="w-20 h-20 rounded-full flex flex-col items-center justify-center border-4 border-red-500/30 bg-slate-50 dark:bg-slate-800/60 shadow-inner">
-              <span className="text-2xl font-black text-red-600 tabular-nums tracking-tight">
+            <div className="w-20 h-20 rounded-full flex flex-col items-center justify-center border-4 border-[#BA223C]/30 bg-white dark:bg-[#3A1F33] shadow-inner">
+              <span className="text-2xl font-black text-[#BA223C] tabular-nums tracking-tight">
                 {deviationCountdown}
               </span>
-              <span className="text-[9px] uppercase font-black text-slate-600 dark:text-slate-400 tracking-wider">
+              <span className="text-[9px] uppercase font-extrabold text-[#62566F] dark:text-[#E9DFD2] tracking-wider">
                 seconds
               </span>
             </div>
           </div>
-          <div className="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full mt-2.5 overflow-hidden">
+          <div className="w-full bg-[#E9DFD2] dark:bg-[#45263F] h-2 rounded-full mt-2.5 overflow-hidden">
             <div
-              className="bg-red-600 h-full transition-all duration-1000 ease-linear rounded-full"
+              className="bg-[#BA223C] h-full transition-all duration-1000 ease-linear rounded-full"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
         </div>
 
-        {/* Action Selector: ACTION A vs ACTION B */}
+        {/* Action Selector: Action A vs Action B */}
         <div className="grid grid-cols-2 gap-2 mb-3">
           <button
             onClick={() => {
               setSelectedAction('SAFE');
               setEnteredPin('');
             }}
-            className={`p-2.5 rounded-xl text-xs font-black border transition cursor-pointer ${
+            className={`p-2.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
               selectedAction === 'SAFE'
-                ? 'bg-indigo-600 text-white border-indigo-700 shadow-xs'
-                : 'glass-panel text-slate-700 dark:text-slate-300 border-slate-200 dark:border-indigo-900/40'
+                ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white border-[#702E46] shadow-xs'
+                : 'clay-card text-[#29252D] dark:text-[#FAF5EF] border-[#E9DFD2]'
             }`}
           >
             Action A: I Am Safe
@@ -105,10 +105,10 @@ export const CountdownDialog: React.FC = () => {
               setSelectedAction('DEACTIVATE');
               setEnteredPin('');
             }}
-            className={`p-2.5 rounded-xl text-xs font-black border transition cursor-pointer ${
+            className={`p-2.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
               selectedAction === 'DEACTIVATE'
-                ? 'bg-indigo-600 text-white border-indigo-700 shadow-xs'
-                : 'glass-panel text-slate-700 dark:text-slate-300 border-slate-200 dark:border-indigo-900/40'
+                ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white border-[#702E46] shadow-xs'
+                : 'clay-card text-[#29252D] dark:text-[#FAF5EF] border-[#E9DFD2]'
             }`}
           >
             Action B: Deactivate Trip
@@ -117,7 +117,7 @@ export const CountdownDialog: React.FC = () => {
 
         {/* PIN Entry Prompt */}
         <div className="mb-3">
-          <div className="flex items-center justify-center gap-1.5 text-xs text-indigo-700 dark:text-indigo-400 font-black mb-1.5">
+          <div className="flex items-center justify-center gap-1.5 text-xs text-[#702E46] dark:text-[#E99583] font-bold mb-1.5">
             <Lock className="w-3.5 h-3.5" />
             <span>Enter PIN to Authorize {selectedAction === 'SAFE' ? '"I am safe"' : '"Deactivate"'}</span>
           </div>
@@ -129,7 +129,7 @@ export const CountdownDialog: React.FC = () => {
                 <div
                   key={idx}
                   className={`w-3.5 h-3.5 rounded-full transition-all ${
-                    filled ? 'bg-indigo-600 scale-110 shadow-sm' : 'bg-slate-300 dark:bg-slate-700'
+                    filled ? 'bg-[#C86650] scale-110 shadow-sm' : 'bg-[#E9DFD2] dark:bg-[#45263F]'
                   }`}
                 />
               );
@@ -137,7 +137,7 @@ export const CountdownDialog: React.FC = () => {
           </div>
 
           {errorMsg && (
-            <p className="text-xs text-center text-red-600 font-black mb-2">{errorMsg}</p>
+            <p className="text-xs text-center text-[#BA223C] font-extrabold mb-2">{errorMsg}</p>
           )}
 
           {/* Keypad */}
@@ -147,22 +147,10 @@ export const CountdownDialog: React.FC = () => {
                 key={n}
                 type="button"
                 onClick={() => handleDigit(n)}
-                className="pin-digit-btn h-12 rounded-2xl text-[18px] font-semibold text-[#1E2B5B] bg-[#F0F2FF] border border-[#D8DDF0] hover:bg-[#E2E7FC] active:scale-95 transition shadow-xs cursor-pointer select-none"
-                style={{
-                  backgroundColor: '#F0F2FF',
-                  borderColor: '#D8DDF0',
-                  color: '#1E2B5B',
-                  WebkitTextFillColor: '#1E2B5B',
-                  fontSize: '18px',
-                  fontWeight: 600,
-                  opacity: 1,
-                  visibility: 'visible',
-                }}
+                className="pin-digit-btn h-12 rounded-2xl text-[18px] font-bold text-[#29252D] dark:text-white flex items-center justify-center active:scale-95 transition shadow-xs cursor-pointer select-none"
                 aria-label={`Digit ${n}`}
               >
-                <span style={{ color: '#1E2B5B', WebkitTextFillColor: '#1E2B5B', fontWeight: 600, fontSize: '18px' }}>
-                  {n}
-                </span>
+                <span>{n}</span>
               </button>
             ))}
             <button
@@ -172,16 +160,7 @@ export const CountdownDialog: React.FC = () => {
                 setEnteredPin('');
                 setErrorMsg(null);
               }}
-              className="pin-control-btn h-12 rounded-2xl text-xs font-bold text-[#1E2B5B] bg-[#F4F6FF] border border-[#D8DDF0] hover:bg-[#E8ECFB] active:scale-95 cursor-pointer select-none"
-              style={{
-                backgroundColor: '#F4F6FF',
-                borderColor: '#D8DDF0',
-                color: '#1E2B5B',
-                WebkitTextFillColor: '#1E2B5B',
-                fontWeight: 700,
-                opacity: 1,
-                visibility: 'visible',
-              }}
+              className="pin-control-btn h-12 rounded-2xl text-xs font-bold flex items-center justify-center active:scale-95 cursor-pointer select-none"
               aria-label="Clear PIN"
             >
               Clear
@@ -189,22 +168,10 @@ export const CountdownDialog: React.FC = () => {
             <button
               type="button"
               onClick={() => handleDigit('0')}
-              className="pin-digit-btn h-12 rounded-2xl text-[18px] font-semibold text-[#1E2B5B] bg-[#F0F2FF] border border-[#D8DDF0] hover:bg-[#E2E7FC] active:scale-95 transition shadow-xs cursor-pointer select-none"
-              style={{
-                backgroundColor: '#F0F2FF',
-                borderColor: '#D8DDF0',
-                color: '#1E2B5B',
-                WebkitTextFillColor: '#1E2B5B',
-                fontSize: '18px',
-                fontWeight: 600,
-                opacity: 1,
-                visibility: 'visible',
-              }}
+              className="pin-digit-btn h-12 rounded-2xl text-[18px] font-bold text-[#29252D] dark:text-white flex items-center justify-center active:scale-95 transition shadow-xs cursor-pointer select-none"
               aria-label="Digit 0"
             >
-              <span style={{ color: '#1E2B5B', WebkitTextFillColor: '#1E2B5B', fontWeight: 600, fontSize: '18px' }}>
-                0
-              </span>
+              <span>0</span>
             </button>
             <button
               type="button"
@@ -213,28 +180,19 @@ export const CountdownDialog: React.FC = () => {
                 setEnteredPin((prev) => prev.slice(0, -1));
                 setErrorMsg(null);
               }}
-              className="pin-control-btn h-12 rounded-2xl text-xs font-bold text-[#1E2B5B] bg-[#F4F6FF] border border-[#D8DDF0] hover:bg-[#E8ECFB] active:scale-95 cursor-pointer select-none flex items-center justify-center"
-              style={{
-                backgroundColor: '#F4F6FF',
-                borderColor: '#D8DDF0',
-                color: '#1E2B5B',
-                WebkitTextFillColor: '#1E2B5B',
-                fontWeight: 700,
-                opacity: 1,
-                visibility: 'visible',
-              }}
+              className="pin-control-btn h-12 rounded-2xl text-xs font-bold flex items-center justify-center active:scale-95 cursor-pointer select-none"
               aria-label="Backspace delete last digit"
             >
-              <Delete className="w-5 h-5 stroke-[2.4]" style={{ color: '#1E2B5B' }} />
+              <Delete className="w-5 h-5 stroke-[2.4]" />
             </button>
           </div>
         </div>
 
         {/* Bottom Immediate Escalation */}
-        <div className="pt-2 border-t border-slate-200 dark:border-indigo-900/40">
+        <div className="pt-2 border-t border-[#E9DFD2] dark:border-[#E9DFD2]/25">
           <button
             onClick={handleManualSos}
-            className="w-full h-11 rounded-full glass-panel-emergency text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg active:scale-98 transition cursor-pointer"
+            className="clay-btn-emergency w-full h-11 flex items-center justify-center gap-2 text-xs font-black"
           >
             <Siren className="w-4 h-4" />
             <span>In Immediate Danger? Escalate SOS</span>

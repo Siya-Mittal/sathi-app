@@ -199,9 +199,9 @@ export const SafetyProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [theme, setThemeState] = useState<'light' | 'dark'>(() => {
     try {
       const saved = localStorage.getItem('safejourney_theme');
-      return (saved === 'dark' || saved === 'light') ? saved : 'light';
+      return (saved === 'light') ? 'light' : 'dark';
     } catch {
-      return 'light';
+      return 'dark';
     }
   });
   const [deviceView, setDeviceViewState] = useState<'web' | 'mobile'>('web');
@@ -212,6 +212,16 @@ export const SafetyProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       localStorage.setItem('safejourney_theme', t);
     } catch {}
   };
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+  }, [theme]);
 
   const setDeviceView = (d: 'web' | 'mobile') => {
     setDeviceViewState(d);

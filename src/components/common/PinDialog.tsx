@@ -51,26 +51,26 @@ export const PinDialog: React.FC<PinDialogProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-fadeIn">
-      <div className="glass-panel-elevated w-full max-w-sm rounded-[32px] p-6 lg:p-7 shadow-2xl border border-slate-200 dark:border-indigo-900/60">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/80 backdrop-blur-xl animate-fadeIn">
+      <div className="clay-card-elevated w-full max-w-sm rounded-[32px] p-6 lg:p-7 shadow-2xl border-2 border-[#E9DFD2] dark:border-[#E9DFD2]/25">
         {/* Header */}
         <div className="flex items-center justify-between pb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-indigo-600/15 text-indigo-700 dark:text-indigo-400 flex items-center justify-center border border-indigo-500/20">
-              <Lock className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-2xl bg-[#702E46]/15 text-[#702E46] dark:text-[#E99583] flex items-center justify-center border border-[#702E46]/20">
+              <Lock className="w-4 h-4 stroke-[2.4]" />
             </div>
-            <h3 className="text-base font-black text-slate-900 dark:text-white">{title}</h3>
+            <h3 className="text-base font-extrabold text-[#45263F] dark:text-[#FAF5EF]">{title}</h3>
           </div>
           <button
             onClick={onCancel}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition cursor-pointer"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-[#62566F] dark:text-[#FAF5EF] hover:bg-[#FAF5EF] dark:hover:bg-[#45263F] active:scale-95 transition cursor-pointer"
             aria-label="Close"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-5 leading-relaxed">{subtitle}</p>
+        <p className="text-xs font-semibold text-[#62566F] dark:text-[#E9DFD2] mb-5 leading-relaxed">{subtitle}</p>
 
         {/* PIN Indicators */}
         <div className="flex justify-center gap-4 mb-6">
@@ -81,8 +81,8 @@ export const PinDialog: React.FC<PinDialogProps> = ({
                 key={idx}
                 className={`w-4 h-4 rounded-full transition-all duration-200 ${
                   isFilled
-                    ? 'bg-indigo-600 scale-110 shadow-sm'
-                    : 'bg-slate-300 dark:bg-slate-700'
+                    ? 'bg-[#C86650] scale-110 shadow-sm ring-2 ring-[#C86650]/40'
+                    : 'bg-[#E9DFD2] dark:bg-[#45263F]'
                 }`}
               />
             );
@@ -90,7 +90,7 @@ export const PinDialog: React.FC<PinDialogProps> = ({
         </div>
 
         {errorMsg && (
-          <div className="mb-4 text-center text-xs font-black text-red-600 bg-red-100 dark:bg-red-950/60 py-2 px-3 rounded-xl border border-red-200 dark:border-red-900 animate-shake">
+          <div className="mb-4 text-center text-xs font-black text-[#BA223C] bg-red-50 dark:bg-red-950/60 py-2 px-3 rounded-xl border border-red-200 dark:border-red-900 animate-shake">
             {errorMsg}
           </div>
         )}
@@ -102,37 +102,16 @@ export const PinDialog: React.FC<PinDialogProps> = ({
               key={digit}
               type="button"
               onClick={() => handleDigit(digit)}
-              className="pin-digit-btn h-13 rounded-2xl text-[18px] font-semibold text-[#1E2B5B] bg-[#F0F2FF] border border-[#D8DDF0] flex items-center justify-center hover:bg-[#E2E7FC] active:scale-95 transition shadow-xs cursor-pointer select-none"
-              style={{
-                backgroundColor: '#F0F2FF',
-                borderColor: '#D8DDF0',
-                color: '#1E2B5B',
-                WebkitTextFillColor: '#1E2B5B',
-                fontSize: '18px',
-                fontWeight: 600,
-                opacity: 1,
-                visibility: 'visible',
-              }}
+              className="pin-digit-btn h-13 rounded-2xl text-[18px] font-bold text-[#29252D] dark:text-white flex items-center justify-center active:scale-95 transition shadow-xs cursor-pointer select-none"
               aria-label={`Digit ${digit}`}
             >
-              <span style={{ color: '#1E2B5B', WebkitTextFillColor: '#1E2B5B', fontWeight: 600, fontSize: '18px' }}>
-                {digit}
-              </span>
+              <span>{digit}</span>
             </button>
           ))}
           <button
             type="button"
             onClick={handleClear}
-            className="pin-control-btn h-13 rounded-2xl text-xs font-bold text-[#1E2B5B] bg-[#F4F6FF] border border-[#D8DDF0] flex items-center justify-center hover:bg-[#E8ECFB] active:scale-95 transition cursor-pointer select-none"
-            style={{
-              backgroundColor: '#F4F6FF',
-              borderColor: '#D8DDF0',
-              color: '#1E2B5B',
-              WebkitTextFillColor: '#1E2B5B',
-              fontWeight: 700,
-              opacity: 1,
-              visibility: 'visible',
-            }}
+            className="pin-control-btn h-13 rounded-2xl text-xs font-extrabold flex items-center justify-center active:scale-95 transition cursor-pointer select-none"
             aria-label="Clear PIN"
           >
             Clear
@@ -140,45 +119,24 @@ export const PinDialog: React.FC<PinDialogProps> = ({
           <button
             type="button"
             onClick={() => handleDigit('0')}
-            className="pin-digit-btn h-13 rounded-2xl text-[18px] font-semibold text-[#1E2B5B] bg-[#F0F2FF] border border-[#D8DDF0] flex items-center justify-center hover:bg-[#E2E7FC] active:scale-95 transition shadow-xs cursor-pointer select-none"
-            style={{
-              backgroundColor: '#F0F2FF',
-              borderColor: '#D8DDF0',
-              color: '#1E2B5B',
-              WebkitTextFillColor: '#1E2B5B',
-              fontSize: '18px',
-              fontWeight: 600,
-              opacity: 1,
-              visibility: 'visible',
-            }}
+            className="pin-digit-btn h-13 rounded-2xl text-[18px] font-bold text-[#29252D] dark:text-white flex items-center justify-center active:scale-95 transition shadow-xs cursor-pointer select-none"
             aria-label="Digit 0"
           >
-            <span style={{ color: '#1E2B5B', WebkitTextFillColor: '#1E2B5B', fontWeight: 600, fontSize: '18px' }}>
-              0
-            </span>
+            <span>0</span>
           </button>
           <button
             type="button"
             onClick={handleDelete}
-            className="pin-control-btn h-13 rounded-2xl text-xs font-bold text-[#1E2B5B] bg-[#F4F6FF] border border-[#D8DDF0] flex items-center justify-center hover:bg-[#E8ECFB] active:scale-95 transition cursor-pointer select-none"
-            style={{
-              backgroundColor: '#F4F6FF',
-              borderColor: '#D8DDF0',
-              color: '#1E2B5B',
-              WebkitTextFillColor: '#1E2B5B',
-              fontWeight: 700,
-              opacity: 1,
-              visibility: 'visible',
-            }}
+            className="pin-control-btn h-13 rounded-2xl text-xs font-bold flex items-center justify-center active:scale-95 transition cursor-pointer select-none"
             aria-label="Backspace delete last digit"
           >
-            <Delete className="w-5 h-5 stroke-[2.4]" style={{ color: '#1E2B5B' }} />
+            <Delete className="w-5 h-5 stroke-[2.4]" />
           </button>
         </div>
 
         <div className="text-center pt-2">
-          <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">
-            Default verification PIN is <strong className="text-indigo-700 dark:text-indigo-400 font-black">1234</strong>
+          <span className="text-[11px] font-semibold text-[#62566F] dark:text-[#E9DFD2]">
+            Default verification PIN is <strong className="text-[#702E46] dark:text-[#E99583] font-black">1234</strong>
           </span>
         </div>
       </div>

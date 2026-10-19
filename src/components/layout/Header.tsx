@@ -9,16 +9,12 @@ import {
   Users,
   Wrench,
   FileText,
-  User,
+  Clock,
   Monitor,
   Smartphone,
   Sun,
   Moon,
-  Sparkles,
-  Radio,
-  Clock,
   LogIn,
-  LogOut,
 } from 'lucide-react';
 import { useSafety } from '../../context/SafetyContext';
 import { soundManager } from '../../utils/audio';
@@ -26,7 +22,6 @@ import { soundManager } from '../../utils/audio';
 export const Header: React.FC = () => {
   const {
     user,
-    currentLocation,
     activeJourney,
     triggerSos,
     isSirenPlaying,
@@ -42,7 +37,7 @@ export const Header: React.FC = () => {
 
   const handleQuickSos = () => {
     soundManager.triggerHaptic([50, 100, 50]);
-    triggerSos('Top Header Emergency Tap');
+    triggerSos('Top Header Emergency SOS');
   };
 
   const navLinks = [
@@ -58,38 +53,38 @@ export const Header: React.FC = () => {
   const isDark = theme === 'dark';
 
   return (
-    <header className="sticky top-0 z-40 bg-[#FAF7F2]/90 dark:bg-[#1A1024]/90 backdrop-blur-2xl border-b border-[#E8DFF5]/80 dark:border-purple-950/60 shadow-xs transition-colors select-none">
+    <header className="sticky top-0 z-40 bg-[#FAF5EF]/95 dark:bg-[#1A0C18]/95 backdrop-blur-2xl border-b border-[#E9DFD2] dark:border-[#E99583]/20 shadow-xs transition-colors select-none">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between gap-3">
           
-          {/* Brand Logo & Protective Status */}
-          <div className="flex items-center gap-2.5 shrink-0">
+          {/* Zone 1: Brand Wordmark */}
+          <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => setActiveTab('dashboard')}
-              className="flex items-center gap-3 text-left group cursor-pointer"
+              className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
               title="SafeSaathi — Return to Command Hub"
             >
-              <div className="w-10 h-10 rounded-2xl overflow-hidden p-0.5 bg-gradient-to-br from-rose-200 via-purple-200 to-indigo-200 shadow-sm border border-purple-200/60 group-hover:scale-105 transition-transform flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl overflow-hidden p-0.5 bg-gradient-to-br from-[#E99583] via-[#C86650] to-[#702E46] shadow-md border border-white/60 group-hover:scale-105 transition-transform flex items-center justify-center">
                 <img
                   src="/src/assets/images/safesaathi_app_icon_1792355765489.jpg"
-                  alt="SafeSaathi Icon"
+                  alt="SafeSaathi Logo"
                   className="w-full h-full object-cover rounded-[14px]"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <div>
-                <span className="text-base sm:text-lg font-extrabold tracking-tight text-[#2A1637] dark:text-[#FAF4FE] block">
+                <span className="text-base sm:text-lg font-extrabold tracking-tight text-[#45263F] dark:text-[#FAF5EF] block leading-tight">
                   SafeSaathi
                 </span>
-                <span className="text-[11px] font-medium text-[#7A6588] dark:text-purple-300 block">
-                  Autonomous Journey Escort
+                <span className="text-[11px] font-semibold text-[#62566F] dark:text-[#E99583] block leading-none mt-0.5">
+                  Proactive Journey Guard
                 </span>
               </div>
             </button>
           </div>
 
-          {/* Desktop Web Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 p-1 rounded-2xl bg-white/70 dark:bg-purple-950/40 border border-[#E8DFF5]/70 shadow-xs">
+          {/* Zone 2: Navigation Links (Single-Line, High-Contrast) */}
+          <nav className="hidden lg:flex items-center gap-1 p-1 rounded-2xl bg-white/80 dark:bg-[#2C1529]/80 border border-[#E9DFD2] dark:border-[#E99583]/25 shadow-xs">
             {navLinks.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -102,38 +97,38 @@ export const Header: React.FC = () => {
                     soundManager.triggerHaptic(15);
                     setActiveTab(item.id as typeof activeTab);
                   }}
-                  className={`relative px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                  className={`relative px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white shadow-sm'
-                      : 'text-[#493356] dark:text-purple-200 hover:text-[#6C3A82] dark:hover:text-white hover:bg-purple-50/70 dark:hover:bg-purple-900/40'
+                      ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white shadow-sm'
+                      : 'text-[#29252D] dark:text-[#FAF5EF] hover:text-[#702E46] dark:hover:text-[#E99583] hover:bg-[#FAF5EF] dark:hover:bg-[#45263F]'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#7A6588] dark:text-purple-300'}`} />
-                  <span className="whitespace-nowrap tracking-wide">{item.label}</span>
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#62566F] dark:text-[#E99583]'}`} />
+                  <span className="tracking-wide">{item.label}</span>
                   {hasJourneyIndicator && (
-                    <span className="w-2 h-2 rounded-full bg-amber-400" />
+                    <span className="w-2 h-2 rounded-full bg-[#C86650] ring-2 ring-white" />
                   )}
                 </button>
               );
             })}
           </nav>
 
-          {/* Right Action Bar */}
+          {/* Zone 3: Right Controls & Primary Action */}
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
             
             {/* Dual Web / Mobile View Toggle */}
-            <div className="hidden sm:flex items-center p-1 rounded-2xl glass-panel shadow-xs border border-[#E8DFF5]/80">
+            <div className="hidden sm:flex items-center p-1 rounded-2xl clay-card border border-[#E9DFD2] dark:border-[#E9DFD2]/20 shadow-xs">
               <button
                 onClick={() => {
                   soundManager.triggerHaptic(15);
                   setDeviceView('web');
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                   deviceView === 'web'
-                    ? 'bg-[#6C3A82] text-white shadow-xs'
-                    : 'text-[#5E486D] dark:text-purple-300 hover:text-[#6C3A82]'
+                    ? 'bg-[#702E46] text-white shadow-xs'
+                    : 'text-[#62566F] dark:text-[#FAF5EF] hover:text-[#702E46]'
                 }`}
-                title="Full Web App Mode"
+                title="Full Web Application"
               >
                 <Monitor className="w-3.5 h-3.5" />
                 <span>Web</span>
@@ -143,12 +138,12 @@ export const Header: React.FC = () => {
                   soundManager.triggerHaptic(15);
                   setDeviceView('mobile');
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                   deviceView === 'mobile'
-                    ? 'bg-[#6C3A82] text-white shadow-xs'
-                    : 'text-[#5E486D] dark:text-purple-300 hover:text-[#6C3A82]'
+                    ? 'bg-[#702E46] text-white shadow-xs'
+                    : 'text-[#62566F] dark:text-[#FAF5EF] hover:text-[#702E46]'
                 }`}
-                title="Interactive Mobile App Simulation"
+                title="Mobile Phone Simulation"
               >
                 <Smartphone className="w-3.5 h-3.5" />
                 <span>App</span>
@@ -161,20 +156,20 @@ export const Header: React.FC = () => {
                 soundManager.triggerHaptic(20);
                 setTheme(isDark ? 'light' : 'dark');
               }}
-              className="w-9 h-9 rounded-2xl glass-panel flex items-center justify-center text-[#493356] dark:text-purple-200 shadow-xs hover:scale-105 transition cursor-pointer border border-[#E8DFF5]/80"
-              title={isDark ? 'Switch to Warm Ivory Light Mode' : 'Switch to Evening Mode'}
+              className="w-10 h-10 rounded-2xl clay-card flex items-center justify-center text-[#29252D] dark:text-[#FAF5EF] shadow-xs hover:scale-105 transition cursor-pointer border border-[#E9DFD2] dark:border-[#E9DFD2]/20"
+              title={isDark ? 'Switch to Warm Porcelain Light Mode' : 'Switch to Rich Plum Evening Mode'}
               aria-label="Toggle Theme"
             >
-              {isDark ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-[#6C3A82]" />}
+              {isDark ? <Sun className="w-4 h-4 text-[#C5A36A]" /> : <Moon className="w-4 h-4 text-[#702E46]" />}
             </button>
 
             {/* Siren Alarm Trigger */}
             <button
               onClick={toggleSiren}
-              className={`w-9 h-9 rounded-2xl flex items-center justify-center transition-all cursor-pointer border ${
+              className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all cursor-pointer border ${
                 isSirenPlaying
-                  ? 'bg-rose-500 text-white animate-bounce shadow-md border-rose-400'
-                  : 'glass-panel text-[#5E486D] dark:text-purple-200 hover:text-[#6C3A82] border-[#E8DFF5]/80'
+                  ? 'bg-[#BA223C] text-white animate-bounce shadow-md border-rose-300'
+                  : 'clay-card text-[#62566F] dark:text-[#FAF5EF] hover:text-[#702E46] border-[#E9DFD2] dark:border-[#E9DFD2]/20'
               }`}
               title={isSirenPlaying ? 'Mute Siren Alarm' : 'Sound Deterrent Siren'}
               aria-label="Toggle Siren"
@@ -182,10 +177,10 @@ export const Header: React.FC = () => {
               {isSirenPlaying ? <Siren className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4" />}
             </button>
 
-            {/* Emergency SOS Button (Coral-Crimson Genuine Action) */}
+            {/* Emergency SOS Button (Crimson Genuine Action) */}
             <button
               onClick={handleQuickSos}
-              className="h-9 px-4 rounded-2xl bg-gradient-to-r from-[#DF4B5E] to-[#C82B3E] hover:from-[#E65669] hover:to-[#D23347] text-white text-xs font-black tracking-wider flex items-center gap-1.5 shadow-md shadow-rose-600/20 active:scale-95 transition-transform cursor-pointer border border-white/30"
+              className="clay-btn-emergency h-10 px-4 flex items-center gap-1.5 text-xs font-black tracking-wider whitespace-nowrap"
               aria-label="Emergency SOS"
             >
               <ShieldAlert className="w-4 h-4 stroke-[2.5]" />
@@ -196,10 +191,10 @@ export const Header: React.FC = () => {
             {user.isLoggedIn ? (
               <button
                 onClick={() => setActiveTab('profile')}
-                className="flex items-center gap-2 p-1 rounded-2xl glass-panel hover:bg-purple-50/60 dark:hover:bg-purple-900/40 transition shadow-xs group cursor-pointer border border-[#E8DFF5]/80"
-                title="View Profile & Cloud Settings"
+                className="flex items-center gap-2 p-1 rounded-2xl clay-card hover:border-[#C86650] transition shadow-xs group cursor-pointer border border-[#E9DFD2] dark:border-[#E9DFD2]/20"
+                title="View Profile & Settings"
               >
-                <div className="w-8 h-8 rounded-xl overflow-hidden bg-gradient-to-br from-[#6C3A82] to-[#472656] text-white flex items-center justify-center font-bold text-xs shadow-xs border border-purple-300/40">
+                <div className="w-8 h-8 rounded-xl overflow-hidden bg-gradient-to-br from-[#702E46] to-[#45263F] text-white flex items-center justify-center font-bold text-xs shadow-xs border border-white/30">
                   {user.avatarUrl ? (
                     <img
                       src={user.avatarUrl}
@@ -211,7 +206,7 @@ export const Header: React.FC = () => {
                     user.name.charAt(0) || 'U'
                   )}
                 </div>
-                <span className="hidden xl:inline text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] pr-2">
+                <span className="hidden xl:inline text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] pr-2">
                   {user.name.split(' ')[0]}
                 </span>
               </button>
@@ -221,7 +216,7 @@ export const Header: React.FC = () => {
                   soundManager.triggerHaptic(20);
                   setShowAuthModal(true);
                 }}
-                className="h-9 px-3.5 rounded-2xl bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold flex items-center gap-1.5 shadow-sm hover:opacity-95 active:scale-95 transition cursor-pointer"
+                className="clay-btn-berry h-10 px-3.5 flex items-center gap-1.5 text-xs font-bold whitespace-nowrap"
                 title="Sign In to Sync Journeys & Evidence"
               >
                 <LogIn className="w-3.5 h-3.5" />

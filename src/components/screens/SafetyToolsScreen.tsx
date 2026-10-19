@@ -21,6 +21,7 @@ import {
   Camera,
   FileCheck,
   RefreshCw,
+  PhoneOff,
 } from 'lucide-react';
 import { useSafety } from '../../context/SafetyContext';
 import { soundManager } from '../../utils/audio';
@@ -138,23 +139,24 @@ export const SafetyToolsScreen: React.FC = () => {
   const handleOpenVideoTool = () => {
     setActiveToolModal('camerarecord');
     setCameraViewActive(true);
-    setCameraError(null);
-    setLastSavedVideoId(null);
-    setRecordingSeconds(0);
   };
 
   const handleStartManualVideo = async () => {
     setCameraError(null);
     setRecordingSeconds(0);
+    showToast('Requesting camera & microphone...');
+
     const res = await startCameraRecording(cameraVideoRef.current);
-    if (res.success) {
-      if (recordingTimerRef.current) clearInterval(recordingTimerRef.current);
-      recordingTimerRef.current = window.setInterval(() => {
-        setRecordingSeconds((prev) => prev + 1);
-      }, 1000);
-    } else {
-      setCameraError(res.error || 'Camera could not be engaged');
+    if (!res.success) {
+      setCameraError(res.error || 'Camera permission denied or camera device in use');
+      return;
     }
+
+    if (recordingTimerRef.current) clearInterval(recordingTimerRef.current);
+    recordingTimerRef.current = window.setInterval(() => {
+      setRecordingSeconds((prev) => prev + 1);
+    }, 1000);
+    showToast('Camera Video Recording started');
   };
 
   const handleStopManualVideo = async () => {
@@ -162,12 +164,10 @@ export const SafetyToolsScreen: React.FC = () => {
       clearInterval(recordingTimerRef.current);
       recordingTimerRef.current = null;
     }
-    const savedRecord = await stopCameraRecording();
-    if (savedRecord) {
-      setLastSavedVideoId(savedRecord.id);
-      showToast('Video saved to Vault & cryptographically hashed.');
-    } else {
-      showToast('Recording ended (no non-zero file generated)');
+    const saved = await stopCameraRecording();
+    if (saved) {
+      setLastSavedVideoId(saved.id);
+      showToast('Video evidence saved and cryptographically sealed.');
     }
   };
 
@@ -177,26 +177,29 @@ export const SafetyToolsScreen: React.FC = () => {
     }
     setActiveToolModal(null);
     setCameraViewActive(false);
+    setCameraError(null);
   };
 
-  const handleReportSubmit = (e: React.FormEvent) => {
+  // Incident report submission
+  const handleSubmitReport = (e: React.FormEvent) => {
     e.preventDefault();
     if (!reportDescription.trim()) return;
 
     addEvidenceRecord({
       type: 'incident_report',
       coords: currentLocation,
-      address: `Incident Report: ${reportCategory}`,
+      address: `Incident: ${reportCategory}`,
       notes: reportDescription,
       syncedToCloud: true,
     });
 
     setReportSubmitted(true);
+    soundManager.triggerHaptic(20);
     setTimeout(() => {
       setReportSubmitted(false);
       setReportDescription('');
       setActiveToolModal(null);
-      showToast('Anonymous incident report logged to safety network');
+      showToast('Hazard report recorded and saved to Vault');
     }, 1800);
   };
 
@@ -213,16 +216,16 @@ export const SafetyToolsScreen: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setActiveTab('dashboard')}
-            className="h-10 px-4 rounded-2xl glass-panel flex items-center gap-1.5 text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] hover:bg-purple-50/70 active:scale-95 transition shadow-xs border border-[#E8DEF3] cursor-pointer"
+            className="h-10 px-4 rounded-2xl editorial-card flex items-center gap-1.5 text-xs font-extrabold text-[#29252D] dark:text-[#FAF5EF] hover:bg-[#E9DFD2]/40 active:scale-95 transition shadow-xs border border-[#E9DFD2] dark:border-[#45263F] cursor-pointer"
           >
-            <ChevronLeft className="w-4 h-4 text-[#6C3A82]" />
+            <ChevronLeft className="w-4 h-4 text-[#702E46] dark:text-[#E99583]" />
             <span>Command Hub</span>
           </button>
           <div>
-            <h1 className="text-base lg:text-xl font-extrabold text-[#2A1637] dark:text-[#FAF4FE] tracking-tight">
+            <h1 className="text-base lg:text-xl font-extrabold text-[#29252D] dark:text-[#FAF5EF] tracking-tight">
               Safety Tools &amp; Tactical Alibis
             </h1>
-            <span className="text-xs font-medium text-[#7A6588] dark:text-purple-300 hidden sm:inline">
+            <span className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 hidden sm:inline">
               Tactical alibis, camera video evidence recording, and vocal distress recognition
             </span>
           </div>
@@ -231,27 +234,27 @@ export const SafetyToolsScreen: React.FC = () => {
 
       {/* Active Safe-Walk Banner */}
       {safeWalkRemainingSeconds !== null && (
-        <div className="rounded-[32px] p-6 shadow-md bg-gradient-to-br from-[#FFF5F8] via-[#FAF2FD] to-[#F0F4FE] border border-purple-200/80 animate-fadeIn flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="rounded-[32px] p-6 shadow-md bg-gradient-to-br from-[#FAF5EF] via-[#FFFDF9] to-[#E9DFD2] dark:from-[#341B2F] dark:to-[#45263F] border border-[#C86650]/50 animate-fadeIn flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-              <span className="text-xs font-extrabold uppercase tracking-widest text-[#6C3A82]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#7E927B] animate-ping" />
+              <span className="text-xs font-extrabold uppercase tracking-widest text-[#702E46] dark:text-[#E99583]">
                 Safe-Walk Timer Active
               </span>
             </div>
-            <h2 className="text-2xl font-extrabold text-[#2A1637] tabular-nums">
+            <h2 className="text-2xl font-black text-[#29252D] dark:text-[#FAF5EF] tabular-nums">
               {formatTimer(safeWalkRemainingSeconds)} Left
             </h2>
-            <p className="text-xs font-medium text-[#493356] mt-1">
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-1">
               Check in upon safe arrival. If unstopped, emergency SOS initiates automatically.
             </p>
           </div>
 
           <button
             onClick={cancelSafeWalk}
-            className="h-12 px-6 rounded-full bg-[#2A1637] hover:bg-[#3D254C] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md transition shrink-0 cursor-pointer border border-white/20"
+            className="h-12 px-6 rounded-full bg-gradient-to-r from-[#702E46] to-[#45263F] hover:opacity-95 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md transition shrink-0 cursor-pointer border border-white/20 active:scale-95"
           >
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4 text-[#7E927B]" />
             <span>I Arrived Safely (Stop Timer)</span>
           </button>
         </div>
@@ -263,25 +266,25 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 1: Camera Video Evidence Recorder */}
         <div
           onClick={handleOpenVideoTool}
-          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
+          className="editorial-card rounded-[32px] p-6 border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]/80 hover:bg-[#FFFDF9] dark:hover:bg-[#341B2F] active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6C3A82] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-purple-200/60">
+            <div className="w-12 h-12 rounded-2xl bg-[#702E46]/10 text-[#702E46] dark:text-[#E99583] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-[#702E46]/20">
               <Video className="w-6 h-6 stroke-[2.2]" />
             </div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">Camera Video Recorder</h3>
+              <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Camera Video Recorder</h3>
               {isCameraRecording && (
-                <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#DF4B5E] text-white animate-pulse">
+                <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#C86650] text-white animate-pulse">
                   REC
                 </span>
               )}
             </div>
-            <p className="text-xs font-medium text-[#7A6588] mt-1.5 leading-relaxed">
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-1.5 leading-relaxed">
               Capture video and audio evidence. Automatically validated for non-zero size, sealed with SHA-256, and stored securely in local IndexedDB and cloud storage.
             </p>
           </div>
-          <span className="text-xs font-bold text-[#6C3A82] mt-4 pt-3 border-t border-[#F0E8F8] flex items-center justify-between">
+          <span className="text-xs font-extrabold text-[#702E46] dark:text-[#E99583] mt-4 pt-3 border-t border-[#E9DFD2] dark:border-[#45263F] flex items-center justify-between">
             <span>{isCameraRecording ? 'Active Recording' : 'Open Camera Recorder'}</span>
             <span>&rarr;</span>
           </span>
@@ -290,18 +293,18 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 2: Safe-Walk Timer */}
         <div
           onClick={() => setActiveToolModal('safewalk')}
-          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
+          className="editorial-card rounded-[32px] p-6 border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]/80 hover:bg-[#FFFDF9] dark:hover:bg-[#341B2F] active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6C3A82] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-purple-200/60">
+            <div className="w-12 h-12 rounded-2xl bg-[#C86650]/15 text-[#C86650] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-[#C86650]/30">
               <Timer className="w-6 h-6 stroke-[2.2]" />
             </div>
-            <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">Safe-Walk Timer</h3>
-            <p className="text-xs font-medium text-[#7A6588] mt-1.5 leading-relaxed">
+            <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Safe-Walk Timer</h3>
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-1.5 leading-relaxed">
               Configurable countdown for solo transit. Automatically triggers emergency SOS if check-in fails.
             </p>
           </div>
-          <span className="text-xs font-bold text-[#6C3A82] mt-4 pt-3 border-t border-[#F0E8F8] flex items-center justify-between">
+          <span className="text-xs font-extrabold text-[#C86650] mt-4 pt-3 border-t border-[#E9DFD2] dark:border-[#45263F] flex items-center justify-between">
             <span>Configure Timer</span>
             <span>&rarr;</span>
           </span>
@@ -310,18 +313,18 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 3: Fake Call Simulator */}
         <div
           onClick={() => setActiveToolModal('fakecall')}
-          className="glass-panel rounded-[32px] p-6 border border-slate-200 dark:border-indigo-900/50 hover:bg-white dark:hover:bg-slate-800/80 active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
+          className="editorial-card rounded-[32px] p-6 border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]/80 hover:bg-[#FFFDF9] dark:hover:bg-[#341B2F] active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-700 dark:text-amber-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-amber-500/20">
+            <div className="w-12 h-12 rounded-2xl bg-[#C5A36A]/20 text-[#C5A36A] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-[#C5A36A]/40">
               <PhoneCall className="w-6 h-6 stroke-[2.4]" />
             </div>
-            <h3 className="text-base font-black text-slate-900 dark:text-white">Fake Phone Call</h3>
-            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-1.5 leading-relaxed">
+            <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Fake Phone Call</h3>
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-1.5 leading-relaxed">
               Realistic incoming call with dual ringtone and escape dialogue cues to deter suspicious followers.
             </p>
           </div>
-          <span className="text-xs font-black text-amber-700 dark:text-amber-400 mt-4 pt-3 border-t border-slate-200 dark:border-indigo-900/40 flex items-center justify-between">
+          <span className="text-xs font-extrabold text-[#702E46] dark:text-[#C5A36A] mt-4 pt-3 border-t border-[#E9DFD2] dark:border-[#45263F] flex items-center justify-between">
             <span>Launch Alibi Call</span>
             <span>&rarr;</span>
           </span>
@@ -330,25 +333,25 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 4: Voice Keyword Trigger */}
         <div
           onClick={() => setActiveToolModal('voicetrigger')}
-          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
+          className="editorial-card rounded-[32px] p-6 border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]/80 hover:bg-[#FFFDF9] dark:hover:bg-[#341B2F] active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6C3A82] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-purple-200/60">
-              <Mic className={`w-6 h-6 stroke-[2.2] ${isVoiceMonitoringActive ? 'text-[#DF4B5E] animate-pulse' : ''}`} />
+            <div className="w-12 h-12 rounded-2xl bg-[#702E46]/10 text-[#702E46] dark:text-[#E99583] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-[#702E46]/20">
+              <Mic className={`w-6 h-6 stroke-[2.2] ${isVoiceMonitoringActive ? 'text-[#C86650] animate-pulse' : ''}`} />
             </div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">Voice Trigger Sentry</h3>
+              <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Voice Trigger Sentry</h3>
               {isVoiceMonitoringActive && (
-                <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#6C3A82] text-white animate-pulse">
-                  Active
+                <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#7E927B] text-white animate-pulse">
+                  Listening
                 </span>
               )}
             </div>
-            <p className="text-xs font-medium text-[#7A6588] mt-1.5 leading-relaxed">
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-1.5 leading-relaxed">
               Hands-free microphone detection listening for <strong>"{settings.voicePhrase || 'SafeJourney, Help'}"</strong> even when shouted or distorted.
             </p>
           </div>
-          <span className="text-xs font-bold text-[#6C3A82] mt-4 pt-3 border-t border-[#F0E8F8] flex items-center justify-between">
+          <span className="text-xs font-extrabold text-[#702E46] dark:text-[#E99583] mt-4 pt-3 border-t border-[#E9DFD2] dark:border-[#45263F] flex items-center justify-between">
             <span>{isVoiceMonitoringActive ? 'Active (Tap to Stop)' : 'Start Sentry'}</span>
             <span>&rarr;</span>
           </span>
@@ -357,18 +360,18 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 5: Anonymous Incident Reporter */}
         <div
           onClick={() => setActiveToolModal('report')}
-          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
+          className="editorial-card rounded-[32px] p-6 border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]/80 hover:bg-[#FFFDF9] dark:hover:bg-[#341B2F] active:scale-98 transition cursor-pointer shadow-xs group flex flex-col justify-between"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-amber-200">
+            <div className="w-12 h-12 rounded-2xl bg-[#C86650]/15 text-[#C86650] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-[#C86650]/30">
               <AlertTriangle className="w-6 h-6 stroke-[2.2]" />
             </div>
-            <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">Hazard Reporter</h3>
-            <p className="text-xs font-medium text-[#7A6588] mt-1.5 leading-relaxed">
+            <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Hazard Reporter</h3>
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-1.5 leading-relaxed">
               Flag harassment hotspots, dark alleys, and broken streetlights with coordinates.
             </p>
           </div>
-          <span className="text-xs font-bold text-amber-800 mt-4 pt-3 border-t border-[#F0E8F8] flex items-center justify-between">
+          <span className="text-xs font-extrabold text-[#C86650] mt-4 pt-3 border-t border-[#E9DFD2] dark:border-[#45263F] flex items-center justify-between">
             <span>File Report</span>
             <span>&rarr;</span>
           </span>
@@ -377,22 +380,22 @@ export const SafetyToolsScreen: React.FC = () => {
         {/* Tool 6: Legal Rights Handbook */}
         <div
           onClick={() => setActiveToolModal('legalguide')}
-          className="glass-panel rounded-[32px] p-6 border border-[#E8DEF3] hover:bg-white active:scale-98 transition cursor-pointer shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+          className="editorial-card rounded-[32px] p-6 border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]/80 hover:bg-[#FFFDF9] dark:hover:bg-[#341B2F] active:scale-98 transition cursor-pointer shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6C3A82] flex items-center justify-center shrink-0 border border-purple-200/60">
+            <div className="w-12 h-12 rounded-2xl bg-[#702E46]/10 text-[#702E46] dark:text-[#E99583] flex items-center justify-center shrink-0 border border-[#702E46]/20">
               <BookOpen className="w-6 h-6 stroke-[2.2]" />
             </div>
             <div>
-              <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">
+              <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">
                 Legal Rights &amp; Self-Defense
               </h3>
-              <p className="text-xs font-medium text-[#7A6588] mt-1 leading-relaxed max-w-lg">
+              <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-1 leading-relaxed max-w-lg">
                 Understand Zero FIR provisions, confidential statements, and electronic evidence admissibility.
               </p>
             </div>
           </div>
-          <span className="text-xs font-bold text-[#6C3A82] shrink-0 self-end sm:self-center">
+          <span className="text-xs font-extrabold text-[#702E46] dark:text-[#E99583] shrink-0 self-end sm:self-center">
             Read &rarr;
           </span>
         </div>
@@ -401,25 +404,25 @@ export const SafetyToolsScreen: React.FC = () => {
 
       {/* MODAL: Camera Video Evidence Recorder */}
       {activeToolModal === 'camerarecord' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fadeIn">
-          <div className="glass-panel-elevated w-full max-w-lg rounded-[32px] p-6 lg:p-7 shadow-2xl border border-purple-200 overflow-hidden">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F0E8F8]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/80 backdrop-blur-md animate-fadeIn">
+          <div className="glass-panel-elevated w-full max-w-lg rounded-[32px] p-6 lg:p-7 shadow-2xl border border-[#E9DFD2] dark:border-[#45263F] overflow-hidden bg-[#FAF5EF] dark:bg-[#341B2F]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E9DFD2] dark:border-[#45263F]">
               <div className="flex items-center gap-2">
-                <Video className="w-5 h-5 text-[#6C3A82]" />
-                <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">
+                <Video className="w-5 h-5 text-[#702E46] dark:text-[#E99583]" />
+                <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">
                   Camera Video Evidence Recorder
                 </h3>
               </div>
               <button
                 onClick={handleCloseVideoModal}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-[#7A6588] hover:bg-purple-50 cursor-pointer"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/50 dark:hover:bg-[#45263F] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Video Viewfinder Container */}
-            <div className="mt-4 relative w-full h-56 rounded-2xl bg-black overflow-hidden flex items-center justify-center border border-purple-200">
+            <div className="mt-4 relative w-full h-56 rounded-2xl bg-black overflow-hidden flex items-center justify-center border border-[#E9DFD2] dark:border-[#45263F]">
               <video
                 ref={cameraVideoRef}
                 autoPlay
@@ -429,18 +432,18 @@ export const SafetyToolsScreen: React.FC = () => {
               />
 
               {cameraError && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/95 p-4 text-center z-10">
-                  <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-2">
-                    <VideoOff className="w-5 h-5 text-amber-300" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#29252D]/95 p-4 text-center z-10">
+                  <div className="w-10 h-10 rounded-2xl bg-[#C86650]/20 border border-[#C86650]/40 flex items-center justify-center text-[#E99583] mb-2">
+                    <VideoOff className="w-5 h-5" />
                   </div>
-                  <span className="text-xs font-extrabold text-white">Camera Access Denied</span>
-                  <p className="text-[11px] text-slate-300 mt-1 max-w-xs leading-relaxed">
-                    Camera access was blocked by your browser. Please allow camera and microphone permissions in browser settings to record video evidence.
+                  <span className="text-xs font-extrabold text-[#FAF5EF]">Camera Access Denied</span>
+                  <p className="text-[11px] text-[#E9DFD2] mt-1 max-w-xs leading-relaxed">
+                    Camera access was blocked. Please allow camera and microphone permissions in browser settings to record video evidence.
                   </p>
                   <button
                     type="button"
                     onClick={handleStartManualVideo}
-                    className="mt-3 px-4 py-2 rounded-full bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold flex items-center gap-1.5 transition active:scale-95 shadow-md cursor-pointer border border-white/20"
+                    className="mt-3 px-4 py-2 rounded-full bg-gradient-to-r from-[#702E46] to-[#C86650] text-white text-xs font-extrabold flex items-center gap-1.5 transition active:scale-95 shadow-md cursor-pointer border border-white/20"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     <span>Retry Camera Access</span>
@@ -449,7 +452,7 @@ export const SafetyToolsScreen: React.FC = () => {
               )}
 
               {isCameraRecording && (
-                <div className="absolute top-3 left-3 flex items-center gap-2 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-mono font-bold shadow-lg animate-pulse">
+                <div className="absolute top-3 left-3 flex items-center gap-2 bg-[#C86650] text-white px-3 py-1 rounded-full text-xs font-mono font-extrabold shadow-lg animate-pulse">
                   <span className="w-2 h-2 rounded-full bg-white" />
                   <span>REC {formatTimer(recordingSeconds)}</span>
                 </div>
@@ -457,22 +460,22 @@ export const SafetyToolsScreen: React.FC = () => {
             </div>
 
             {/* Status and Diagnostics */}
-            <div className="mt-3 p-3 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-indigo-900/40 text-xs font-bold text-slate-700 dark:text-slate-300">
+            <div className="mt-3 p-3 rounded-xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 text-xs font-bold text-[#625B63] dark:text-[#E9DFD2]">
               <div className="flex items-center justify-between">
                 <span>Storage Target:</span>
-                <span className="font-mono text-indigo-700 dark:text-indigo-300">IndexedDB & Supabase Vault</span>
+                <span className="font-mono text-[#702E46] dark:text-[#E99583]">IndexedDB &amp; Supabase Vault</span>
               </div>
               <div className="flex items-center justify-between mt-1">
                 <span>Cryptographic Proof:</span>
-                <span className="font-mono text-slate-900 dark:text-white">SHA-256 Hash Seal</span>
+                <span className="font-mono text-[#29252D] dark:text-[#FAF5EF]">SHA-256 Hash Seal</span>
               </div>
             </div>
 
             {/* Success notification if just recorded */}
             {lastSavedVideoId && !isCameraRecording && (
-              <div className="mt-3 p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-black text-indigo-950 dark:text-indigo-200">
-                  <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+              <div className="mt-3 p-3 rounded-xl bg-[#7E927B]/20 border border-[#7E927B]/40 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-extrabold text-[#29252D] dark:text-[#FAF5EF]">
+                  <CheckCircle2 className="w-4 h-4 text-[#7E927B]" />
                   <span>Video saved and sealed</span>
                 </div>
                 <button
@@ -480,7 +483,7 @@ export const SafetyToolsScreen: React.FC = () => {
                     setActiveToolModal(null);
                     setActiveTab('evidence');
                   }}
-                  className="text-xs font-black text-indigo-600 dark:text-indigo-400 underline cursor-pointer"
+                  className="text-xs font-extrabold text-[#702E46] dark:text-[#E99583] underline cursor-pointer"
                 >
                   View in Vault &rarr;
                 </button>
@@ -492,7 +495,7 @@ export const SafetyToolsScreen: React.FC = () => {
               {!isCameraRecording ? (
                 <button
                   onClick={handleStartManualVideo}
-                  className="flex-1 h-12 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black shadow-md shadow-indigo-600/30 flex items-center justify-center gap-2 transition cursor-pointer"
+                  className="flex-1 h-12 rounded-full bg-gradient-to-r from-[#702E46] to-[#45263F] hover:opacity-95 text-white text-xs font-extrabold shadow-md flex items-center justify-center gap-2 transition cursor-pointer border border-white/20 active:scale-95"
                 >
                   <Camera className="w-4 h-4" />
                   <span>Start Recording Video</span>
@@ -500,10 +503,10 @@ export const SafetyToolsScreen: React.FC = () => {
               ) : (
                 <button
                   onClick={handleStopManualVideo}
-                  className="flex-1 h-12 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs font-black shadow-md shadow-red-600/30 flex items-center justify-center gap-2 transition cursor-pointer"
+                  className="flex-1 h-12 rounded-full bg-[#C86650] hover:bg-[#B3523D] text-white text-xs font-extrabold shadow-md flex items-center justify-center gap-2 transition cursor-pointer active:scale-95"
                 >
                   <Square className="w-4 h-4 fill-white" />
-                  <span>Stop & Save Video ({formatTimer(recordingSeconds)})</span>
+                  <span>Stop &amp; Save Video ({formatTimer(recordingSeconds)})</span>
                 </button>
               )}
             </div>
@@ -513,22 +516,22 @@ export const SafetyToolsScreen: React.FC = () => {
 
       {/* MODAL 1: Safe-Walk Timer */}
       {activeToolModal === 'safewalk' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fadeIn">
-          <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-slate-200 dark:border-indigo-900/60">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-indigo-900/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/80 backdrop-blur-md animate-fadeIn">
+          <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E9DFD2] dark:border-[#45263F]">
               <div className="flex items-center gap-2">
-                <Timer className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                <h3 className="text-base font-black text-slate-900 dark:text-white">Safe-Walk Timer</h3>
+                <Timer className="w-5 h-5 text-[#C86650]" />
+                <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Safe-Walk Timer</h3>
               </div>
               <button
                 onClick={() => setActiveToolModal(null)}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 cursor-pointer"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/50 dark:hover:bg-[#45263F] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-3">
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-3 leading-relaxed">
               Set estimated walk duration. If you do not tap "I Arrived" before the timer expires, Journey Guard automatically escalates Emergency SOS.
             </p>
 
@@ -537,10 +540,10 @@ export const SafetyToolsScreen: React.FC = () => {
                 <button
                   key={mins}
                   onClick={() => setSafeWalkDurationMinutes(mins)}
-                  className={`h-12 rounded-2xl text-xs font-black border transition cursor-pointer ${
+                  className={`h-12 rounded-2xl text-xs font-extrabold border transition cursor-pointer ${
                     safeWalkDurationMinutes === mins
-                      ? 'bg-indigo-600 text-white border-indigo-700 shadow-md shadow-indigo-600/30'
-                      : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-200 dark:border-indigo-900/40'
+                      ? 'bg-gradient-to-r from-[#702E46] to-[#C86650] text-white border-transparent shadow-md'
+                      : 'bg-[#FFFDF9] dark:bg-[#45263F] text-[#29252D] dark:text-[#FAF5EF] border-[#E9DFD2] dark:border-[#702E46]/40'
                   }`}
                 >
                   {mins} Minutes
@@ -548,230 +551,284 @@ export const SafetyToolsScreen: React.FC = () => {
               ))}
             </div>
 
-            <button
-              onClick={() => {
-                startSafeWalk();
-                setActiveToolModal(null);
-              }}
-              className="w-full h-12 rounded-full bg-indigo-600 text-white text-xs font-black shadow-md shadow-indigo-600/30 hover:bg-indigo-700 cursor-pointer"
-            >
-              Start Safe-Walk ({safeWalkDurationMinutes} min)
-            </button>
+            <div className="flex gap-2.5">
+              <button
+                onClick={() => setActiveToolModal(null)}
+                className="flex-1 h-12 rounded-full border border-[#E9DFD2] dark:border-[#45263F] text-xs font-extrabold text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/40 cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  startSafeWalk();
+                  setActiveToolModal(null);
+                }}
+                className="flex-1 h-12 rounded-full bg-gradient-to-r from-[#702E46] to-[#45263F] text-white text-xs font-extrabold shadow-md hover:opacity-95 transition cursor-pointer border border-white/20 active:scale-95"
+              >
+                Start Countdown
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      {/* MODAL 2: Fake Call Setup */}
+      {/* MODAL 2: Fake Call Configurator */}
       {activeToolModal === 'fakecall' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fadeIn">
-          <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-slate-200 dark:border-indigo-900/60">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-indigo-900/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/80 backdrop-blur-md animate-fadeIn">
+          <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E9DFD2] dark:border-[#45263F]">
               <div className="flex items-center gap-2">
-                <PhoneCall className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                <h3 className="text-base font-black text-slate-900 dark:text-white">Fake Call Simulator</h3>
+                <PhoneCall className="w-5 h-5 text-[#C5A36A]" />
+                <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Fake Call Alibi</h3>
               </div>
               <button
                 onClick={() => setActiveToolModal(null)}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 cursor-pointer"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/50 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="space-y-4 mt-4">
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-3 leading-relaxed">
+              Discreetly schedule a realistic incoming phone call to give you a natural pretext to walk away or deter suspicious individuals.
+            </p>
+
+            <div className="space-y-4 my-5 text-xs">
               <div>
-                <label className="text-xs font-black text-slate-900 dark:text-white block mb-1">
-                  Caller Display Name
+                <label className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
+                  Caller Name / Relationship
                 </label>
                 <input
                   type="text"
                   value={fakeCallerName}
                   onChange={(e) => setFakeCallerName(e.target.value)}
-                  className="w-full h-11 px-4 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-300 dark:border-indigo-900/50 text-xs font-bold text-slate-900 dark:text-white"
+                  className="w-full h-11 px-4 rounded-xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 font-bold text-[#29252D] dark:text-[#FAF5EF]"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-black text-slate-900 dark:text-white block mb-1">
-                  Delay Before Ringing
+                <label className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
+                  Delay Before Incoming Call
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {[2, 5, 15].map((s) => (
+                  {[5, 15, 30].map((s) => (
                     <button
                       key={s}
                       onClick={() => setFakeCallDelaySeconds(s)}
-                      className={`h-10 rounded-xl text-xs font-black border transition cursor-pointer ${
+                      className={`h-10 rounded-xl text-xs font-extrabold border transition cursor-pointer ${
                         fakeCallDelaySeconds === s
-                          ? 'bg-indigo-600 text-white border-indigo-700 shadow-md shadow-indigo-600/25'
-                          : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-indigo-900/40'
+                          ? 'bg-[#C5A36A] text-white border-transparent shadow-xs'
+                          : 'bg-[#FFFDF9] dark:bg-[#45263F] text-[#29252D] dark:text-[#FAF5EF] border-[#E9DFD2]'
                       }`}
                     >
-                      {s}s Delay
+                      {s} Seconds
                     </button>
                   ))}
                 </div>
               </div>
+            </div>
 
+            <div className="flex gap-2.5">
+              <button
+                onClick={() => setActiveToolModal(null)}
+                className="flex-1 h-12 rounded-full border border-[#E9DFD2] dark:border-[#45263F] text-xs font-extrabold text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/40 cursor-pointer"
+              >
+                Cancel
+              </button>
               <button
                 onClick={scheduleFakeCall}
-                className="w-full h-12 rounded-full bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-black shadow-md shadow-amber-500/25 cursor-pointer mt-2"
+                className="flex-1 h-12 rounded-full bg-gradient-to-r from-[#702E46] to-[#C86650] text-white text-xs font-extrabold shadow-md hover:opacity-95 transition cursor-pointer border border-white/20 active:scale-95"
               >
-                Trigger Incoming Call
+                Schedule Alibi Call
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* FULL SCREEN ACTIVE FAKE CALL */}
-      {isFakeCallActive && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-between p-8 bg-slate-950 text-white animate-fadeIn">
+      {/* ACTIVE FAKE CALL SCREEN */}
+      {(isFakeCallRinging || isFakeCallActive) && (
+        <div className="fixed inset-0 z-50 bg-[#29252D] flex flex-col justify-between p-8 text-white select-none animate-fadeIn">
           <div className="text-center pt-12">
-            <span className="text-xs uppercase font-mono tracking-widest text-indigo-400 block mb-1">
-              Connected · {formatTimer(fakeCallDuration)}
+            <span className="text-xs uppercase tracking-widest text-[#E99583] font-extrabold block mb-2">
+              {isFakeCallRinging ? 'Incoming Call...' : 'Call in Progress'}
             </span>
-            <h2 className="text-2xl font-black text-white">{fakeCallerName}</h2>
+            <h2 className="text-3xl font-extrabold tracking-tight">{fakeCallerName}</h2>
+            <span className="text-sm text-[#E9DFD2] font-mono mt-1 block">
+              {isFakeCallActive ? formatTimer(fakeCallDuration) : 'Mobile · +91 98765 43210'}
+            </span>
           </div>
 
-          <div className="glass-panel-dark rounded-[32px] p-6 my-auto max-w-md mx-auto border border-indigo-500/30 text-center">
-            <p className="text-xs text-indigo-300 font-black mb-2">
-              Conversational Escape Cue:
-            </p>
-            <p className="text-sm font-semibold text-white italic">
-              "Hey! Yes, I see you right there at the main avenue. Stay right there, I'm pulling up in 30 seconds."
-            </p>
+          <div className="flex flex-col items-center justify-center my-8">
+            <div className="w-28 h-28 rounded-full bg-gradient-to-br from-[#702E46] to-[#45263F] flex items-center justify-center text-white shadow-2xl border-4 border-white/20 animate-pulse">
+              <PhoneCall className="w-12 h-12" />
+            </div>
           </div>
 
-          <div className="flex justify-center pb-8">
-            <button
-              onClick={endFakeCall}
-              className="w-18 h-18 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl active:scale-95 transition cursor-pointer"
-            >
-              <PhoneCall className="w-7 h-7 rotate-[135deg]" />
-            </button>
+          <div className="pb-8 max-w-sm mx-auto w-full">
+            {isFakeCallRinging ? (
+              <div className="flex items-center justify-around">
+                <button
+                  onClick={endFakeCall}
+                  className="w-16 h-16 rounded-full bg-[#C86650] flex items-center justify-center shadow-lg active:scale-95 transition cursor-pointer"
+                >
+                  <PhoneOff className="w-7 h-7 text-white" />
+                </button>
+                <button
+                  onClick={acceptFakeCall}
+                  className="w-16 h-16 rounded-full bg-[#7E927B] flex items-center justify-center shadow-lg animate-bounce active:scale-95 transition cursor-pointer"
+                >
+                  <PhoneIncoming className="w-7 h-7 text-white" />
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-center">
+                <button
+                  onClick={endFakeCall}
+                  className="h-14 px-8 rounded-full bg-[#C86650] flex items-center gap-2.5 shadow-lg active:scale-95 transition text-xs font-extrabold uppercase tracking-wider cursor-pointer"
+                >
+                  <PhoneOff className="w-5 h-5 text-white" />
+                  <span>End Alibi Call</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      {/* MODAL 3: Voice Trigger */}
+      {/* MODAL 3: Voice Keyword Trigger */}
       {activeToolModal === 'voicetrigger' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fadeIn">
-          <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-slate-200 dark:border-indigo-900/60">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-indigo-900/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/80 backdrop-blur-md animate-fadeIn">
+          <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E9DFD2] dark:border-[#45263F]">
               <div className="flex items-center gap-2">
-                <Mic className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                <h3 className="text-base font-black text-slate-900 dark:text-white">Voice Trigger Sentry</h3>
+                <Mic className="w-5 h-5 text-[#702E46] dark:text-[#E99583]" />
+                <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Voice Keyword Sentry</h3>
               </div>
               <button
                 onClick={() => setActiveToolModal(null)}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 cursor-pointer"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#62566F] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/50 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-3 leading-relaxed">
-              When armed, SafeJourney continuously monitors for the emergency wake-phrase:{' '}
-              <span className="text-indigo-700 dark:text-indigo-300 font-black">
-                "{settings.voicePhrase || 'SafeJourney, Help'}"
-              </span>. Shouting, pause variations, and phonetic distortions are automatically matched.
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-3 leading-relaxed">
+              When enabled, your microphone constantly listens for distress keywords even if your phone screen is dark or tucked in your pocket.
             </p>
 
-            <div className="my-5 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-indigo-900/40 text-center">
-              <span className="text-[10px] uppercase font-black text-indigo-600 dark:text-indigo-400 block mb-1">
-                Sentry Engine Status
+            <div className="my-5 p-4 rounded-2xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 text-center">
+              <span className="text-[10px] uppercase tracking-wider text-[#625B63] dark:text-[#E9DFD2]/80 font-extrabold block">
+                Target Distress Trigger Phrase
               </span>
-              <span
-                className={`text-sm font-black block ${
-                  isVoiceMonitoringActive ? 'text-indigo-700 dark:text-indigo-300 animate-pulse' : 'text-slate-700 dark:text-slate-300'
-                }`}
-              >
-                {isVoiceMonitoringActive ? 'Active • Sentry Armed' : 'Standby / Inactive'}
+              <span className="text-lg font-black text-[#702E46] dark:text-[#E99583] mt-1 block">
+                "{settings.voicePhrase || 'SafeJourney, Help'}"
               </span>
-              <p className="text-xs font-mono font-bold text-slate-900 dark:text-white mt-2 bg-slate-200 dark:bg-slate-700 p-2.5 rounded-xl">
-                {voiceStatusMessage}
-              </p>
+              <span className="text-[11px] text-[#625B63] dark:text-[#E9DFD2]/80 mt-1 block">
+                Phonetic engine matches accents, shouting, or background street noise.
+              </span>
             </div>
 
-            <button
-              onClick={() => {
-                toggleVoiceMonitoring();
-              }}
-              className={`w-full h-12 rounded-full text-xs font-black shadow-md transition cursor-pointer ${
-                isVoiceMonitoringActive
-                  ? 'bg-red-600 text-white hover:bg-red-700'
-                  : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-600/30'
-              }`}
-            >
-              {isVoiceMonitoringActive ? 'Deactivate Voice Sentry' : 'Arm Voice Trigger Now'}
-            </button>
+            {voiceStatusMessage && (
+              <div className="p-3 rounded-xl bg-[#E9DFD2]/60 dark:bg-[#45263F]/70 text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] mb-4 text-center">
+                {voiceStatusMessage}
+              </div>
+            )}
+
+            <div className="flex gap-2.5">
+              <button
+                onClick={() => setActiveToolModal(null)}
+                className="flex-1 h-12 rounded-full border border-[#E9DFD2] dark:border-[#45263F] text-xs font-extrabold text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/40 cursor-pointer"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => {
+                  toggleVoiceMonitoring();
+                  setActiveToolModal(null);
+                }}
+                className={`flex-1 h-12 rounded-full text-white text-xs font-extrabold shadow-md transition cursor-pointer border border-white/20 active:scale-95 ${
+                  isVoiceMonitoringActive ? 'bg-[#C86650]' : 'bg-gradient-to-r from-[#702E46] to-[#45263F]'
+                }`}
+              >
+                {isVoiceMonitoringActive ? 'Stop Listening' : 'Activate Voice Sentry'}
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      {/* MODAL 4: Incident Report */}
+      {/* MODAL 4: Incident Reporter */}
       {activeToolModal === 'report' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fadeIn">
-          <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-slate-200 dark:border-indigo-900/60">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-indigo-900/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/80 backdrop-blur-md animate-fadeIn">
+          <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E9DFD2] dark:border-[#45263F]">
               <div className="flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-600" />
-                <h3 className="text-base font-black text-slate-900 dark:text-white">Hazard Report</h3>
+                <AlertTriangle className="w-5 h-5 text-[#C86650]" />
+                <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Hazard Incident Report</h3>
               </div>
               <button
                 onClick={() => setActiveToolModal(null)}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 cursor-pointer"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/50 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {reportSubmitted ? (
-              <div className="py-8 text-center text-indigo-700 dark:text-indigo-400">
-                <CheckCircle2 className="w-12 h-12 mx-auto mb-2 text-indigo-600" />
-                <h4 className="text-base font-black">Hazard Report Logged</h4>
-                <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-1">
-                  Thank you for contributing to community corridor safety.
-                </p>
+              <div className="py-8 text-center">
+                <CheckCircle2 className="w-12 h-12 text-[#7E927B] mx-auto mb-2" />
+                <span className="text-sm font-extrabold text-[#29252D] dark:text-[#FAF5EF] block">Hazard Tagged</span>
+                <p className="text-xs text-[#625B63] dark:text-[#E9DFD2]/80 mt-1">Incident saved with GPS coordinates to Vault.</p>
               </div>
             ) : (
-              <form onSubmit={handleReportSubmit} className="space-y-4 mt-4">
+              <form onSubmit={handleSubmitReport} className="space-y-4 my-4 text-xs">
                 <div>
-                  <label className="text-xs font-black text-slate-900 dark:text-white block mb-1">
-                    Hazard Classification
+                  <label className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
+                    Hazard Category
                   </label>
                   <select
                     value={reportCategory}
                     onChange={(e) => setReportCategory(e.target.value)}
-                    className="w-full h-11 px-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-300 dark:border-indigo-900/50 text-xs font-bold text-slate-900 dark:text-white"
+                    className="w-full h-11 px-3 rounded-xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 font-bold text-[#29252D] dark:text-[#FAF5EF]"
                   >
                     <option>Poor Lighting / Broken Streetlamps</option>
-                    <option>Catcalling / Street Harassment</option>
-                    <option>Isolated Alley / Deserted Stretch</option>
-                    <option>Unregistered Cab / Suspicious Vehicle</option>
+                    <option>Stalking or Suspicious Individual</option>
+                    <option>Aggressive Street Animals</option>
+                    <option>Deserted Corridor or Blocked Pathway</option>
+                    <option>Verbal Harassment Hotspot</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="text-xs font-black text-slate-900 dark:text-white block mb-1">
-                    Observations & Notes
+                  <label className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
+                    Description &amp; Landmark Notes
                   </label>
                   <textarea
                     rows={3}
                     value={reportDescription}
                     onChange={(e) => setReportDescription(e.target.value)}
-                    placeholder="Describe context (e.g. 2 men loitering near metro exit 4)..."
-                    className="w-full p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-300 dark:border-indigo-900/50 text-xs font-bold text-slate-900 dark:text-white resize-none"
+                    placeholder="Provide details to assist community audit..."
+                    required
+                    className="w-full p-3 rounded-xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 font-bold text-[#29252D] dark:text-[#FAF5EF]"
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full h-12 rounded-full bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-black shadow-md shadow-amber-500/25 flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>Submit Anonymous Safety Report</span>
-                </button>
+                <div className="flex gap-2.5 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setActiveToolModal(null)}
+                    className="flex-1 h-12 rounded-full border border-[#E9DFD2] dark:border-[#45263F] text-xs font-extrabold text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/40 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 h-12 rounded-full bg-gradient-to-r from-[#702E46] to-[#C86650] text-white text-xs font-extrabold shadow-md hover:opacity-95 transition cursor-pointer border border-white/20 active:scale-95"
+                  >
+                    Submit Report
+                  </button>
+                </div>
               </form>
             )}
           </div>
@@ -780,52 +837,60 @@ export const SafetyToolsScreen: React.FC = () => {
 
       {/* MODAL 5: Legal Rights Handbook */}
       {activeToolModal === 'legalguide' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fadeIn">
-          <div className="glass-panel-elevated w-full max-w-xl rounded-[32px] p-6 lg:p-7 shadow-2xl border border-slate-200 dark:border-indigo-900/60 max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-indigo-900/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/80 backdrop-blur-md animate-fadeIn">
+          <div className="glass-panel-elevated w-full max-w-lg rounded-[32px] p-6 lg:p-7 shadow-2xl border border-[#E9DFD2] dark:border-[#45263F] max-h-[85vh] overflow-y-auto bg-[#FAF5EF] dark:bg-[#341B2F]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E9DFD2] dark:border-[#45263F]">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  Legal Rights & Defense Handbook
+                <BookOpen className="w-5 h-5 text-[#702E46] dark:text-[#E99583]" />
+                <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">
+                  Legal Rights &amp; Self-Defense Handbook
                 </h3>
               </div>
               <button
                 onClick={() => setActiveToolModal(null)}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 cursor-pointer"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/50 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="space-y-4 mt-4 text-xs">
-              <div>
-                <h4 className="font-black text-indigo-700 dark:text-indigo-400 text-sm">1. Right to Zero FIR</h4>
-                <p className="font-bold text-slate-700 dark:text-slate-300 mt-1 leading-relaxed">
-                  A victim can file an FIR at ANY police station regardless of jurisdiction where the incident occurred. The police must register it and transfer it later.
+            <div className="space-y-4 my-4 text-xs font-medium text-[#29252D] dark:text-[#FAF5EF] leading-relaxed">
+              <div className="p-3.5 rounded-2xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40">
+                <h4 className="font-extrabold text-[#702E46] dark:text-[#E99583] text-sm mb-1">
+                  1. Zero FIR Provision
+                </h4>
+                <p className="text-[#625B63] dark:text-[#E9DFD2]/80">
+                  You can file a First Information Report (FIR) at <em>any</em> police station regardless of jurisdiction. The station is legally mandated to register the incident and transfer it to the competent local station.
                 </p>
               </div>
 
-              <div>
-                <h4 className="font-black text-indigo-700 dark:text-indigo-400 text-sm">2. Confidential In-Camera Statements</h4>
-                <p className="font-bold text-slate-700 dark:text-slate-300 mt-1 leading-relaxed">
-                  Women have the statutory right to have statements recorded before a female judicial magistrate or female police officer in a secure, confidential environment.
+              <div className="p-3.5 rounded-2xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40">
+                <h4 className="font-extrabold text-[#702E46] dark:text-[#E99583] text-sm mb-1">
+                  2. Electronic Evidence Admissibility
+                </h4>
+                <p className="text-[#625B63] dark:text-[#E9DFD2]/80">
+                  Audio recordings, camera video clips, and cryptographic SHA-256 evidence stored in SafeSaathi Vault are valid digital evidence under the Indian Evidence Act / Section 65B guidelines.
                 </p>
               </div>
 
-              <div>
-                <h4 className="font-black text-indigo-700 dark:text-indigo-400 text-sm">3. Digital Evidence Admissibility</h4>
-                <p className="font-bold text-slate-700 dark:text-slate-300 mt-1 leading-relaxed">
-                  GPS coordinate logs, video recordings, and timestamped distress beacon messages from SafeJourney are valid electronic evidence under electronic evidence provisions.
+              <div className="p-3.5 rounded-2xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40">
+                <h4 className="font-extrabold text-[#702E46] dark:text-[#E99583] text-sm mb-1">
+                  3. Right to Virtual / Confidential Statement
+                </h4>
+                <p className="text-[#625B63] dark:text-[#E9DFD2]/80">
+                  In sensitive harassment or distress cases, women have the statutory right to have statements recorded in the presence of a female officer, advocate, or family member, including via video teleconference.
                 </p>
               </div>
             </div>
 
-            <button
-              onClick={() => setActiveToolModal(null)}
-              className="w-full mt-6 h-12 rounded-full bg-indigo-600 text-white text-xs font-black shadow-md shadow-indigo-600/30 hover:bg-indigo-700 cursor-pointer"
-            >
-              Done Reading
-            </button>
+            <div className="pt-2">
+              <button
+                onClick={() => setActiveToolModal(null)}
+                className="w-full h-12 rounded-full bg-gradient-to-r from-[#702E46] to-[#45263F] text-white text-xs font-extrabold shadow-md hover:opacity-95 transition cursor-pointer border border-white/20 active:scale-95"
+              >
+                Close Handbook
+              </button>
+            </div>
           </div>
         </div>
       )}

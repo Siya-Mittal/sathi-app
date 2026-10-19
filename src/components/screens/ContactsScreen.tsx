@@ -137,16 +137,16 @@ export const ContactsScreen: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setActiveTab('dashboard')}
-            className="h-10 px-4 rounded-2xl glass-panel flex items-center gap-1.5 text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] hover:bg-purple-50/70 active:scale-95 transition shadow-xs border border-[#E8DEF3] cursor-pointer"
+            className="h-10 px-4 rounded-2xl clay-card flex items-center gap-1.5 text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] hover:border-[#C86650] active:scale-95 transition shadow-xs border border-[#E9DFD2] dark:border-[#E99583]/25 cursor-pointer"
           >
-            <ChevronLeft className="w-4 h-4 text-[#6C3A82]" />
+            <ChevronLeft className="w-4 h-4 text-[#702E46] dark:text-[#E99583]" />
             <span>Command Hub</span>
           </button>
           <div>
-            <h1 className="text-base lg:text-xl font-extrabold text-[#2A1637] dark:text-[#FAF4FE] tracking-tight">
+            <h1 className="text-base lg:text-xl font-extrabold text-[#45263F] dark:text-[#FAF5EF] tracking-tight">
               Trusted Circle &amp; Guardians
             </h1>
-            <span className="text-xs font-medium text-[#7A6588] dark:text-purple-300 hidden sm:inline">
+            <span className="text-xs font-medium text-[#62566F] dark:text-[#E9DFD2] hidden sm:inline">
               Designated recipients for live GPS beacons &amp; deviation escalation
             </span>
           </div>
@@ -154,7 +154,7 @@ export const ContactsScreen: React.FC = () => {
 
         <button
           onClick={openAddModal}
-          className="h-11 px-5 rounded-2xl bg-gradient-to-r from-[#6C3A82] to-[#55276B] hover:from-[#7B4294] hover:to-[#612D79] text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-purple-900/20 active:scale-95 transition cursor-pointer border border-white/20"
+          className="clay-btn-primary h-11 px-5 flex items-center gap-2 text-xs font-bold"
         >
           <UserPlus className="w-4 h-4" />
           <span>Add New Guardian</span>
@@ -164,44 +164,45 @@ export const ContactsScreen: React.FC = () => {
       {/* Grid of Contacts */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {contacts.length === 0 && (
-          <div className="col-span-full text-center py-12 px-6 glass-panel rounded-[32px] border border-dashed border-[#E8DEF3] flex flex-col items-center justify-center space-y-3">
-            <div className="w-14 h-14 rounded-2xl bg-purple-100 text-[#6C3A82] flex items-center justify-center">
+          <div className="col-span-full text-center py-12 px-6 clay-card rounded-[32px] border border-dashed border-[#E9DFD2] flex flex-col items-center justify-center space-y-3">
+            <div className="w-14 h-14 rounded-2xl bg-[#FAF5EF] dark:bg-[#281324] text-[#702E46] dark:text-[#E99583] flex items-center justify-center">
               <Users className="w-7 h-7" />
             </div>
-            <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">No Trusted Contacts Added Yet</h3>
-            <p className="text-xs font-medium text-[#7A6588] max-w-sm">
+            <h3 className="text-base font-extrabold text-[#45263F] dark:text-[#FAF5EF]">No Trusted Contacts Added Yet</h3>
+            <p className="text-xs font-medium text-[#62566F] dark:text-[#E9DFD2] max-w-sm">
               Add trusted family members or friends. They will receive automated GPS tracking alerts and emergency SOS beacons.
             </p>
             <button
               onClick={openAddModal}
-              className="mt-2 h-10 px-5 rounded-2xl bg-[#6C3A82] text-white text-xs font-bold flex items-center gap-2 hover:bg-[#55276B] active:scale-95 transition shadow-sm cursor-pointer"
+              className="clay-btn-primary mt-2 h-10 px-5 flex items-center gap-2 text-xs font-bold"
             >
               <UserPlus className="w-4 h-4" />
               <span>Add First Contact</span>
             </button>
           </div>
         )}
+
         {contacts.map((contact) => (
           <div
             key={contact.id}
-            className="glass-panel rounded-[32px] p-5 lg:p-6 shadow-sm border border-[#E8DEF3] transition-all hover:bg-white flex flex-col justify-between"
+            className="clay-card rounded-[32px] p-5 lg:p-6 shadow-sm border border-[#E9DFD2] dark:border-[#E99583]/25 transition-all flex flex-col justify-between bg-white dark:bg-[#281324]"
           >
             <div>
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-3.5">
-                  <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6C3A82] font-extrabold text-base flex items-center justify-center shrink-0 border border-purple-200/60">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#702E46] to-[#45263F] text-white font-extrabold text-base flex items-center justify-center shrink-0 border border-white/30 shadow-xs">
                     {contact.name.charAt(0)}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="text-sm font-extrabold text-[#2A1637] dark:text-white">{contact.name}</h3>
+                      <h3 className="text-sm font-extrabold text-[#29252D] dark:text-[#FAF5EF]">{contact.name}</h3>
                       {contact.isPrimary && (
-                        <span className="text-[10px] font-bold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-200">
+                        <span className="text-[10px] font-bold text-[#702E46] dark:text-[#E99583] bg-[#FAF5EF] dark:bg-[#231622] px-2 py-0.5 rounded-full border border-[#E9DFD2]">
                           Primary
                         </span>
                       )}
                     </div>
-                    <span className="text-xs font-medium text-[#7A6588] font-mono block mt-0.5">
+                    <span className="text-xs font-medium text-[#62566F] dark:text-[#E9DFD2] font-mono block mt-0.5">
                       {contact.phone} · {contact.relationship}
                     </span>
                   </div>
@@ -210,14 +211,14 @@ export const ContactsScreen: React.FC = () => {
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => openEditModal(contact)}
-                    className="w-8 h-8 rounded-xl hover:bg-purple-50 text-[#7A6588] hover:text-[#6C3A82] flex items-center justify-center transition cursor-pointer"
+                    className="w-8 h-8 rounded-xl hover:bg-[#FAF5EF] dark:hover:bg-[#45263F] text-[#62566F] hover:text-[#702E46] dark:text-[#E9DFD2] dark:hover:text-white flex items-center justify-center transition cursor-pointer"
                     title="Edit Contact"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => deleteContact(contact.id)}
-                    className="w-8 h-8 rounded-xl hover:bg-rose-50 text-[#7A6588] hover:text-[#DF4B5E] flex items-center justify-center transition cursor-pointer"
+                    className="w-8 h-8 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950 text-[#62566F] hover:text-[#BA223C] flex items-center justify-center transition cursor-pointer"
                     title="Delete Contact"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -226,22 +227,22 @@ export const ContactsScreen: React.FC = () => {
               </div>
 
               {/* Notification preferences checklist */}
-              <div className="mt-4 pt-3 border-t border-[#F0E8F8] space-y-1.5 text-xs font-medium text-[#493356] dark:text-purple-200/90">
+              <div className="mt-4 pt-3 border-t border-[#E9DFD2]/60 dark:border-[#E9DFD2]/15 space-y-1.5 text-xs font-medium text-[#29252D] dark:text-[#FAF5EF]">
                 <div className="flex items-center justify-between">
-                  <span>Journey Departure Alert:</span>
-                  <span className={contact.notifyOnJourneyStart ? 'text-emerald-700 font-bold' : 'text-[#7A6588]'}>
+                  <span className="text-[#62566F] dark:text-[#E9DFD2]">Journey Departure Alert:</span>
+                  <span className={contact.notifyOnJourneyStart ? 'text-[#3D6B4E] dark:text-[#7E927B] font-bold' : 'text-[#62566F]'}>
                     {contact.notifyOnJourneyStart ? 'Enabled' : 'Disabled'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>30s Route Deviation Beacon:</span>
-                  <span className={contact.notifyOnDeviation ? 'text-emerald-700 font-bold' : 'text-[#7A6588]'}>
+                  <span className="text-[#62566F] dark:text-[#E9DFD2]">30s Route Deviation Beacon:</span>
+                  <span className={contact.notifyOnDeviation ? 'text-[#3D6B4E] dark:text-[#7E927B] font-bold' : 'text-[#62566F]'}>
                     {contact.notifyOnDeviation ? 'Enabled' : 'Disabled'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>Emergency SOS Broadcast:</span>
-                  <span className={contact.notifyOnSos ? 'text-emerald-700 font-bold' : 'text-[#7A6588]'}>
+                  <span className="text-[#62566F] dark:text-[#E9DFD2]">Emergency SOS Broadcast:</span>
+                  <span className={contact.notifyOnSos ? 'text-[#3D6B4E] dark:text-[#7E927B] font-bold' : 'text-[#62566F]'}>
                     {contact.notifyOnSos ? 'Enabled' : 'Disabled'}
                   </span>
                 </div>
@@ -249,10 +250,10 @@ export const ContactsScreen: React.FC = () => {
             </div>
 
             {/* Quick Action Dial & Beacon Buttons */}
-            <div className="mt-5 pt-3 border-t border-[#F0E8F8] grid grid-cols-3 gap-2">
+            <div className="mt-5 pt-3 border-t border-[#E9DFD2]/60 dark:border-[#E9DFD2]/15 grid grid-cols-3 gap-2">
               <a
                 href={`tel:${contact.phone}`}
-                className="h-10 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#6C3A82] flex items-center justify-center gap-1.5 text-xs font-bold transition active:scale-95 cursor-pointer border border-[#E8DEF3]"
+                className="clay-btn-secondary h-10 flex items-center justify-center gap-1.5 text-xs font-bold"
                 title="Call Directly"
               >
                 <Phone className="w-3.5 h-3.5" />
@@ -260,21 +261,23 @@ export const ContactsScreen: React.FC = () => {
               </a>
 
               <button
-                onClick={() => handleTestWhatsApp(contact)}
-                className="h-10 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#6C3A82] flex items-center justify-center gap-1.5 text-xs font-bold transition active:scale-95 cursor-pointer border border-[#E8DEF3]"
-                title="Send Live GPS via WhatsApp"
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-                <span>WhatsApp</span>
-              </button>
-
-              <button
+                type="button"
                 onClick={() => handleTestSms(contact)}
-                className="h-10 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#6C3A82] flex items-center justify-center gap-1.5 text-xs font-bold transition active:scale-95 cursor-pointer border border-[#E8DEF3]"
-                title="Send SMS Beacon"
+                className="clay-btn-secondary h-10 flex items-center justify-center gap-1.5 text-xs font-bold"
+                title="Send Live GPS SMS"
               >
                 <Share2 className="w-3.5 h-3.5" />
                 <span>SMS</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleTestWhatsApp(contact)}
+                className="clay-btn-secondary h-10 flex items-center justify-center gap-1.5 text-xs font-bold"
+                title="Send WhatsApp Beacon"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Chat</span>
               </button>
             </div>
           </div>
@@ -283,61 +286,66 @@ export const ContactsScreen: React.FC = () => {
 
       {/* Add / Edit Contact Modal Dialog */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fadeIn">
-          <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 sm:p-7 shadow-2xl border border-purple-200">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F0E8F8]">
-              <h3 className="text-base font-extrabold text-[#2A1637] dark:text-white">
-                {editingContact ? 'Edit Trusted Contact' : 'Add New Trusted Guardian'}
-              </h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/80 backdrop-blur-md animate-fadeIn">
+          <div className="clay-card-elevated w-full max-w-md p-6 shadow-2xl border-2 border-[#E9DFD2] relative bg-white dark:bg-[#281324]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E9DFD2] dark:border-[#E9DFD2]/15 mb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-2xl bg-[#702E46]/15 text-[#702E46] dark:text-[#E99583] flex items-center justify-center">
+                  <Shield className="w-4 h-4" />
+                </div>
+                <h3 className="text-base font-extrabold text-[#45263F] dark:text-[#FAF5EF]">
+                  {editingContact ? 'Edit Guardian Details' : 'Add New Guardian'}
+                </h3>
+              </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="w-8 h-8 rounded-full hover:bg-purple-50 text-[#7A6588] hover:text-[#2A1637] flex items-center justify-center transition cursor-pointer"
+                className="p-1 rounded-full text-[#62566F] hover:text-[#BA223C] cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSave} className="mt-4 space-y-4">
-              {validationError && (
-                <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-xs font-bold text-rose-800">
-                  {validationError}
-                </div>
-              )}
+            {validationError && (
+              <div className="mb-4 p-2.5 rounded-xl bg-red-50 dark:bg-red-950/60 text-[#BA223C] text-xs font-bold border border-red-200">
+                {validationError}
+              </div>
+            )}
 
+            <form onSubmit={handleSave} className="space-y-4">
               <div>
-                <label className="text-xs font-extrabold text-[#2A1637] dark:text-purple-200 uppercase tracking-wider block mb-1">
+                <label className="text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
                   Full Name
                 </label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Priya Sharma"
-                  className="w-full h-11 px-4 rounded-xl bg-white dark:bg-purple-950/40 border border-[#E8DEF3] text-sm font-bold text-[#2A1637] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6C3A82]/40"
+                  placeholder="e.g. Priya Sharma, Mom, Dad"
+                  className="w-full h-11 px-4 rounded-xl bg-[#FAF5EF] dark:bg-[#231622] border border-[#E9DFD2] text-xs font-bold text-[#29252D] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#C86650]/40"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-extrabold text-[#2A1637] dark:text-purple-200 uppercase tracking-wider block mb-1">
-                  Mobile Number (E.164 Format)
+                <label className="text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
+                  Mobile Number (With Country Code)
                 </label>
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+91 98765 43210"
-                  className="w-full h-11 px-4 rounded-xl bg-white dark:bg-purple-950/40 border border-[#E8DEF3] text-sm font-bold text-[#2A1637] dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#6C3A82]/40"
+                  className="w-full h-11 px-4 rounded-xl bg-[#FAF5EF] dark:bg-[#231622] border border-[#E9DFD2] text-xs font-mono font-bold text-[#29252D] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#C86650]/40"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-extrabold text-[#2A1637] dark:text-purple-200 uppercase tracking-wider block mb-1">
+                <label className="text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
                   Relationship
                 </label>
                 <select
                   value={relationship}
                   onChange={(e) => setRelationship(e.target.value as TrustedContact['relationship'])}
-                  className="w-full h-11 px-4 rounded-xl bg-white dark:bg-purple-950/40 border border-[#E8DEF3] text-sm font-bold text-[#2A1637] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6C3A82]/40 cursor-pointer"
+                  className="w-full h-11 px-3 rounded-xl bg-[#FAF5EF] dark:bg-[#231622] border border-[#E9DFD2] text-xs font-bold text-[#29252D] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#C86650]/40"
                 >
                   <option value="Parent">Parent</option>
                   <option value="Partner">Partner</option>
@@ -348,57 +356,67 @@ export const ContactsScreen: React.FC = () => {
                 </select>
               </div>
 
-              {/* Toggles */}
-              <div className="space-y-2 pt-2 border-t border-[#F0E8F8]">
-                <label className="flex items-center gap-2.5 cursor-pointer text-xs font-bold text-[#2A1637] dark:text-purple-200">
+              <div className="pt-2 border-t border-[#E9DFD2]/60 dark:border-[#E9DFD2]/15 space-y-2.5">
+                <label className="flex items-center gap-2.5 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isPrimary}
                     onChange={(e) => setIsPrimary(e.target.checked)}
-                    className="w-4 h-4 rounded text-[#6C3A82] accent-[#6C3A82]"
+                    className="w-4 h-4 rounded text-[#702E46] accent-[#702E46]"
                   />
-                  <span>Designate as Primary Guardian</span>
+                  <span className="text-xs font-bold text-[#29252D] dark:text-[#FAF5EF]">
+                    Set as Primary Guardian (First to be dialed on SOS)
+                  </span>
                 </label>
-                <label className="flex items-center gap-2.5 cursor-pointer text-xs font-medium text-[#493356] dark:text-purple-300">
+
+                <label className="flex items-center gap-2.5 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={notifyOnJourneyStart}
                     onChange={(e) => setNotifyOnJourneyStart(e.target.checked)}
-                    className="w-4 h-4 rounded text-[#6C3A82] accent-[#6C3A82]"
+                    className="w-4 h-4 rounded text-[#702E46] accent-[#702E46]"
                   />
-                  <span>Notify on Journey Start</span>
+                  <span className="text-xs font-semibold text-[#62566F] dark:text-[#E9DFD2]">
+                    Notify when journey starts
+                  </span>
                 </label>
-                <label className="flex items-center gap-2.5 cursor-pointer text-xs font-medium text-[#493356] dark:text-purple-300">
+
+                <label className="flex items-center gap-2.5 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={notifyOnDeviation}
                     onChange={(e) => setNotifyOnDeviation(e.target.checked)}
-                    className="w-4 h-4 rounded text-[#6C3A82] accent-[#6C3A82]"
+                    className="w-4 h-4 rounded text-[#702E46] accent-[#702E46]"
                   />
-                  <span>Notify on 30s Route Deviation</span>
+                  <span className="text-xs font-semibold text-[#62566F] dark:text-[#E9DFD2]">
+                    Notify on 30s route deviation anomaly
+                  </span>
                 </label>
-                <label className="flex items-center gap-2.5 cursor-pointer text-xs font-medium text-[#493356] dark:text-purple-300">
+
+                <label className="flex items-center gap-2.5 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={notifyOnSos}
                     onChange={(e) => setNotifyOnSos(e.target.checked)}
-                    className="w-4 h-4 rounded text-[#6C3A82] accent-[#6C3A82]"
+                    className="w-4 h-4 rounded text-[#702E46] accent-[#702E46]"
                   />
-                  <span>Notify on Emergency SOS Beacon</span>
+                  <span className="text-xs font-semibold text-[#62566F] dark:text-[#E9DFD2]">
+                    Broadcast on Emergency SOS activation
+                  </span>
                 </label>
               </div>
 
-              <div className="pt-3 flex items-center justify-end gap-2.5">
+              <div className="pt-3 flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="h-11 px-4 rounded-xl bg-purple-50 text-xs font-bold text-[#493356] hover:bg-purple-100 transition cursor-pointer"
+                  className="clay-btn-secondary h-11 px-4 text-xs font-bold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="h-11 px-6 rounded-xl bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold transition shadow-sm hover:opacity-95 active:scale-95 cursor-pointer border border-white/20"
+                  className="clay-btn-primary h-11 px-6 text-xs font-bold"
                 >
                   Save Guardian
                 </button>

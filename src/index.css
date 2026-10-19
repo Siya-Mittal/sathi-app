@@ -2,187 +2,228 @@
 
 @layer base {
   :root {
-    /* SafeSaathi Warm Editorial Design System */
-    --warm-cream: #FFF5E9;
-    --pale-peach: #FFE0CC;
-    --warm-sand: #E9D0B7;
-    --butter-yellow: #F6D879;
-    
-    --vibrant-coral: #F26F61;
-    --terracotta: #C85B49;
-    --warm-rose: #D98DA5;
-    --muted-sage: #A9BFA5;
-    --forest-green: #31594B;
-    
-    --deep-berry: #642D48;
-    --dark-aubergine: #392635;
-    --text-primary: #30262B;
-    --text-secondary: #65565A;
-    --pure-white: #FFFFFF;
-    --emergency-red: #B4233D;
+    /* SafeSaathi Warm Editorial Design System (Prescribed Palette) */
+    --warm-porcelain: #FAF5EF; /* Primary light background */
+    --soft-oat: #E9DFD2;       /* Secondary surfaces & borders */
+    --deep-berry: #702E46;     /* Primary brand color */
+    --rich-plum: #45263F;      /* Dark headings & deep surfaces */
+    --burnt-terracotta: #C86650; /* Important accent & active states */
+    --warm-coral: #E99583;     /* Secondary accent */
+    --muted-sage: #7E927B;     /* Positive & calm states */
+    --champagne-gold: #C5A36A; /* Restrained decorative highlights */
+    --deep-ink: #29252D;       /* Primary text in light mode */
+    --muted-charcoal: #625B63; /* Secondary text in light mode */
+    --pure-white: #FFFFFF;     /* Pure white for contrast surfaces */
+    --emergency-crimson: #BA223C; /* High-urgency verified SOS crimson */
 
-    /* Legacy backward-compat aliases */
-    --warm-ivory: #FFF5E9;
-    --pearl-cream: #FFF8F0;
-    --soft-lavender: #FFE0CC;
-    --periwinkle: #E9D0B7;
-    --blush-pink: #FAD4DF;
-    --dusty-rose: #D98DA5;
-    --rich-plum: #642D48;
-    --deep-aubergine: #392635;
+    /* Dark Warm Theme Tokens */
+    --dark-warm-bg: #180B15;           /* Obsidian Plum Base */
+    --dark-warm-surface: #261323;      /* Velvet Mahogany */
+    --dark-warm-surface-elevated: #31182D; /* Deep Plum Clay */
+    --dark-warm-surface-glow: #3E1E37; /* Rosewood Plum */
+    --dark-warm-border: rgba(233, 149, 131, 0.24); /* Warm Terracotta rim */
+    --dark-warm-text: #FAF5EF;         /* Warm Porcelain text */
+    --dark-warm-text-muted: #D6C2B4;   /* Soft Oat Silk text */
+    --dark-warm-accent: #C86650;       /* Burnt Terracotta */
+    --dark-warm-coral: #E99583;        /* Warm Coral */
+    --dark-warm-gold: #C5A36A;         /* Champagne Gold */
+
+    /* Legacy semantic mappings for backward compatibility */
+    --warm-cream: #FAF5EF;
+    --pale-peach: #F5EAE0;
+    --warm-sand: #E9DFD2;
+    --butter-yellow: #C5A36A;
+    --vibrant-coral: #E99583;
+    --terracotta: #C86650;
+    --warm-rose: #C86650;
+    --forest-green: #3D6B4E;
+    --dark-aubergine: #45263F;
+    --text-primary: #FAF5EF;
+    --text-secondary: #D6C2B4;
+    --emergency-red: #BA223C;
   }
 
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: var(--text-primary);
-    background-color: var(--warm-cream);
+    color: var(--dark-warm-text);
+    background-color: var(--dark-warm-bg);
     -webkit-tap-highlight-color: transparent;
     overflow-x: hidden;
     font-weight: 500;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    color: var(--dark-aubergine);
+    color: #FAF5EF;
     font-weight: 800;
     letter-spacing: -0.02em;
   }
+
+  .light h1, .light h2, .light h3, .light h4, .light h5, .light h6 {
+    color: var(--rich-plum);
+  }
+
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #FAF5EF;
+  }
 }
 
-/* Atmospheric Ambient Textured Background — Warm Cream & Pale Peach with Subtle Terracotta & Sage Reflections */
-.ambient-bg-light {
-  background-color: #FFF5E9;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(255, 224, 204, 0.7) 0px, transparent 55%),
-    radial-gradient(at 100% 0%, rgba(246, 216, 121, 0.3) 0px, transparent 50%),
-    radial-gradient(at 50% 25%, rgba(255, 245, 233, 0.95) 0px, transparent 65%),
-    radial-gradient(at 100% 100%, rgba(217, 141, 165, 0.28) 0px, transparent 55%),
-    radial-gradient(at 0% 100%, rgba(169, 191, 165, 0.25) 0px, transparent 50%),
-    radial-gradient(rgba(100, 45, 72, 0.038) 1.2px, transparent 1.2px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 24px 24px;
-  background-attachment: fixed;
-  color: #30262B;
-}
+/* ================= AMBIENT BACKGROUNDS ================= */
 
+/* Dark Warm Ambient Canvas: Obsidian Plum, Velvet Mahogany & Warm Terracotta Ember Glow */
 .ambient-bg-dark {
-  background-color: #1E121B;
+  background-color: #180B15;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(100, 45, 72, 0.45) 0px, transparent 55%),
-    radial-gradient(at 100% 0%, rgba(200, 91, 73, 0.3) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(30, 18, 27, 0.9) 0px, transparent 65%),
-    radial-gradient(at 100% 100%, rgba(15, 9, 14, 0.98) 0px, transparent 60%),
-    radial-gradient(rgba(233, 208, 183, 0.06) 1.2px, transparent 1.2px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 24px 24px;
+    radial-gradient(at 0% 0%, rgba(142, 59, 93, 0.45) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(200, 102, 80, 0.38) 0px, transparent 50%),
+    radial-gradient(at 50% 35%, rgba(38, 19, 35, 0.98) 0px, transparent 65%),
+    radial-gradient(at 100% 100%, rgba(26, 12, 24, 0.99) 0px, transparent 60%),
+    radial-gradient(at 0% 100%, rgba(197, 163, 106, 0.18) 0px, transparent 55%),
+    radial-gradient(rgba(233, 149, 131, 0.08) 1.2px, transparent 1.2px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 28px 28px;
   background-attachment: fixed;
-  color: #FFF5E9;
+  color: #FAF5EF;
 }
 
-/* ================= CLAYMORPHIC DESIGN SYSTEM ================= */
+/* Light Ambient Canvas: Warm Porcelain base with gentle oat and terracotta warmth */
+.ambient-bg-light {
+  background-color: #FAF5EF;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(233, 223, 210, 0.7) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(197, 163, 106, 0.25) 0px, transparent 50%),
+    radial-gradient(at 50% 25%, rgba(250, 245, 239, 0.98) 0px, transparent 65%),
+    radial-gradient(at 100% 100%, rgba(200, 102, 80, 0.15) 0px, transparent 55%),
+    radial-gradient(at 0% 100%, rgba(126, 146, 123, 0.18) 0px, transparent 50%),
+    radial-gradient(rgba(112, 46, 70, 0.035) 1.2px, transparent 1.2px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 28px 28px;
+  background-attachment: fixed;
+  color: #29252D;
+}
 
-/* Standard Clay Card: Pillowy sculpted surface, warm sand framing, dual inner light */
-.clay-card {
-  background: #FFFDF9;
-  border: 1.5px solid #E9D0B7;
+/* ================= REAL CLAYMORPHISM & EDITORIAL CARDS ================= */
+
+/* Standard Clay Card */
+.clay-card,
+.editorial-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E9DFD2;
   border-radius: 28px;
   box-shadow: 
-    0 12px 28px -6px rgba(57, 38, 53, 0.08),
-    0 4px 12px -2px rgba(57, 38, 53, 0.04),
+    0 12px 28px -6px rgba(41, 37, 45, 0.08),
+    0 4px 12px -2px rgba(41, 37, 45, 0.03),
     inset 0 3px 5px rgba(255, 255, 255, 1),
-    inset 0 -3px 5px rgba(100, 45, 72, 0.04);
-  color: #30262B;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    inset 0 -3px 5px rgba(112, 46, 70, 0.04);
+  color: #29252D;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease;
 }
 
-.clay-card:hover {
+.clay-card:hover,
+.editorial-card:hover {
   transform: translateY(-2px);
   box-shadow: 
-    0 18px 36px -8px rgba(57, 38, 53, 0.12),
-    0 6px 14px -3px rgba(57, 38, 53, 0.05),
+    0 18px 36px -8px rgba(41, 37, 45, 0.12),
+    0 6px 14px -3px rgba(41, 37, 45, 0.05),
     inset 0 3px 5px rgba(255, 255, 255, 1),
-    inset 0 -3px 5px rgba(100, 45, 72, 0.06);
+    inset 0 -3px 5px rgba(112, 46, 70, 0.06);
 }
 
-.ambient-bg-dark .clay-card {
-  background: rgba(45, 28, 40, 0.92);
-  border: 1.5px solid rgba(233, 208, 183, 0.25);
+/* Dark Warm Mode Clay Card: Velvet Mahogany with warm Terracotta edge light */
+.dark .clay-card,
+.dark .editorial-card {
+  background: linear-gradient(145deg, rgba(46, 23, 42, 0.96) 0%, rgba(36, 18, 33, 0.94) 100%);
+  border: 1.5px solid rgba(233, 149, 131, 0.26);
   box-shadow: 
-    0 16px 36px -10px rgba(0, 0, 0, 0.55),
-    inset 0 1px 2px rgba(255, 255, 255, 0.14),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
-  color: #FFF5E9;
+    0 18px 40px -10px rgba(0, 0, 0, 0.65),
+    inset 0 1.5px 2.5px rgba(233, 149, 131, 0.18),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+  color: #FAF5EF;
+}
+
+.dark .clay-card:hover,
+.dark .editorial-card:hover {
+  border-color: rgba(200, 102, 80, 0.45);
+  box-shadow: 
+    0 22px 46px -10px rgba(0, 0, 0, 0.75),
+    inset 0 1.5px 3px rgba(233, 149, 131, 0.25),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Elevated Hero Clay Card: Maximum sculptural presence & layered warm lighting */
-.clay-card-elevated {
-  background: linear-gradient(145deg, #FFFFFF 0%, #FFF5E9 45%, #FFE0CC 100%);
-  border: 1.5px solid #E9D0B7;
+.clay-card-elevated,
+.editorial-card-elevated {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FAF5EF 55%, #F4EBE0 100%);
+  border: 1.5px solid #E9DFD2;
   border-radius: 36px;
   box-shadow: 
-    0 24px 52px -12px rgba(100, 45, 72, 0.12),
-    0 8px 20px -4px rgba(200, 91, 73, 0.06),
+    0 24px 52px -12px rgba(112, 46, 70, 0.12),
+    0 8px 20px -4px rgba(200, 102, 80, 0.06),
     inset 0 4px 6px rgba(255, 255, 255, 1),
-    inset 0 -4px 7px rgba(100, 45, 72, 0.07);
-  color: #30262B;
+    inset 0 -4px 7px rgba(112, 46, 70, 0.06);
+  color: #29252D;
 }
 
-.ambient-bg-dark .clay-card-elevated {
-  background: linear-gradient(145deg, #361F2E 0%, #261521 100%);
-  border: 1.5px solid rgba(233, 208, 183, 0.3);
+/* Dark Warm Elevated Card: Deep Plum Clay with Champagne & Coral Edge Glow */
+.dark .clay-card-elevated,
+.dark .editorial-card-elevated {
+  background: linear-gradient(145deg, rgba(54, 27, 49, 0.98) 0%, rgba(38, 19, 35, 0.98) 60%, rgba(26, 12, 24, 0.99) 100%);
+  border: 1.5px solid rgba(233, 149, 131, 0.32);
   box-shadow: 
-    0 24px 56px -12px rgba(0, 0, 0, 0.7),
-    inset 0 1px 2px rgba(255, 255, 255, 0.16),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.5);
-  color: #FFF5E9;
+    0 28px 64px -14px rgba(0, 0, 0, 0.8),
+    0 8px 24px -4px rgba(200, 102, 80, 0.15),
+    inset 0 2px 3px rgba(233, 149, 131, 0.25),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.6);
+  color: #FAF5EF;
 }
 
-/* Deep Berry Clay Card: Rich editorial contrast surface */
+/* Deep Berry & Rich Plum Clay Cards: Rich editorial contrast surfaces */
 .clay-card-berry,
-.clay-card-plum {
-  background: linear-gradient(135deg, #642D48 0%, #392635 100%);
-  border: 1.5px solid rgba(217, 141, 165, 0.45);
+.clay-card-plum,
+.plum-card {
+  background: linear-gradient(135deg, #702E46 0%, #45263F 100%);
+  border: 1.5px solid rgba(233, 149, 131, 0.4);
   border-radius: 32px;
   box-shadow: 
-    0 22px 48px -10px rgba(57, 38, 53, 0.45),
+    0 22px 48px -10px rgba(41, 37, 45, 0.45),
     inset 0 2px 4px rgba(255, 255, 255, 0.28),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
   color: #FFFFFF;
 }
 
-/* Terracotta Editorial Clay Card */
+/* Terracotta Accent Clay Card */
 .clay-card-terracotta {
-  background: linear-gradient(135deg, #C85B49 0%, #A84736 100%);
-  border: 1.5px solid rgba(255, 224, 204, 0.45);
+  background: linear-gradient(135deg, #C86650 0%, #A84C38 100%);
+  border: 1.5px solid rgba(250, 245, 239, 0.45);
   border-radius: 32px;
   box-shadow: 
-    0 20px 45px -10px rgba(200, 91, 73, 0.35),
-    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    0 20px 45px -10px rgba(200, 102, 80, 0.38),
+    inset 0 2px 4px rgba(255, 255, 255, 0.35),
     inset 0 -2px 5px rgba(0, 0, 0, 0.3);
   color: #FFFFFF;
 }
 
-/* Soft Peach Clay Card */
-.clay-card-peach {
-  background: linear-gradient(135deg, #FFFDF9 0%, #FFE0CC 100%);
-  border: 1.5px solid #E9D0B7;
+/* Muted Sage Positive Clay Card */
+.clay-card-sage {
+  background: linear-gradient(135deg, #7E927B 0%, #637760 100%);
+  border: 1.5px solid rgba(250, 245, 239, 0.45);
   border-radius: 28px;
   box-shadow: 
-    0 10px 24px -5px rgba(200, 91, 73, 0.08),
-    inset 0 2px 4px rgba(255, 255, 255, 1),
-    inset 0 -2px 4px rgba(100, 45, 72, 0.04);
-  color: #30262B;
+    0 16px 36px -8px rgba(99, 119, 96, 0.35),
+    inset 0 2px 3px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+  color: #FFFFFF;
 }
 
-/* ================= RAISED CLAYMORPHIC BUTTONS ================= */
+/* ================= TACTILE CLAYMORPHIC BUTTONS ================= */
 
-/* Primary Button: Terracotta / Coral Editorial Gradient */
+/* Primary Button: Burnt Terracotta Gradient with crisp white text */
 .clay-btn-primary {
-  background: linear-gradient(135deg, #C85B49 0%, #B44A39 100%);
+  background: linear-gradient(135deg, #C86650 0%, #B0533E 100%);
   color: #FFFFFF !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   border-radius: 1.25rem;
   font-weight: 700;
   box-shadow: 
-    0 8px 22px -4px rgba(200, 91, 73, 0.45),
-    inset 0 2px 3px rgba(255, 255, 255, 0.4),
+    0 8px 22px -4px rgba(200, 102, 80, 0.45),
+    inset 0 2px 3px rgba(255, 255, 255, 0.45),
     inset 0 -2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
@@ -190,32 +231,32 @@
 }
 
 .clay-btn-primary:hover {
-  background: linear-gradient(135deg, #D46654 0%, #BD503F 100%);
+  background: linear-gradient(135deg, #D4745E 0%, #BA5D48 100%);
   transform: translateY(-1.5px);
   box-shadow: 
-    0 12px 28px -4px rgba(200, 91, 73, 0.52),
-    inset 0 2px 3px rgba(255, 255, 255, 0.5),
+    0 12px 28px -4px rgba(200, 102, 80, 0.55),
+    inset 0 2px 3px rgba(255, 255, 255, 0.55),
     inset 0 -2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .clay-btn-primary:active {
   transform: translateY(1px);
   box-shadow: 
-    0 4px 10px -2px rgba(200, 91, 73, 0.38),
+    0 4px 10px -2px rgba(200, 102, 80, 0.4),
     inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Secondary Button: Warm Cream Clay Surface */
+/* Secondary Button: Warm Porcelain & Soft Oat Surface */
 .clay-btn-secondary {
-  background: linear-gradient(135deg, #FFFDF9 0%, #FFF5E9 100%);
-  color: #30262B !important;
-  border: 1.5px solid #E9D0B7;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FAF5EF 100%);
+  color: #29252D !important;
+  border: 1.5px solid #E9DFD2;
   border-radius: 1.25rem;
   font-weight: 700;
   box-shadow: 
-    0 6px 16px -3px rgba(57, 38, 53, 0.08),
+    0 6px 16px -3px rgba(41, 37, 45, 0.08),
     inset 0 2px 3px rgba(255, 255, 255, 1),
-    inset 0 -2px 3px rgba(100, 45, 72, 0.04);
+    inset 0 -2px 3px rgba(112, 46, 70, 0.04);
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   user-select: none;
@@ -223,183 +264,196 @@
 
 .clay-btn-secondary:hover {
   background: #FFFFFF;
-  border-color: #D98DA5;
-  color: #642D48 !important;
+  border-color: #C86650;
+  color: #702E46 !important;
   transform: translateY(-1.5px);
   box-shadow: 
-    0 10px 22px -4px rgba(57, 38, 53, 0.12),
+    0 10px 22px -4px rgba(41, 37, 45, 0.12),
     inset 0 2px 3px rgba(255, 255, 255, 1),
-    inset 0 -2px 3px rgba(100, 45, 72, 0.05);
+    inset 0 -2px 3px rgba(112, 46, 70, 0.06);
 }
 
 .clay-btn-secondary:active {
   transform: translateY(1px);
   box-shadow: 
-    0 3px 8px -2px rgba(57, 38, 53, 0.08),
-    inset 0 2px 3px rgba(100, 45, 72, 0.08);
+    0 3px 8px -2px rgba(41, 37, 45, 0.08),
+    inset 0 2px 3px rgba(112, 46, 70, 0.08);
+}
+
+/* Dark Warm Secondary Button */
+.dark .clay-btn-secondary {
+  background: linear-gradient(135deg, #3C1E37 0%, #2D1629 100%);
+  color: #FAF5EF !important;
+  border: 1.5px solid rgba(233, 149, 131, 0.28);
+  box-shadow: 
+    0 6px 18px -3px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(233, 149, 131, 0.2),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.45);
+}
+
+.dark .clay-btn-secondary:hover {
+  border-color: #C86650;
+  background: linear-gradient(135deg, #482342 0%, #351A31 100%);
+  color: #FFFFFF !important;
 }
 
 /* Deep Berry Hero Button */
 .clay-btn-berry {
-  background: linear-gradient(135deg, #642D48 0%, #4D1F35 100%);
+  background: linear-gradient(135deg, #702E46 0%, #582136 100%);
   color: #FFFFFF !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   border-radius: 1.25rem;
   font-weight: 700;
   box-shadow: 
-    0 8px 22px -4px rgba(100, 45, 72, 0.42),
-    inset 0 2px 3px rgba(255, 255, 255, 0.35),
+    0 8px 22px -4px rgba(112, 46, 70, 0.45),
+    inset 0 2px 3px rgba(255, 255, 255, 0.4),
     inset 0 -2px 4px rgba(0, 0, 0, 0.3);
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
 .clay-btn-berry:hover {
-  background: linear-gradient(135deg, #743454 0%, #5B2540 100%);
+  background: linear-gradient(135deg, #813753 0%, #682740 100%);
   transform: translateY(-1.5px);
-  box-shadow: 0 12px 26px -4px rgba(100, 45, 72, 0.5);
+  box-shadow: 0 12px 26px -4px rgba(112, 46, 70, 0.55);
 }
 
-/* Emergency Button: Vibrant Crimson Red */
+/* Emergency Crimson SOS Button */
 .clay-btn-emergency {
-  background: linear-gradient(135deg, #D42B49 0%, #B4233D 100%);
+  background: linear-gradient(135deg, #D42B49 0%, #BA223C 100%);
   color: #FFFFFF !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
   border-radius: 1.25rem;
   font-weight: 800;
   letter-spacing: 0.03em;
   box-shadow: 
-    0 10px 26px -4px rgba(180, 35, 61, 0.48),
-    inset 0 2px 3px rgba(255, 255, 255, 0.5),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+    0 10px 26px -4px rgba(186, 34, 60, 0.5),
+    inset 0 2px 3px rgba(255, 255, 255, 0.55),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.35);
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   user-select: none;
 }
 
 .clay-btn-emergency:hover {
-  background: linear-gradient(135deg, #E23856 0%, #C32843 100%);
+  background: linear-gradient(135deg, #E23856 0%, #C92843 100%);
   transform: translateY(-1.5px);
   box-shadow: 
-    0 14px 32px -4px rgba(180, 35, 61, 0.55),
-    inset 0 2px 3px rgba(255, 255, 255, 0.6),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+    0 14px 32px -4px rgba(186, 34, 60, 0.6),
+    inset 0 2px 3px rgba(255, 255, 255, 0.65),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.35);
 }
 
 .clay-btn-emergency:active {
   transform: translateY(1px);
   box-shadow: 
-    0 4px 12px -2px rgba(180, 35, 61, 0.4),
+    0 4px 12px -2px rgba(186, 34, 60, 0.4),
     inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* ================= IMMERSIVE GLASSMORPHISM ================= */
+/* ================= REAL GLASSMORPHISM ================= */
 
-/* Genuine Frosted Glass Panel with Multilayered Light Sheen */
+/* Standard Frosted Glass Panel */
 .glass-panel,
 .glass-card {
-  background: rgba(255, 253, 249, 0.82);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  outline: 1px solid rgba(233, 208, 183, 0.65);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  outline: 1px solid rgba(233, 223, 210, 0.8);
   border-radius: 28px;
   box-shadow: 
-    0 14px 32px -6px rgba(57, 38, 53, 0.08),
-    0 4px 12px -2px rgba(57, 38, 53, 0.03),
-    inset 0 2px 4px rgba(255, 255, 255, 0.95),
-    inset 0 -2px 3px rgba(100, 45, 72, 0.03);
-  color: #30262B;
+    0 14px 32px -6px rgba(41, 37, 45, 0.08),
+    0 4px 12px -2px rgba(41, 37, 45, 0.03),
+    inset 0 2px 4px rgba(255, 255, 255, 1),
+    inset 0 -2px 3px rgba(112, 46, 70, 0.03);
+  color: #29252D;
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel:hover {
   transform: translateY(-1.5px);
   box-shadow: 
-    0 18px 38px -8px rgba(57, 38, 53, 0.12),
+    0 18px 38px -8px rgba(41, 37, 45, 0.12),
     inset 0 2px 4px rgba(255, 255, 255, 1);
 }
 
-.ambient-bg-dark .glass-panel,
-.ambient-bg-dark .glass-card {
-  background: rgba(38, 24, 34, 0.85);
-  border: 1.5px solid rgba(233, 208, 183, 0.25);
-  outline: 1px solid rgba(255, 255, 255, 0.08);
+.dark .glass-panel,
+.dark .glass-card {
+  background: rgba(42, 21, 38, 0.92);
+  backdrop-filter: blur(26px) saturate(180%);
+  -webkit-backdrop-filter: blur(26px) saturate(180%);
+  border: 1.5px solid rgba(233, 149, 131, 0.25);
+  outline: 1px solid rgba(200, 102, 80, 0.15);
   box-shadow: 
-    0 16px 36px -10px rgba(0, 0, 0, 0.6),
-    inset 0 1px 2px rgba(255, 255, 255, 0.14);
-  color: #FFF5E9;
+    0 18px 42px -10px rgba(0, 0, 0, 0.7),
+    inset 0 1.5px 2px rgba(233, 149, 131, 0.18);
+  color: #FAF5EF;
 }
 
 /* Elevated Glass Panel with Radial Specular Highlight */
 .glass-panel-elevated {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 245, 233, 0.85) 50%, rgba(255, 224, 204, 0.78) 100%);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.94) 0%, rgba(250, 245, 239, 0.9) 50%, rgba(245, 234, 224, 0.85) 100%);
   backdrop-filter: blur(28px) saturate(170%);
   -webkit-backdrop-filter: blur(28px) saturate(170%);
-  border: 1.5px solid rgba(255, 255, 255, 0.95);
-  outline: 1px solid rgba(233, 208, 183, 0.7);
+  border: 1.5px solid rgba(255, 255, 255, 0.98);
+  outline: 1px solid rgba(233, 223, 210, 0.85);
   border-radius: 32px;
   box-shadow: 
-    0 22px 48px -10px rgba(100, 45, 72, 0.12),
-    0 8px 18px -3px rgba(200, 91, 73, 0.05),
+    0 22px 48px -10px rgba(112, 46, 70, 0.12),
+    0 8px 18px -3px rgba(200, 102, 80, 0.05),
     inset 0 3px 5px rgba(255, 255, 255, 1),
-    inset 0 -3px 5px rgba(100, 45, 72, 0.05);
-  color: #30262B;
+    inset 0 -3px 5px rgba(112, 46, 70, 0.05);
+  color: #29252D;
 }
 
-.ambient-bg-dark .glass-panel-elevated {
-  background: rgba(45, 28, 40, 0.9);
-  border: 1.5px solid rgba(233, 208, 183, 0.35);
+.dark .glass-panel-elevated {
+  background: linear-gradient(145deg, rgba(50, 25, 45, 0.96) 0%, rgba(38, 19, 34, 0.94) 100%);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1.5px solid rgba(233, 149, 131, 0.32);
+  outline: 1px solid rgba(200, 102, 80, 0.2);
   box-shadow: 
-    0 22px 52px -12px rgba(0, 0, 0, 0.65),
-    inset 0 1px 2px rgba(255, 255, 255, 0.16);
-  color: #FFF5E9;
+    0 24px 56px -12px rgba(0, 0, 0, 0.78),
+    inset 0 1.5px 2.5px rgba(233, 149, 131, 0.2);
+  color: #FAF5EF;
 }
 
-/* Warm Navigation Glass Dock */
+/* Navigation Glass Dock */
 .clay-nav-dock,
 .glass-nav-dock {
-  background: rgba(255, 245, 233, 0.94);
+  background: rgba(250, 245, 239, 0.95);
   backdrop-filter: blur(24px) saturate(170%);
   -webkit-backdrop-filter: blur(24px) saturate(170%);
-  border: 1.5px solid #E9D0B7;
+  border: 1.5px solid #E9DFD2;
   border-radius: 28px;
   box-shadow: 
-    0 16px 38px -8px rgba(57, 38, 53, 0.16),
-    0 4px 14px rgba(57, 38, 53, 0.06),
+    0 16px 38px -8px rgba(41, 37, 45, 0.16),
+    0 4px 14px rgba(41, 37, 45, 0.06),
     inset 0 2px 3px rgba(255, 255, 255, 1),
-    inset 0 -2px 3px rgba(100, 45, 72, 0.04);
+    inset 0 -2px 3px rgba(112, 46, 70, 0.04);
 }
 
-.ambient-bg-dark .clay-nav-dock,
-.ambient-bg-dark .glass-nav-dock {
-  background: rgba(30, 18, 27, 0.94);
-  border: 1.5px solid rgba(233, 208, 183, 0.3);
+.dark .clay-nav-dock,
+.dark .glass-nav-dock {
+  background: rgba(36, 18, 33, 0.95);
+  backdrop-filter: blur(26px) saturate(180%);
+  -webkit-backdrop-filter: blur(26px) saturate(180%);
+  border: 1.5px solid rgba(233, 149, 131, 0.3);
   box-shadow: 
-    0 20px 48px -8px rgba(0, 0, 0, 0.7),
-    inset 0 1px 2px rgba(255, 255, 255, 0.15),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+    0 22px 52px -8px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(233, 149, 131, 0.2),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.55);
 }
 
-/* Backward-compatible plum card mapping to deep berry */
-.plum-card {
-  background: linear-gradient(135deg, #642D48 0%, #392635 100%);
-  border: 1.5px solid rgba(217, 141, 165, 0.45);
-  box-shadow: 
-    0 20px 45px -10px rgba(57, 38, 53, 0.45),
-    inset 0 2px 4px rgba(255, 255, 255, 0.28),
-    inset 0 -2px 5px rgba(0, 0, 0, 0.35);
-  color: #FFFFFF;
-}
-
-/* PIN Keypad Numeric Button Styles - Anti-Inheritance & High Contrast */
+/* ================= HIGH-CONTRAST PIN KEYPAD ================= */
 .pin-digit-btn {
-  background-color: #FFFDF9 !important;
-  border: 1.5px solid #E9D0B7 !important;
-  color: #30262B !important;
-  -webkit-text-fill-color: #30262B !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid #E9DFD2 !important;
+  color: #29252D !important;
+  -webkit-text-fill-color: #29252D !important;
   font-size: 20px !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
   line-height: 1 !important;
   opacity: 1 !important;
   visibility: visible !important;
@@ -408,31 +462,47 @@
   justify-content: center !important;
   border-radius: 1.25rem !important;
   box-shadow: 
-    0 5px 12px rgba(57, 38, 53, 0.08),
+    0 5px 12px rgba(41, 37, 45, 0.08),
     inset 0 2px 3px #FFFFFF !important,
-    inset 0 -2px 3px rgba(100, 45, 72, 0.04) !important;
+    inset 0 -2px 3px rgba(112, 46, 70, 0.04) !important;
   transition: all 0.15s ease-in-out !important;
   cursor: pointer !important;
   user-select: none !important;
 }
 
 .pin-digit-btn:hover {
-  background-color: #FFE0CC !important;
-  border-color: #C85B49 !important;
-  color: #642D48 !important;
-  -webkit-text-fill-color: #642D48 !important;
+  background: #FAF5EF !important;
+  border-color: #C86650 !important;
+  color: #702E46 !important;
+  -webkit-text-fill-color: #702E46 !important;
+  transform: translateY(-1px) !important;
 }
 
 .pin-digit-btn:active {
-  background-color: #F6D879 !important;
+  background: #E9DFD2 !important;
   transform: scale(0.96) !important;
 }
 
+.dark .pin-digit-btn {
+  background: #3A1F33 !important;
+  border-color: rgba(233, 149, 131, 0.35) !important;
+  color: #FAF5EF !important;
+  -webkit-text-fill-color: #FAF5EF !important;
+  box-shadow: 
+    0 6px 14px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(233, 149, 131, 0.25) !important;
+}
+
+.dark .pin-digit-btn:hover {
+  background: #4E2745 !important;
+  border-color: #C86650 !important;
+}
+
 .pin-control-btn {
-  background-color: #FFF5E9 !important;
-  border: 1.5px solid #E9D0B7 !important;
-  color: #642D48 !important;
-  -webkit-text-fill-color: #642D48 !important;
+  background: #FAF5EF !important;
+  border: 1.5px solid #E9DFD2 !important;
+  color: #702E46 !important;
+  -webkit-text-fill-color: #702E46 !important;
   font-size: 13px !important;
   font-weight: 800 !important;
   letter-spacing: 0.02em !important;
@@ -443,7 +513,7 @@
   justify-content: center !important;
   border-radius: 1.25rem !important;
   box-shadow: 
-    0 4px 10px rgba(57, 38, 53, 0.06),
+    0 4px 10px rgba(41, 37, 45, 0.06),
     inset 0 1px 2px #FFFFFF !important;
   transition: all 0.15s ease-in-out !important;
   cursor: pointer !important;
@@ -451,18 +521,29 @@
 }
 
 .pin-control-btn:hover {
-  background-color: #FFE0CC !important;
-  border-color: #D98DA5 !important;
+  background: #E9DFD2 !important;
+  border-color: #C86650 !important;
 }
 
 .pin-control-btn:active {
-  background-color: #E9D0B7 !important;
   transform: scale(0.96) !important;
 }
 
+.dark .pin-control-btn {
+  background: #2E1629 !important;
+  border-color: rgba(233, 149, 131, 0.3) !important;
+  color: #E99583 !important;
+  -webkit-text-fill-color: #E99583 !important;
+}
+
 .pin-control-btn svg {
-  color: #642D48 !important;
-  stroke: #642D48 !important;
+  color: #702E46 !important;
+  stroke: #702E46 !important;
+}
+
+.dark .pin-control-btn svg {
+  color: #E99583 !important;
+  stroke: #E99583 !important;
 }
 
 /* Custom Scrollbars */
@@ -474,32 +555,14 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(200, 91, 73, 0.28);
+  background: rgba(200, 102, 80, 0.45);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(200, 91, 73, 0.48);
+  background: rgba(200, 102, 80, 0.65);
 }
 
-/* CSS 3D Transforms Animations & Utilities */
-@keyframes orbital-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes clay-levitate {
-  0%, 100% {
-    transform: translateY(0px) rotateZ(0deg);
-  }
-  50% {
-    transform: translateY(-8px) rotateZ(0.5deg);
-  }
-}
-
+/* 3D Helpers */
 .preserve-3d {
   transform-style: preserve-3d;
 }

@@ -114,25 +114,25 @@ export const SafeSaathi3DCorridor: React.FC<SafeSaathi3DCorridorProps> = ({
     // 1. Translucent Base Disc with Concentric Deviation Rings
     const discGeo = new THREE.CylinderGeometry(1.6, 1.6, 0.06, 64);
     const discMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color('#FAF7FF'),
+      color: new THREE.Color('#FAF5EF'),
       metalness: 0.1,
       roughness: 0.15,
-      transmission: 0.8,
+      transmission: 0.85,
       thickness: 0.8,
       ior: 1.48,
       clearcoat: 1.0,
       transparent: true,
-      opacity: 0.92,
+      opacity: 0.95,
     });
     const disc = new THREE.Mesh(discGeo, discMat);
     rootGroup.add(disc);
 
-    // 2. Concentric Safe Corridor Perimeters (100m, 300m, 500m threshold)
+    // 2. Concentric Safe Corridor Perimeters (Champagne Gold threshold rings)
     const ringMat = new THREE.MeshBasicMaterial({
-      color: new THREE.Color('#D8CCE8'),
+      color: new THREE.Color('#C5A36A'),
       wireframe: false,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.75,
     });
     [0.6, 1.0, 1.4].forEach((radius) => {
       const ring = new THREE.Mesh(new THREE.TorusGeometry(radius, 0.008, 8, 64), ringMat);
@@ -141,7 +141,7 @@ export const SafeSaathi3DCorridor: React.FC<SafeSaathi3DCorridorProps> = ({
       rootGroup.add(ring);
     });
 
-    // 3. 3D Route Corridor Ribbon (Curved 3D spline representing the route)
+    // 3. 3D Route Corridor Ribbon (Deep Berry spline)
     const curve = new THREE.CatmullRomCurve3([
       new THREE.Vector3(-1.1, 0.05, 0.8),
       new THREE.Vector3(-0.4, 0.05, 0.3),
@@ -151,22 +151,22 @@ export const SafeSaathi3DCorridor: React.FC<SafeSaathi3DCorridorProps> = ({
     ]);
     const tubeGeo = new THREE.TubeGeometry(curve, 32, 0.024, 8, false);
     const tubeMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#6C3A82'),
+      color: new THREE.Color('#702E46'),
       metalness: 0.4,
       roughness: 0.2,
-      emissive: new THREE.Color('#55276B'),
+      emissive: new THREE.Color('#45263F'),
       emissiveIntensity: 0.3,
     });
     const routeTube = new THREE.Mesh(tubeGeo, tubeMat);
     rootGroup.add(routeTube);
 
-    // 4. Current User Beacon (Dimensional faceted pin hovering on route)
+    // 4. Current User Beacon (Burnt Terracotta faceted pin)
     const beaconGeo = new THREE.ConeGeometry(0.1, 0.24, 16);
     beaconGeo.center();
     const beaconMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#DF4B5E'),
-      emissive: new THREE.Color('#DF4B5E'),
-      emissiveIntensity: 0.45,
+      color: new THREE.Color('#C86650'),
+      emissive: new THREE.Color('#C86650'),
+      emissiveIntensity: 0.5,
       metalness: 0.5,
       roughness: 0.2,
     });
@@ -176,10 +176,10 @@ export const SafeSaathi3DCorridor: React.FC<SafeSaathi3DCorridorProps> = ({
     rootGroup.add(beacon);
     waypointMeshRef.current = beacon;
 
-    // 5. Escort Directional Guidance Beam
+    // 5. Escort Directional Guidance Beam (Warm Coral)
     const beamGeo = new THREE.CylinderGeometry(0.015, 0.015, 0.8, 16);
     const beamMat = new THREE.MeshBasicMaterial({
-      color: new THREE.Color('#8B5CF6'),
+      color: new THREE.Color('#E99583'),
       transparent: true,
       opacity: 0.75,
     });

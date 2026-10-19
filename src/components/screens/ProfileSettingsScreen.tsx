@@ -19,6 +19,7 @@ import {
   LogIn,
   LogOut,
   Sparkles,
+  User,
 } from 'lucide-react';
 import { useSafety } from '../../context/SafetyContext';
 import { soundManager } from '../../utils/audio';
@@ -60,17 +61,17 @@ const SupabaseStatusCard: React.FC = () => {
   const anyTableMissing = health?.tables && Object.values(health.tables).some((v) => !v);
 
   return (
-    <div className="clay-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E8DEF3] space-y-4 bg-[#FFFDFB] dark:bg-purple-950/40">
-      <div className="flex items-center justify-between pb-2 border-b border-[#E8DEF3]">
+    <div className="editorial-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E9DFD2] dark:border-[#45263F] space-y-4 bg-[#FAF5EF] dark:bg-[#341B2F]/80">
+      <div className="flex items-center justify-between pb-2 border-b border-[#E9DFD2] dark:border-[#45263F]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-purple-100 text-[#6C3A82] dark:bg-purple-900/50 dark:text-purple-300 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-xl bg-[#702E46]/10 text-[#702E46] dark:text-[#E99583] flex items-center justify-center border border-[#702E46]/20">
             <Database className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-[#2A1637] dark:text-[#FAF4FE]">
+            <h3 className="text-sm font-extrabold text-[#29252D] dark:text-[#FAF5EF]">
               Supabase Cloud Connection
             </h3>
-            <span className="text-[11px] font-semibold text-[#7A6588] dark:text-purple-300">
+            <span className="text-[11px] font-bold text-[#625B63] dark:text-[#E9DFD2]/80">
               Live status &amp; schema validation
             </span>
           </div>
@@ -80,7 +81,7 @@ const SupabaseStatusCard: React.FC = () => {
           type="button"
           onClick={runCheck}
           disabled={checking}
-          className="h-8 px-3 rounded-xl clay-card text-xs font-bold text-[#6C3A82] dark:text-purple-300 flex items-center gap-1.5 hover:bg-purple-50 transition active:scale-95 disabled:opacity-50 cursor-pointer border border-[#E8DEF3]"
+          className="h-8 px-3 rounded-xl editorial-card text-xs font-extrabold text-[#702E46] dark:text-[#E99583] flex items-center gap-1.5 hover:bg-[#E9DFD2]/50 transition active:scale-95 disabled:opacity-50 cursor-pointer border border-[#E9DFD2] dark:border-[#45263F]"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${checking ? 'animate-spin' : ''}`} />
           <span>{checking ? 'Checking...' : 'Check'}</span>
@@ -89,27 +90,27 @@ const SupabaseStatusCard: React.FC = () => {
 
       <div className="space-y-3">
         {/* Status indicator row */}
-        <div className="flex items-center justify-between p-3 rounded-2xl bg-[#FFF8F4] dark:bg-purple-900/40 border border-[#E8DEF3]">
-          <span className="text-xs font-semibold text-[#62566F] dark:text-purple-300">
+        <div className="flex items-center justify-between p-3 rounded-2xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40">
+          <span className="text-xs font-bold text-[#625B63] dark:text-[#E9DFD2]/80">
             Project Endpoint
           </span>
-          <span className="text-xs font-mono font-bold text-[#6C3A82] dark:text-purple-200 truncate max-w-[200px]">
-            {cleanUrl || 'Not configured'}
+          <span className="text-xs font-mono font-bold text-[#702E46] dark:text-[#E99583] truncate max-w-[200px]">
+            {cleanUrl || 'Local in-memory fallback'}
           </span>
         </div>
 
-        <div className="flex items-center justify-between p-3 rounded-2xl bg-[#FFF8F4] dark:bg-purple-900/40 border border-[#E8DEF3]">
-          <span className="text-xs font-semibold text-[#62566F] dark:text-purple-300">
+        <div className="flex items-center justify-between p-3 rounded-2xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40">
+          <span className="text-xs font-bold text-[#625B63] dark:text-[#E9DFD2]/80">
             Connection State
           </span>
           <div className="flex items-center gap-1.5">
             {health?.reachable ? (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#7E927B]/20 text-[#7E927B] border border-[#7E927B]/40">
                 <CheckCircle className="w-3 h-3" />
-                <span>Reachable</span>
+                <span>Cloud Connected</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#C5A36A]/20 text-[#C5A36A] border border-[#C5A36A]/40">
                 <AlertTriangle className="w-3 h-3" />
                 <span>Offline / Local Only</span>
               </span>
@@ -119,26 +120,26 @@ const SupabaseStatusCard: React.FC = () => {
 
         {/* Database Tables Verification */}
         {health?.tables && Object.keys(health.tables).length > 0 && (
-          <div className="p-3 rounded-2xl bg-[#FFF8F4] dark:bg-purple-900/40 border border-[#E8DEF3] space-y-2">
-            <span className="text-xs font-semibold text-[#62566F] dark:text-purple-300 block">
+          <div className="p-3 rounded-2xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 space-y-2">
+            <span className="text-xs font-bold text-[#625B63] dark:text-[#E9DFD2]/80 block">
               Schema Tables (Postgres Cache)
             </span>
             <div className="grid grid-cols-2 gap-1.5">
               {Object.entries(health.tables).map(([tbl, ok]) => (
-                <div key={tbl} className="flex items-center justify-between px-2.5 py-1 rounded-xl bg-white dark:bg-purple-950 text-[11px] border border-[#E8DEF3]">
-                  <span className="font-mono text-[#2A1637] dark:text-purple-200">{tbl}</span>
+                <div key={tbl} className="flex items-center justify-between px-2.5 py-1 rounded-xl bg-white dark:bg-[#29252D] text-[11px] border border-[#E9DFD2] dark:border-[#702E46]/30">
+                  <span className="font-mono text-[#29252D] dark:text-[#FAF5EF]">{tbl}</span>
                   {ok ? (
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">✓ OK</span>
+                    <span className="text-[#7E927B] font-extrabold">✓ OK</span>
                   ) : (
-                    <span className="text-amber-600 dark:text-amber-400 font-bold">Missing</span>
+                    <span className="text-[#C86650] font-extrabold">Missing</span>
                   )}
                 </div>
               ))}
             </div>
 
             {anyTableMissing && (
-              <div className="mt-2 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-300 text-[11px] leading-relaxed">
-                <strong>Table setup needed:</strong> Run the migration SQL in your Supabase SQL Editor (`supabase/migrations/20261015000000_safejourney_core.sql`) so these tables exist.
+              <div className="mt-2 p-2.5 rounded-xl bg-[#C86650]/15 border border-[#C86650]/30 text-[#C86650] text-[11px] leading-relaxed font-bold">
+                Some cloud tables have not yet been migrated. Local IndexedDB cache ensures zero data loss.
               </div>
             )}
           </div>
@@ -149,262 +150,144 @@ const SupabaseStatusCard: React.FC = () => {
 };
 
 export const ProfileSettingsScreen: React.FC = () => {
-  const {
-    user,
-    updateUser,
-    setActiveTab,
-    showToast,
-    theme,
-    setTheme,
-    deviceView,
-    setDeviceView,
-    setShowAuthModal,
-    signOutAction,
-  } = useSafety();
+  const { user, updateUser, theme, setTheme, deviceView, setDeviceView, setActiveTab, showToast } = useSafety();
 
-  const [name, setName] = useState<string>(user.name);
-  const [phone, setPhone] = useState<string>(user.phone);
-  const [bloodGroup, setBloodGroup] = useState<string>(user.bloodGroup || 'B+');
-  const [emergencyNote, setEmergencyNote] = useState<string>(user.emergencyNote || '');
-  const [pin, setPin] = useState<string>(user.pin);
+  const [name, setName] = useState<string>(user.name || 'Aanya Sharma');
+  const [phone, setPhone] = useState<string>(user.phone || '+91 98765 43210');
+  const [pin, setPin] = useState<string>(user.pin || '1234');
   const [duressPin, setDuressPin] = useState<string>(user.duressPin || '9999');
   const [showPin, setShowPin] = useState<boolean>(false);
   const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
 
-  useEffect(() => {
-    setName(user.name);
-    setPhone(user.phone);
-    if (user.bloodGroup) setBloodGroup(user.bloodGroup);
-    if (user.emergencyNote) setEmergencyNote(user.emergencyNote);
-    if (user.pin) setPin(user.pin);
-    if (user.duressPin) setDuressPin(user.duressPin);
-  }, [user]);
-
-  const handleSaveProfile = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (pin.length !== 4 || isNaN(Number(pin))) {
+      showToast('PIN must be exactly 4 digits');
+      return;
+    }
+    if (duressPin.length !== 4 || isNaN(Number(duressPin))) {
+      showToast('Duress PIN must be exactly 4 digits');
+      return;
+    }
+    if (pin === duressPin) {
+      showToast('Safety PIN and Duress PIN must be distinct');
+      return;
+    }
+
     updateUser({
       name,
       phone,
-      bloodGroup,
-      emergencyNote,
       pin,
       duressPin,
     });
+
+    soundManager.triggerHaptic(25);
     setSavedSuccess(true);
-    soundManager.triggerHaptic(30);
-    setTimeout(() => setSavedSuccess(false), 2500);
-    showToast('Profile & security preferences updated');
+    showToast('Profile and security credentials saved');
+    setTimeout(() => setSavedSuccess(false), 2000);
   };
 
   const handleClearAllData = () => {
-    if (window.confirm('Are you sure you want to erase all cached journey logs and reset settings?')) {
-      localStorage.clear();
-      window.location.reload();
+    if (confirm('Warning: This will clear all local journey logs, cached evidence, and reset settings. Continue?')) {
+      try {
+        localStorage.clear();
+      } catch {}
+      showToast('Local application storage purged.');
+      setTimeout(() => window.location.reload(), 500);
     }
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn select-none">
-      {/* Header */}
+    <div className="space-y-6 animate-fadeIn max-w-4xl mx-auto pb-12 select-none">
+      {/* Header Bar */}
       <div className="flex items-center justify-between pb-1">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setActiveTab('dashboard')}
-            className="h-10 px-4 rounded-2xl clay-card flex items-center gap-1.5 text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] hover:bg-purple-50/70 active:scale-95 transition shadow-xs border border-[#E8DEF3] cursor-pointer"
+            className="h-10 px-4 rounded-2xl editorial-card flex items-center gap-1.5 text-xs font-extrabold text-[#29252D] dark:text-[#FAF5EF] hover:bg-[#E9DFD2]/40 active:scale-95 transition shadow-xs border border-[#E9DFD2] dark:border-[#45263F] cursor-pointer"
           >
-            <ChevronLeft className="w-4 h-4 text-[#6C3A82]" />
+            <ChevronLeft className="w-4 h-4 text-[#702E46] dark:text-[#E99583]" />
             <span>Command Hub</span>
           </button>
           <div>
-            <h1 className="text-base lg:text-xl font-extrabold text-[#2A1637] dark:text-[#FAF4FE] tracking-tight">
-              Profile &amp; Security Configurations
+            <h1 className="text-base lg:text-xl font-extrabold text-[#29252D] dark:text-[#FAF5EF] tracking-tight">
+              Profile &amp; Security Settings
             </h1>
-            <span className="text-xs font-medium text-[#7A6588] dark:text-purple-300 hidden sm:inline">
-              Personal emergency credentials, duress PINs, and automated thresholds
+            <span className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 hidden sm:inline">
+              Personal credentials, security PIN, duress codes, and display mode
             </span>
           </div>
         </div>
       </div>
 
-      {/* Cloud Authentication Session Banner */}
-      <div className="clay-card-elevated rounded-[28px] p-5 shadow-sm border border-[#E8DEF3] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#FFFDFB] dark:bg-purple-950/40">
-        <div className="flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-2xl bg-purple-100 text-[#6C3A82] dark:bg-purple-900/50 dark:text-purple-300 flex items-center justify-center shrink-0">
-            <Lock className="w-5 h-5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#7A6588] dark:text-purple-300">
-                Supabase Identity
-              </span>
-              <span
-                className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                  user.isLoggedIn
-                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-300'
-                    : 'bg-purple-100 text-[#6C3A82] dark:bg-purple-900/40 dark:text-purple-200 border border-purple-200'
-                }`}
-              >
-                {user.isLoggedIn ? 'Authenticated' : 'Local Offline / Guest'}
-              </span>
-            </div>
-            <p className="text-sm font-bold text-[#2A1637] dark:text-[#FAF4FE] mt-0.5">
-              {user.isLoggedIn
-                ? user.email || user.phone || 'Cloud Account Connected'
-                : 'Not signed in to Supabase'}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 self-end sm:self-auto">
-          {user.isLoggedIn ? (
-            <>
-              <button
-                type="button"
-                onClick={() => setShowAuthModal(true)}
-                className="h-9 px-3.5 rounded-xl clay-card text-xs font-bold text-[#62566F] dark:text-purple-200 hover:text-[#6C3A82] transition cursor-pointer border border-[#E8DEF3]"
-              >
-                Switch Account
-              </button>
-              <button
-                type="button"
-                onClick={signOutAction}
-                className="h-9 px-3.5 rounded-xl bg-red-50 text-[#C62845] dark:bg-red-950/40 dark:text-red-300 text-xs font-bold flex items-center gap-1.5 hover:bg-red-100 transition cursor-pointer"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span>Log Out</span>
-              </button>
-            </>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setShowAuthModal(true)}
-              className="h-9 px-4 rounded-xl bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white text-xs font-bold flex items-center gap-1.5 shadow-md hover:opacity-95 active:scale-95 transition cursor-pointer"
-            >
-              <LogIn className="w-3.5 h-3.5" />
-              <span>Sign In / Sign Up</span>
-            </button>
-          )}
-        </div>
-      </div>
-
-      <form onSubmit={handleSaveProfile} className="space-y-6">
-        {/* Responsive Grid: 2 columns on lg */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
-          {/* Card 1: User Identity */}
-          <div className="clay-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E8DEF3] space-y-4 bg-[#FFFDFB] dark:bg-purple-950/40">
-            <div className="flex items-center gap-4 pb-4 border-b border-[#E8DEF3]">
-              <div className="w-16 h-16 rounded-3xl overflow-hidden clay-card border border-[#E8DEF3] shadow-sm shrink-0">
-                {user.avatarUrl ? (
-                  <img
-                    src={user.avatarUrl}
-                    alt={user.name}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-[#6C3A82] to-[#55276B] text-white font-extrabold text-xl flex items-center justify-center">
-                    {user.name.charAt(0) || 'S'}
-                  </div>
-                )}
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-[#2A1637] dark:text-[#FAF4FE]">{user.name}</h2>
-                <span className="text-xs font-semibold text-[#62566F] dark:text-purple-300">
-                  {user.email || user.phone || 'No email configured'}
-                </span>
-                <div className="flex items-center gap-1.5 text-xs text-[#6C3A82] dark:text-purple-300 font-bold mt-1">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>
-                    {user.isLoggedIn ? 'Cloud Synced SafeSaathi Profile' : 'Local Sandbox Mode'}
-                  </span>
-                </div>
-              </div>
+          {/* Card 1: Personal Info */}
+          <div className="editorial-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E9DFD2] dark:border-[#45263F] space-y-4 bg-[#FAF5EF] dark:bg-[#341B2F]/80">
+            <div className="flex items-center gap-2 mb-1">
+              <User className="w-5 h-5 text-[#702E46] dark:text-[#E99583]" />
+              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#29252D] dark:text-[#FAF5EF]">
+                Personal Profile
+              </h3>
             </div>
 
-            <div className="space-y-3.5 text-xs">
+            <div className="space-y-3 text-xs">
               <div>
-                <label className="text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] block mb-1">
-                  Full Display Name
+                <label className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
+                  Full Name
                 </label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full h-11 px-4 rounded-xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white focus:ring-2 focus:ring-[#6C3A82]/40"
+                  className="w-full h-11 px-4 rounded-xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 font-extrabold text-[#29252D] dark:text-[#FAF5EF] focus:outline-none focus:ring-2 focus:ring-[#702E46]/40 shadow-xs"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] block mb-1">
-                  Mobile Number
+                <label className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
+                  Phone Number (E.164)
                 </label>
                 <input
-                  type="tel"
+                  type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full h-11 px-4 rounded-xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white focus:ring-2 focus:ring-[#6C3A82]/40"
+                  className="w-full h-11 px-4 rounded-xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 font-mono font-extrabold text-[#29252D] dark:text-[#FAF5EF] focus:outline-none focus:ring-2 focus:ring-[#702E46]/40 shadow-xs"
                 />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] block mb-1">
-                    Blood Group
-                  </label>
-                  <input
-                    type="text"
-                    value={bloodGroup}
-                    onChange={(e) => setBloodGroup(e.target.value)}
-                    className="w-full h-11 px-4 rounded-xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] block mb-1">
-                    Emergency Medical Note
-                  </label>
-                  <input
-                    type="text"
-                    value={emergencyNote}
-                    onChange={(e) => setEmergencyNote(e.target.value)}
-                    placeholder="e.g. Inhaler in bag"
-                    className="w-full h-11 px-4 rounded-xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-xs font-bold text-[#2A1637] dark:text-white"
-                  />
-                </div>
               </div>
             </div>
           </div>
 
           {/* Card 2: Security & Duress PINs */}
-          <div className="clay-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E8DEF3] space-y-4 bg-[#FFFDFB] dark:bg-purple-950/40">
+          <div className="editorial-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E9DFD2] dark:border-[#45263F] space-y-4 bg-[#FAF5EF] dark:bg-[#341B2F]/80">
             <div className="flex items-center gap-2 mb-1">
-              <Lock className="w-5 h-5 text-[#6C3A82] dark:text-purple-300" />
-              <h3 className="text-sm font-bold uppercase tracking-wider text-[#2A1637] dark:text-[#FAF4FE]">
-                Security PIN &amp; Duress Protocol
+              <Lock className="w-5 h-5 text-[#C86650]" />
+              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#29252D] dark:text-[#FAF5EF]">
+                Security &amp; Duress PINs
               </h3>
             </div>
 
-            <p className="text-xs font-medium text-[#62566F] dark:text-purple-300 leading-relaxed">
-              Standard PIN silences and cancels alarms. If coerced under threat, entering your <strong>Duress PIN</strong> appears to dismiss the alarm on-screen while silently broadcasting an emergency distress beacon.
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 leading-relaxed">
+              Your 4-digit PIN authenticates deactivation. Entering your <strong>Duress PIN</strong> appears normal but secretly triggers an emergency broadcast.
             </p>
 
-            <div className="grid grid-cols-2 gap-3 text-xs pt-2">
+            <div className="grid grid-cols-2 gap-3 text-xs">
               <div>
-                <label className="font-bold text-[#2A1637] dark:text-[#FAF4FE] block mb-1">
-                  Standard PIN (Safe)
+                <label className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
+                  Normal Safety PIN
                 </label>
                 <input
                   type={showPin ? 'text' : 'password'}
                   maxLength={4}
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
-                  className="w-full h-11 px-4 rounded-xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] font-mono text-sm font-bold text-[#2A1637] dark:text-white"
+                  className="w-full h-11 px-4 rounded-xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 font-mono text-sm font-extrabold text-[#29252D] dark:text-[#FAF5EF] focus:outline-none focus:ring-2 focus:ring-[#702E46]/40 shadow-xs"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-[#C62845] block mb-1">
+                <label className="font-extrabold text-[#C86650] block mb-1">
                   Duress PIN (Silent SOS)
                 </label>
                 <input
@@ -412,7 +295,7 @@ export const ProfileSettingsScreen: React.FC = () => {
                   maxLength={4}
                   value={duressPin}
                   onChange={(e) => setDuressPin(e.target.value)}
-                  className="w-full h-11 px-4 rounded-xl bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] font-mono text-sm font-bold text-[#2A1637] dark:text-white"
+                  className="w-full h-11 px-4 rounded-xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#C86650]/40 font-mono text-sm font-extrabold text-[#C86650] focus:outline-none focus:ring-2 focus:ring-[#C86650]/40 shadow-xs"
                 />
               </div>
             </div>
@@ -420,7 +303,7 @@ export const ProfileSettingsScreen: React.FC = () => {
             <button
               type="button"
               onClick={() => setShowPin(!showPin)}
-              className="text-xs text-[#62566F] dark:text-purple-300 hover:text-[#6C3A82] dark:hover:text-white font-bold mt-2 flex items-center gap-1.5 cursor-pointer"
+              className="text-xs text-[#625B63] dark:text-[#E9DFD2] hover:text-[#702E46] dark:hover:text-white font-extrabold mt-2 flex items-center gap-1.5 cursor-pointer"
             >
               {showPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               <span>{showPin ? 'Hide PIN numbers' : 'Reveal PIN numbers'}</span>
@@ -428,17 +311,17 @@ export const ProfileSettingsScreen: React.FC = () => {
           </div>
 
           {/* Card 3: Experience & Display Preferences */}
-          <div className="clay-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E8DEF3] space-y-4 bg-[#FFFDFB] dark:bg-purple-950/40">
+          <div className="editorial-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E9DFD2] dark:border-[#45263F] space-y-4 bg-[#FAF5EF] dark:bg-[#341B2F]/80">
             <div className="flex items-center gap-2 mb-1">
-              <Sliders className="w-5 h-5 text-[#6C3A82] dark:text-purple-300" />
-              <h3 className="text-sm font-bold uppercase tracking-wider text-[#2A1637] dark:text-[#FAF4FE]">
+              <Sliders className="w-5 h-5 text-[#702E46] dark:text-[#E99583]" />
+              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#29252D] dark:text-[#FAF5EF]">
                 Display &amp; Viewport Preferences
               </h3>
             </div>
 
             <div className="space-y-4 text-xs">
               <div>
-                <span className="font-bold text-[#2A1637] dark:text-[#FAF4FE] block mb-2">
+                <span className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-2">
                   Theme Appearance &amp; Mood
                 </span>
                 <div className="grid grid-cols-2 gap-3">
@@ -447,30 +330,30 @@ export const ProfileSettingsScreen: React.FC = () => {
                     onClick={() => setTheme('light')}
                     className={`p-3 rounded-2xl flex items-center gap-2.5 border transition cursor-pointer ${
                       theme === 'light'
-                        ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white border-transparent shadow-md'
-                        : 'bg-white dark:bg-purple-900/60 text-[#62566F] dark:text-purple-300 border-[#E8DEF3]'
+                        ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white border-transparent shadow-md'
+                        : 'bg-[#FFFDF9] dark:bg-[#381B34] text-[#625B63] dark:text-[#E9DFD2] border-[#E9DFD2] dark:border-[#E99583]/30'
                     }`}
                   >
-                    <Sun className="w-4 h-4 text-amber-300" />
-                    <span className="font-bold">Warm Ivory</span>
+                    <Sun className="w-4 h-4 text-[#C5A36A]" />
+                    <span className="font-extrabold">Warm Ivory (Light)</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setTheme('dark')}
                     className={`p-3 rounded-2xl flex items-center gap-2.5 border transition cursor-pointer ${
                       theme === 'dark'
-                        ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white border-transparent shadow-md'
-                        : 'bg-white dark:bg-purple-900/60 text-[#62566F] dark:text-purple-300 border-[#E8DEF3]'
+                        ? 'bg-gradient-to-r from-[#702E46] to-[#C86650] text-white border-transparent shadow-md'
+                        : 'bg-[#FFFDF9] dark:bg-[#381B34] text-[#625B63] dark:text-[#E9DFD2] border-[#E9DFD2] dark:border-[#E99583]/30'
                     }`}
                   >
-                    <Moon className="w-4 h-4 text-purple-300" />
-                    <span className="font-bold">Deep Plum</span>
+                    <Moon className="w-4 h-4 text-[#E99583]" />
+                    <span className="font-extrabold">Dark Warm Colours</span>
                   </button>
                 </div>
               </div>
 
               <div>
-                <span className="font-bold text-[#2A1637] dark:text-[#FAF4FE] block mb-2">
+                <span className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-2">
                   Device Layout Mode
                 </span>
                 <div className="grid grid-cols-2 gap-3">
@@ -479,24 +362,24 @@ export const ProfileSettingsScreen: React.FC = () => {
                     onClick={() => setDeviceView('web')}
                     className={`p-3 rounded-2xl flex items-center gap-2.5 border transition cursor-pointer ${
                       deviceView === 'web'
-                        ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white border-transparent shadow-md'
-                        : 'bg-white dark:bg-purple-900/60 text-[#62566F] dark:text-purple-300 border-[#E8DEF3]'
+                        ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white border-transparent shadow-md'
+                        : 'bg-[#FFFDF9] dark:bg-[#45263F]/60 text-[#625B63] dark:text-[#E9DFD2] border-[#E9DFD2] dark:border-[#702E46]/40'
                     }`}
                   >
                     <Monitor className="w-4 h-4" />
-                    <span className="font-bold">Web Platform</span>
+                    <span className="font-extrabold">Web Platform</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setDeviceView('mobile')}
                     className={`p-3 rounded-2xl flex items-center gap-2.5 border transition cursor-pointer ${
                       deviceView === 'mobile'
-                        ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white border-transparent shadow-md'
-                        : 'bg-white dark:bg-purple-900/60 text-[#62566F] dark:text-purple-300 border-[#E8DEF3]'
+                        ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white border-transparent shadow-md'
+                        : 'bg-[#FFFDF9] dark:bg-[#45263F]/60 text-[#625B63] dark:text-[#E9DFD2] border-[#E9DFD2] dark:border-[#702E46]/40'
                     }`}
                   >
                     <Smartphone className="w-4 h-4" />
-                    <span className="font-bold">Mobile App Simulator</span>
+                    <span className="font-extrabold">Mobile App Simulator</span>
                   </button>
                 </div>
               </div>
@@ -507,22 +390,22 @@ export const ProfileSettingsScreen: React.FC = () => {
           <SupabaseStatusCard />
 
           {/* Card 4: Data Management */}
-          <div className="clay-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E8DEF3] space-y-4 bg-[#FFFDFB] dark:bg-purple-950/40">
+          <div className="editorial-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E9DFD2] dark:border-[#45263F] space-y-4 bg-[#FAF5EF] dark:bg-[#341B2F]/80">
             <div className="flex items-center gap-2 mb-1">
-              <Trash2 className="w-5 h-5 text-[#C62845]" />
-              <h3 className="text-sm font-bold uppercase tracking-wider text-[#C62845]">
+              <Trash2 className="w-5 h-5 text-[#C86650]" />
+              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#C86650]">
                 Privacy &amp; Data Wipe
               </h3>
             </div>
 
-            <p className="text-xs font-semibold text-[#62566F] dark:text-purple-300 leading-relaxed">
+            <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 leading-relaxed">
               Purges all local incident caches, trusted contact records, and journey history from this browser storage.
             </p>
 
             <button
               type="button"
               onClick={handleClearAllData}
-              className="h-11 px-5 rounded-2xl bg-red-50 text-[#C62845] hover:bg-red-100 font-bold text-xs transition cursor-pointer"
+              className="h-11 px-5 rounded-2xl bg-[#C86650]/15 text-[#C86650] hover:bg-[#C86650]/25 font-extrabold text-xs transition cursor-pointer border border-[#C86650]/30"
             >
               Reset App Data &amp; Cache
             </button>
@@ -534,7 +417,7 @@ export const ProfileSettingsScreen: React.FC = () => {
         <div className="flex justify-end pt-2">
           <button
             type="submit"
-            className="h-12 px-8 rounded-full bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-purple-900/20 hover:opacity-95 active:scale-95 transition cursor-pointer"
+            className="h-12 px-8 rounded-full bg-gradient-to-r from-[#702E46] to-[#C86650] text-white font-extrabold text-xs flex items-center gap-2 shadow-lg hover:opacity-95 active:scale-95 transition cursor-pointer border border-white/20"
           >
             <Save className="w-4 h-4" />
             <span>{savedSuccess ? 'Preferences Saved!' : 'Save Profile Changes'}</span>

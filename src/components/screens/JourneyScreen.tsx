@@ -12,15 +12,9 @@ import {
   Bike,
   CheckCircle2,
   Clock,
-  ShieldCheck,
   AlertTriangle,
   Sliders,
-  Share2,
-  Calendar,
   ChevronDown,
-  RotateCw,
-  Sparkles,
-  ArrowRight,
 } from 'lucide-react';
 import { useSafety } from '../../context/SafetyContext';
 import { soundManager } from '../../utils/audio';
@@ -104,27 +98,27 @@ export const JourneyScreen: React.FC = () => {
       <div className="flex items-center justify-between pb-1">
         <button
           onClick={() => setActiveTab('dashboard')}
-          className="h-10 px-4 rounded-2xl glass-panel flex items-center gap-1.5 text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] hover:bg-purple-50/70 active:scale-95 transition shadow-xs border border-[#E8DEF3] cursor-pointer"
+          className="h-10 px-4 rounded-2xl clay-card flex items-center gap-1.5 text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] hover:border-[#C86650] active:scale-95 transition shadow-xs border border-[#E9DFD2] dark:border-[#E99583]/25 cursor-pointer"
         >
-          <ChevronLeft className="w-4 h-4 text-[#6C3A82]" />
+          <ChevronLeft className="w-4 h-4 text-[#702E46] dark:text-[#E99583]" />
           <span>Command Hub</span>
         </button>
 
-        <h1 className="text-base lg:text-lg font-extrabold text-[#2A1637] dark:text-[#FAF4FE] tracking-tight">
+        <h1 className="text-base lg:text-lg font-extrabold text-[#45263F] dark:text-[#FAF5EF] tracking-tight">
           {activeJourney ? 'Journey Guard Autonomous Monitor' : 'Journey Setup & Route Escort'}
         </h1>
 
         <div className="flex items-center gap-2">
           <button
             onClick={handleWhatsAppEscort}
-            className="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-[#6C3A82] dark:text-purple-300 hover:bg-purple-50/70 active:scale-95 transition shadow-xs border border-[#E8DEF3] cursor-pointer"
+            className="w-10 h-10 rounded-2xl clay-card flex items-center justify-center text-[#702E46] dark:text-[#E99583] hover:border-[#C86650] active:scale-95 transition shadow-xs border border-[#E9DFD2] dark:border-[#E99583]/25 cursor-pointer"
             title="Message Primary Contact"
           >
             <MessageSquare className="w-4 h-4" />
           </button>
           <button
             onClick={handleCallEscort}
-            className="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-[#6C3A82] dark:text-purple-300 hover:bg-purple-50/70 active:scale-95 transition shadow-xs border border-[#E8DEF3] cursor-pointer"
+            className="w-10 h-10 rounded-2xl clay-card flex items-center justify-center text-[#702E46] dark:text-[#E99583] hover:border-[#C86650] active:scale-95 transition shadow-xs border border-[#E9DFD2] dark:border-[#E99583]/25 cursor-pointer"
             title="Call Primary Contact"
           >
             <Phone className="w-4 h-4" />
@@ -139,25 +133,25 @@ export const JourneyScreen: React.FC = () => {
         <div className="lg:col-span-7 space-y-6">
           
           {/* Main Destination Setup Card */}
-          <div className="glass-panel rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E8DEF3] relative overflow-hidden">
+          <div className="clay-card rounded-[32px] p-6 lg:p-7 shadow-sm border border-[#E9DFD2] dark:border-[#E99583]/25 relative overflow-hidden bg-white dark:bg-[#281324]">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <div className="flex items-center gap-2 text-xs font-semibold text-[#6C3A82] dark:text-purple-300 mb-3">
-                  <span className="font-bold">Verified Corridor</span>
-                  <span aria-hidden="true">·</span>
-                  <span>Autonomous Escort Ready</span>
+                <div className="flex items-center gap-2 text-xs font-bold text-[#702E46] dark:text-[#E99583] mb-3">
+                  <span>Verified Safe Corridor</span>
+                  <span aria-hidden="true" className="text-[#C5A36A]">·</span>
+                  <span>Autonomous Sentry Active</span>
                 </div>
 
                 {activeJourney ? (
                   <div>
-                    <span className="text-xs font-semibold text-[#7A6588] block">Current En-Route Destination</span>
-                    <h2 className="text-2xl font-extrabold text-[#2A1637] dark:text-white leading-tight mt-0.5">
+                    <span className="text-xs font-semibold text-[#62566F] dark:text-[#E9DFD2] block">Current En-Route Destination</span>
+                    <h2 className="text-2xl font-extrabold text-[#45263F] dark:text-[#FAF5EF] leading-tight mt-0.5">
                       {activeJourney.destination}
                     </h2>
                   </div>
                 ) : (
                   <div>
-                    <label className="text-xs font-extrabold text-[#2A1637] dark:text-purple-200 uppercase tracking-wider block mb-1.5">
+                    <label className="text-xs font-extrabold text-[#45263F] dark:text-[#FAF5EF] uppercase tracking-wider block mb-1.5">
                       Target Destination
                     </label>
                     <input
@@ -165,26 +159,26 @@ export const JourneyScreen: React.FC = () => {
                       value={destinationInput}
                       onChange={(e) => setDestinationInput(e.target.value)}
                       placeholder="Enter destination address..."
-                      className="w-full h-12 px-4 rounded-2xl bg-white dark:bg-purple-950/40 border border-[#E8DEF3] text-sm font-bold text-[#2A1637] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6C3A82]/40"
+                      className="w-full h-12 px-4 rounded-2xl bg-[#FAF5EF] dark:bg-[#231622] border border-[#E9DFD2] dark:border-[#E9DFD2]/30 text-sm font-bold text-[#29252D] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#C86650]/40"
                     />
                   </div>
                 )}
 
-                <div className="mt-3 flex items-center gap-3 text-xs font-semibold text-[#7A6588] dark:text-purple-300">
+                <div className="mt-3 flex items-center gap-3 text-xs font-semibold text-[#62566F] dark:text-[#E9DFD2]">
                   <span className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-[#6C3A82]" />
-                    <span>3.4 km route</span>
+                    <MapPin className="w-3.5 h-3.5 text-[#C86650]" />
+                    <span>3.4 km corridor</span>
                   </span>
                   <span>·</span>
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-amber-600" />
+                    <Clock className="w-3.5 h-3.5 text-[#C5A36A]" />
                     <span>Est. 18 min</span>
                   </span>
                 </div>
               </div>
 
               {/* Escort Emblem Badge */}
-              <div className="w-20 h-20 rounded-2xl p-0.5 bg-gradient-to-br from-rose-200 via-purple-200 to-indigo-200 border border-purple-200/60 shadow-xs shrink-0 flex items-center justify-center overflow-hidden">
+              <div className="w-20 h-20 rounded-2xl p-0.5 bg-gradient-to-br from-[#E99583] via-[#C86650] to-[#702E46] border border-white/60 shadow-md shrink-0 flex items-center justify-center overflow-hidden">
                 <img
                   src="/src/assets/images/safesaathi_app_icon_1792355765489.jpg"
                   alt="SafeSaathi Escort"
@@ -196,8 +190,8 @@ export const JourneyScreen: React.FC = () => {
 
             {/* Presets if configuring */}
             {!activeJourney && (
-              <div className="mt-5 pt-4 border-t border-[#F0E8F8]">
-                <span className="text-xs font-extrabold text-[#2A1637] dark:text-purple-200 block mb-2.5">
+              <div className="mt-5 pt-4 border-t border-[#E9DFD2] dark:border-[#E9DFD2]/15">
+                <span className="text-xs font-extrabold text-[#45263F] dark:text-[#FAF5EF] block mb-2.5">
                   Frequent Verified Safe Havens:
                 </span>
                 <div className="grid grid-cols-2 gap-2.5">
@@ -207,14 +201,14 @@ export const JourneyScreen: React.FC = () => {
                       onClick={() => setDestinationInput(preset.name)}
                       className={`p-3 rounded-2xl text-left border transition cursor-pointer ${
                         destinationInput === preset.name
-                          ? 'bg-gradient-to-br from-[#6C3A82] to-[#4F2561] text-white border-purple-800 shadow-sm'
-                          : 'bg-white hover:bg-purple-50/70 text-[#2A1637] dark:text-white border-[#E8DEF3]'
+                          ? 'bg-gradient-to-br from-[#702E46] to-[#45263F] text-white border-[#702E46] shadow-sm'
+                          : 'bg-[#FAF5EF] dark:bg-[#231622] hover:bg-white text-[#29252D] dark:text-[#FAF5EF] border-[#E9DFD2] dark:border-[#E99583]/25'
                       }`}
                     >
                       <span className="text-xs font-extrabold block truncate">{preset.name}</span>
                       <span
                         className={`text-[11px] block mt-0.5 font-medium ${
-                          destinationInput === preset.name ? 'text-purple-200' : 'text-[#7A6588]'
+                          destinationInput === preset.name ? 'text-[#FAF5EF]' : 'text-[#62566F] dark:text-[#E9DFD2]'
                         }`}
                       >
                         {preset.distance} · {preset.time}
@@ -227,39 +221,39 @@ export const JourneyScreen: React.FC = () => {
           </div>
 
           {/* Autonomous Protocol Details */}
-          <div className="glass-panel rounded-[32px] p-6 shadow-sm border border-[#E8DEF3]">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#6C3A82] dark:text-purple-300 mb-2">
+          <div className="clay-card rounded-[32px] p-6 shadow-sm border border-[#E9DFD2] dark:border-[#E99583]/25 bg-white dark:bg-[#281324]">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#702E46] dark:text-[#E99583] mb-2">
               Autonomous Surveillance Protocol
             </h3>
-            <p className="text-xs font-medium text-[#493356] dark:text-purple-200/90 leading-relaxed">
+            <p className="text-xs font-medium text-[#62566F] dark:text-[#E9DFD2] leading-relaxed">
               Journey Guard continuously benchmarks your coordinates against the pre-cleared corridor every 8 seconds. If your vehicle departs from the verified path by more than {settings.deviationThresholdMeters} meters or stops unexpectedly for &gt;{settings.stopTimeoutSeconds}s, the 30-second “Are you safe?” countdown engages immediately.
               {showFullDetails && (
-                <span className="block mt-2 text-[#2A1637] dark:text-white font-bold">
+                <span className="block mt-2 text-[#29252D] dark:text-white font-bold">
                   If the prompt is not acknowledged via your 4-digit security PIN, the system automatically transmits distress broadcasts with your live coordinate beacon to your trusted circle, sounds the alarm siren, and locks incident logs into the encrypted Evidence Vault.
                 </span>
               )}
             </p>
             <button
               onClick={() => setShowFullDetails(!showFullDetails)}
-              className="text-xs font-bold text-[#6C3A82] dark:text-purple-300 mt-2 hover:underline inline-block cursor-pointer"
+              className="text-xs font-bold text-[#702E46] dark:text-[#E99583] mt-2 hover:underline inline-block cursor-pointer"
             >
               {showFullDetails ? 'Show less' : 'Read full protocol'}
             </button>
           </div>
 
           {/* Departure Schedule & Transit Mode Selection */}
-          <div className="glass-panel rounded-[32px] p-6 shadow-sm border border-[#E8DEF3]">
+          <div className="clay-card rounded-[32px] p-6 shadow-sm border border-[#E9DFD2] dark:border-[#E99583]/25 bg-white dark:bg-[#281324]">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#2A1637] dark:text-white">
+                <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#45263F] dark:text-[#FAF5EF]">
                   Departure Schedule
                 </h3>
-                <p className="text-[11px] font-medium text-[#7A6588]">Synchronize timing with trusted circle</p>
+                <p className="text-[11px] font-medium text-[#62566F] dark:text-[#E9DFD2]">Synchronize timing with trusted circle</p>
               </div>
 
-              <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white dark:bg-purple-950/60 text-xs font-bold text-[#2A1637] dark:text-purple-200 border border-[#E8DEF3]">
+              <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#FAF5EF] dark:bg-[#231622] text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] border border-[#E9DFD2]">
                 <span>Depart Immediately</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#6C3A82]" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#702E46] dark:text-[#E99583]" />
               </div>
             </div>
 
@@ -275,8 +269,8 @@ export const JourneyScreen: React.FC = () => {
                     }}
                     className={`flex flex-col items-center justify-center py-3 rounded-2xl transition-all duration-200 cursor-pointer ${
                       isSelected
-                        ? 'bg-gradient-to-br from-[#6C3A82] to-[#4F2561] text-white shadow-sm font-extrabold scale-102'
-                        : 'bg-white hover:bg-purple-50/70 text-[#2A1637] dark:text-purple-200 border border-[#E8DEF3] font-bold'
+                        ? 'bg-gradient-to-br from-[#702E46] to-[#45263F] text-white shadow-sm font-extrabold scale-102 ring-2 ring-[#C86650]/50'
+                        : 'bg-[#FAF5EF] dark:bg-[#231622] hover:bg-white text-[#29252D] dark:text-[#FAF5EF] border border-[#E9DFD2] dark:border-[#E99583]/25 font-bold'
                     }`}
                   >
                     <span className="text-[10px] uppercase">{item.day}</span>
@@ -287,8 +281,8 @@ export const JourneyScreen: React.FC = () => {
             </div>
 
             {/* Transit Mode Selection */}
-            <div className="mt-4 pt-3 border-t border-[#F0E8F8]">
-              <span className="text-xs font-extrabold text-[#2A1637] dark:text-white block mb-2">
+            <div className="mt-4 pt-3 border-t border-[#E9DFD2] dark:border-[#E9DFD2]/15">
+              <span className="text-xs font-extrabold text-[#45263F] dark:text-[#FAF5EF] block mb-2">
                 Transit Vehicle Mode
               </span>
               <div className="grid grid-cols-4 gap-2">
@@ -306,8 +300,8 @@ export const JourneyScreen: React.FC = () => {
                       onClick={() => setSelectedTransportMode(m.id as typeof selectedTransportMode)}
                       className={`py-3 rounded-2xl flex flex-col items-center justify-center border transition cursor-pointer ${
                         isSelected
-                          ? 'bg-gradient-to-br from-[#6C3A82] to-[#4F2561] text-white border-purple-800 shadow-sm'
-                          : 'bg-white text-[#2A1637] dark:text-purple-200 border-[#E8DEF3] hover:bg-purple-50/60'
+                          ? 'bg-gradient-to-br from-[#702E46] to-[#45263F] text-white border-[#702E46] shadow-sm'
+                          : 'bg-[#FAF5EF] dark:bg-[#231622] text-[#29252D] dark:text-[#FAF5EF] border-[#E9DFD2] dark:border-[#E99583]/25 hover:bg-white'
                       }`}
                     >
                       <Icon className="w-4 h-4 mb-1 stroke-[2.2]" />
@@ -324,15 +318,15 @@ export const JourneyScreen: React.FC = () => {
             {activeJourney ? (
               <button
                 onClick={endJourney}
-                className="w-full h-14 rounded-full bg-[#2A1637] hover:bg-[#3D254C] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg active:scale-98 transition tracking-wider cursor-pointer border border-white/20"
+                className="clay-btn-secondary w-full h-14 flex items-center justify-center gap-2 text-xs font-extrabold tracking-wider"
               >
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <CheckCircle2 className="w-4 h-4 text-[#7E927B]" />
                 <span>I HAVE ARRIVED SAFELY (END JOURNEY)</span>
               </button>
             ) : (
               <button
                 onClick={handleStart}
-                className="w-full h-14 rounded-full bg-gradient-to-r from-[#6C3A82] to-[#55276B] hover:from-[#7B4294] hover:to-[#612D79] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-purple-900/20 active:scale-98 transition tracking-wider cursor-pointer border border-white/20"
+                className="clay-btn-primary w-full h-14 flex items-center justify-center gap-2 text-xs font-extrabold tracking-wider"
               >
                 <Navigation className="w-4 h-4" />
                 <span>START PROTECTED JOURNEY</span>
@@ -344,18 +338,18 @@ export const JourneyScreen: React.FC = () => {
         {/* ================= RIGHT COLUMN (col-span-12 lg:col-span-5) ================= */}
         <div className="lg:col-span-5 space-y-6">
           
-          {/* Genuine 3D Autonomous Corridor Radar */}
-          <div className="glass-panel rounded-[32px] p-6 shadow-sm relative overflow-hidden border border-[#E8DEF3]">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F0E8F8]">
+          {/* 3D Autonomous Corridor Radar */}
+          <div className="clay-card rounded-[32px] p-6 shadow-sm relative overflow-hidden border border-[#E9DFD2] dark:border-[#E99583]/25 bg-white dark:bg-[#281324]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E9DFD2] dark:border-[#E9DFD2]/15">
               <div>
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#2A1637] dark:text-white">
+                <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#45263F] dark:text-[#FAF5EF]">
                   3D Corridor Radar
                 </h3>
-                <p className="text-[11px] font-medium text-[#7A6588]">
+                <p className="text-[11px] font-medium text-[#62566F] dark:text-[#E9DFD2]">
                   Autonomous deviation perimeter &amp; live waypoint guidance
                 </p>
               </div>
-              <span className="text-[10px] font-mono tabular-nums font-bold text-[#6C3A82] bg-purple-100 px-2.5 py-0.5 rounded-full">
+              <span className="text-[10px] font-mono tabular-nums font-bold text-[#702E46] dark:text-[#E99583] bg-[#FAF5EF] dark:bg-[#231622] px-2.5 py-0.5 rounded-full border border-[#E9DFD2]">
                 ±{settings.deviationThresholdMeters}m Bound
               </span>
             </div>
@@ -372,20 +366,20 @@ export const JourneyScreen: React.FC = () => {
               />
             </div>
 
-            <div className="mt-3 pt-3 border-t border-[#F0E8F8] flex items-center justify-between text-xs font-semibold text-[#7A6588]">
+            <div className="mt-3 pt-3 border-t border-[#E9DFD2] dark:border-[#E9DFD2]/15 flex items-center justify-between text-xs font-semibold text-[#62566F] dark:text-[#E9DFD2]">
               <span>Status: Strict Safe Corridor</span>
-              <span className="text-[#6C3A82] font-bold">Waypoint Active</span>
+              <span className="text-[#702E46] dark:text-[#E99583] font-bold">Waypoint Active</span>
             </div>
           </div>
 
           {/* Anomaly Test Lab Controls */}
-          <div className="glass-panel rounded-[32px] p-6 shadow-sm border border-[#E8DEF3]">
+          <div className="clay-card rounded-[32px] p-6 shadow-sm border border-[#E9DFD2] dark:border-[#E99583]/25 bg-white dark:bg-[#281324]">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#2A1637] dark:text-white">
+                <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#45263F] dark:text-[#FAF5EF]">
                   Proactive Anomaly Verification
                 </h3>
-                <p className="text-[11px] font-medium text-[#7A6588]">
+                <p className="text-[11px] font-medium text-[#62566F] dark:text-[#E9DFD2]">
                   Verify 30-second countdown and PIN verification dialog
                 </p>
               </div>
@@ -394,26 +388,26 @@ export const JourneyScreen: React.FC = () => {
             <div className="space-y-2.5">
               <button
                 onClick={simulateDeviation}
-                className="w-full p-4 rounded-2xl bg-white hover:bg-purple-50/60 text-left transition border border-[#E8DEF3] active:scale-98 shadow-2xs cursor-pointer group"
+                className="w-full p-4 rounded-2xl bg-[#FAF5EF] dark:bg-[#231622] hover:bg-white text-left transition border border-[#E9DFD2] dark:border-[#E99583]/25 active:scale-98 shadow-2xs cursor-pointer group"
               >
-                <div className="flex items-center gap-2 text-xs font-bold text-[#2A1637] mb-1">
-                  <AlertTriangle className="w-4 h-4 text-amber-600 group-hover:scale-110 transition-transform" />
+                <div className="flex items-center gap-2 text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] mb-1">
+                  <AlertTriangle className="w-4 h-4 text-[#C86650] group-hover:scale-110 transition-transform" />
                   <span>Simulate Route Deviation (&gt;500m)</span>
                 </div>
-                <span className="text-[11px] font-medium text-[#7A6588] block leading-tight">
+                <span className="text-[11px] font-medium text-[#62566F] dark:text-[#E9DFD2] block leading-tight">
                   Simulates vehicle departure off the safe route for &gt;60s.
                 </span>
               </button>
 
               <button
                 onClick={simulateStop}
-                className="w-full p-4 rounded-2xl bg-white hover:bg-purple-50/60 text-left transition border border-[#E8DEF3] active:scale-98 shadow-2xs cursor-pointer group"
+                className="w-full p-4 rounded-2xl bg-[#FAF5EF] dark:bg-[#231622] hover:bg-white text-left transition border border-[#E9DFD2] dark:border-[#E99583]/25 active:scale-98 shadow-2xs cursor-pointer group"
               >
-                <div className="flex items-center gap-2 text-xs font-bold text-[#2A1637] mb-1">
-                  <Clock className="w-4 h-4 text-purple-600 group-hover:scale-110 transition-transform" />
+                <div className="flex items-center gap-2 text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] mb-1">
+                  <Clock className="w-4 h-4 text-[#702E46] dark:text-[#E99583] group-hover:scale-110 transition-transform" />
                   <span>Simulate Unexplained Stop (&gt;60s)</span>
                 </div>
-                <span className="text-[11px] font-medium text-[#7A6588] block leading-tight">
+                <span className="text-[11px] font-medium text-[#62566F] dark:text-[#E9DFD2] block leading-tight">
                   Simulates vehicle remaining stationary at unknown location.
                 </span>
               </button>
@@ -421,17 +415,17 @@ export const JourneyScreen: React.FC = () => {
           </div>
 
           {/* Threshold Configurations */}
-          <div className="glass-panel rounded-[32px] p-6 shadow-sm border border-[#E8DEF3]">
+          <div className="clay-card rounded-[32px] p-6 shadow-sm border border-[#E9DFD2] dark:border-[#E99583]/25 bg-white dark:bg-[#281324]">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Sliders className="w-4 h-4 text-[#6C3A82]" />
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#2A1637] dark:text-white">
+                <Sliders className="w-4 h-4 text-[#702E46] dark:text-[#E99583]" />
+                <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#45263F] dark:text-[#FAF5EF]">
                   Parameters &amp; Thresholds
                 </h3>
               </div>
               <button
                 onClick={() => setShowThresholdConfig(!showThresholdConfig)}
-                className="text-xs font-bold text-[#6C3A82] hover:underline cursor-pointer"
+                className="text-xs font-bold text-[#702E46] dark:text-[#E99583] hover:underline cursor-pointer"
               >
                 {showThresholdConfig ? 'Close' : 'Adjust'}
               </button>
@@ -440,7 +434,7 @@ export const JourneyScreen: React.FC = () => {
             {showThresholdConfig ? (
               <div className="space-y-4 pt-2 text-xs">
                 <div>
-                  <div className="flex justify-between font-bold text-[#2A1637] dark:text-white mb-1">
+                  <div className="flex justify-between font-bold text-[#29252D] dark:text-[#FAF5EF] mb-1">
                     <span>Deviation Tolerance:</span>
                     <span>{settings.deviationThresholdMeters} meters</span>
                   </div>
@@ -453,12 +447,12 @@ export const JourneyScreen: React.FC = () => {
                     onChange={(e) =>
                       updateSettings({ deviationThresholdMeters: Number(e.target.value) })
                     }
-                    className="w-full accent-[#6C3A82]"
+                    className="w-full accent-[#C86650]"
                   />
                 </div>
 
                 <div>
-                  <div className="flex justify-between font-bold text-[#2A1637] dark:text-white mb-1">
+                  <div className="flex justify-between font-bold text-[#29252D] dark:text-[#FAF5EF] mb-1">
                     <span>Confirmation Countdown:</span>
                     <span>{settings.countdownSeconds} seconds</span>
                   </div>
@@ -471,23 +465,23 @@ export const JourneyScreen: React.FC = () => {
                     onChange={(e) =>
                       updateSettings({ countdownSeconds: Number(e.target.value) })
                     }
-                    className="w-full accent-[#6C3A82]"
+                    className="w-full accent-[#C86650]"
                   />
                 </div>
               </div>
             ) : (
               <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                <div className="p-3 rounded-2xl bg-white border border-[#E8DEF3]">
-                  <span className="text-[10px] font-medium text-[#7A6588] block">Deviation Max</span>
-                  <span className="font-extrabold text-[#2A1637] text-sm tabular-nums">{settings.deviationThresholdMeters}m</span>
+                <div className="p-3 rounded-2xl bg-[#FAF5EF] dark:bg-[#231622] border border-[#E9DFD2] dark:border-[#E99583]/25">
+                  <span className="text-[10px] font-medium text-[#62566F] dark:text-[#E9DFD2] block">Deviation Max</span>
+                  <span className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] text-sm tabular-nums">{settings.deviationThresholdMeters}m</span>
                 </div>
-                <div className="p-3 rounded-2xl bg-white border border-[#E8DEF3]">
-                  <span className="text-[10px] font-medium text-[#7A6588] block">Stop Timeout</span>
-                  <span className="font-extrabold text-[#2A1637] text-sm tabular-nums">{settings.stopTimeoutSeconds}s</span>
+                <div className="p-3 rounded-2xl bg-[#FAF5EF] dark:bg-[#231622] border border-[#E9DFD2] dark:border-[#E99583]/25">
+                  <span className="text-[10px] font-medium text-[#62566F] dark:text-[#E9DFD2] block">Stop Timeout</span>
+                  <span className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] text-sm tabular-nums">{settings.stopTimeoutSeconds}s</span>
                 </div>
-                <div className="p-3 rounded-2xl bg-white border border-[#E8DEF3]">
-                  <span className="text-[10px] font-medium text-[#7A6588] block">Countdown</span>
-                  <span className="font-extrabold text-[#2A1637] text-sm tabular-nums">{settings.countdownSeconds}s</span>
+                <div className="p-3 rounded-2xl bg-[#FAF5EF] dark:bg-[#231622] border border-[#E9DFD2] dark:border-[#E99583]/25">
+                  <span className="text-[10px] font-medium text-[#62566F] dark:text-[#E9DFD2] block">Countdown</span>
+                  <span className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] text-sm tabular-nums">{settings.countdownSeconds}s</span>
                 </div>
               </div>
             )}

@@ -62,42 +62,42 @@ export const HistoryScreen: React.FC = () => {
   return (
     <div className="space-y-6 animate-fadeIn max-w-5xl mx-auto pb-12 select-none">
       {/* Top Header Card */}
-      <div className="clay-card p-5 sm:p-6 rounded-3xl border border-[#E8DEF3] shadow-sm bg-[#FFFDFB] dark:bg-purple-950/40">
+      <div className="editorial-card p-5 sm:p-6 rounded-3xl border border-[#E9DFD2] dark:border-[#45263F] shadow-sm bg-[#FAF5EF] dark:bg-[#341B2F]/80">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setActiveTab('dashboard')}
-              className="h-10 px-4 rounded-2xl clay-card flex items-center gap-1.5 text-xs font-bold text-[#2A1637] dark:text-[#FAF4FE] hover:bg-purple-50/70 active:scale-95 transition shadow-xs border border-[#E8DEF3] cursor-pointer"
+              className="h-10 px-4 rounded-2xl editorial-card flex items-center gap-1.5 text-xs font-extrabold text-[#29252D] dark:text-[#FAF5EF] hover:bg-[#E9DFD2]/40 active:scale-95 transition shadow-xs border border-[#E9DFD2] dark:border-[#45263F] cursor-pointer"
               title="Return to Command Hub"
             >
-              <ChevronLeft className="w-4 h-4 text-[#6C3A82]" />
+              <ChevronLeft className="w-4 h-4 text-[#702E46] dark:text-[#E99583]" />
               <span>Command Hub</span>
             </button>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#2A1637] dark:text-[#FAF4FE]">
+                <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#29252D] dark:text-[#FAF5EF]">
                   Audit &amp; Security History
                 </h1>
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-100 text-[#6C3A82] dark:bg-purple-900/60 dark:text-purple-300 border border-purple-200">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#E9DFD2]/60 text-[#702E46] dark:bg-[#702E46]/40 dark:text-[#E99583] border border-[#E9DFD2] dark:border-[#702E46]/40">
                   Cryptographic Log
                 </span>
               </div>
-              <p className="text-xs font-semibold text-[#62566F] dark:text-purple-300 mt-0.5">
+              <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-0.5">
                 Tamper-evident record of safety confirmations, GPS deviations, and emergency dispatches
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="px-3.5 py-2 rounded-2xl bg-[#FFF8F4] dark:bg-purple-900/50 border border-[#E8DEF3] text-xs font-bold text-[#6C3A82] dark:text-purple-200 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#6C3A82]" />
+            <div className="px-3.5 py-2 rounded-2xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 text-xs font-extrabold text-[#702E46] dark:text-[#FAF5EF] flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#C5A36A]" />
               <span>{allEvents.length} Recorded Events</span>
             </div>
           </div>
         </div>
 
         {/* Filter Controls & Search */}
-        <div className="mt-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pt-4 border-t border-[#E8DEF3]">
+        <div className="mt-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pt-4 border-t border-[#E9DFD2] dark:border-[#45263F]">
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
             {[
               { id: 'ALL', label: 'All Records' },
@@ -108,10 +108,10 @@ export const HistoryScreen: React.FC = () => {
               <button
                 key={btn.id}
                 onClick={() => setFilterType(btn.id as typeof filterType)}
-                className={`text-xs font-bold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
+                className={`text-xs font-extrabold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
                   filterType === btn.id
-                    ? 'bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white shadow-xs'
-                    : 'bg-white dark:bg-purple-900/40 hover:bg-purple-50 text-[#62566F] dark:text-purple-300 border border-[#E8DEF3]'
+                    ? 'bg-gradient-to-r from-[#702E46] to-[#C86650] text-white shadow-xs border border-white/20'
+                    : 'bg-[#FFFDF9] dark:bg-[#45263F]/40 hover:bg-[#E9DFD2]/50 text-[#625B63] dark:text-[#E9DFD2] border border-[#E9DFD2] dark:border-[#45263F]'
                 }`}
               >
                 {btn.label}
@@ -120,13 +120,13 @@ export const HistoryScreen: React.FC = () => {
           </div>
 
           <div className="relative min-w-[220px]">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#7A6588]" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#625B63]" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search logs..."
-              className="w-full pl-9 pr-3 py-2 rounded-xl text-xs font-bold bg-[#FFF8F4] dark:bg-purple-950/60 border border-[#E8DEF3] text-[#2A1637] dark:text-white placeholder:text-[#7A6588] focus:outline-none focus:ring-2 focus:ring-[#6C3A82]/40"
+              className="w-full pl-9 pr-3 py-2 rounded-xl text-xs font-extrabold bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 text-[#29252D] dark:text-[#FAF5EF] placeholder:text-[#625B63] focus:outline-none focus:ring-2 focus:ring-[#702E46]/40 shadow-xs"
             />
           </div>
         </div>
@@ -135,115 +135,65 @@ export const HistoryScreen: React.FC = () => {
       {/* Events List */}
       <div className="space-y-3">
         {filteredEvents.length === 0 ? (
-          <div className="clay-card p-10 rounded-3xl border border-[#E8DEF3] text-center bg-[#FFFDFB] dark:bg-purple-950/40">
-            <Clock className="w-12 h-12 text-[#7A6588] mx-auto mb-3 stroke-[1.5]" />
-            <h3 className="text-sm font-bold text-[#2A1637] dark:text-white">No Audit Records Found</h3>
-            <p className="text-xs font-semibold text-[#62566F] dark:text-purple-300 max-w-sm mx-auto mt-1">
-              Events will be logged automatically as journeys are tracked, safety checks are confirmed, or emergencies are broadcast.
+          <div className="editorial-card p-10 rounded-3xl border border-[#E9DFD2] dark:border-[#45263F] text-center bg-[#FAF5EF] dark:bg-[#341B2F]/40">
+            <Clock className="w-12 h-12 text-[#625B63] mx-auto mb-3 stroke-[1.5]" />
+            <h3 className="text-sm font-extrabold text-[#29252D] dark:text-[#FAF5EF]">No Audit Records Found</h3>
+            <p className="text-xs text-[#625B63] dark:text-[#E9DFD2]/80 mt-1">
+              Events will be automatically registered when journeys start, safety checks occur, or emergency signals fire.
             </p>
           </div>
         ) : (
-          filteredEvents.map((item) => {
-            const isEmergency = item.type === 'EMERGENCY';
-            const isSafety = item.type === 'SAFETY_CHECK';
-            const isDuress = isSafety && (item.raw as any).isDuress;
+          filteredEvents.map((event) => {
+            const isEmergency = event.type === 'EMERGENCY';
+            const isSafetyCheck = event.type === 'SAFETY_CHECK';
 
             return (
               <div
-                key={item.id}
-                className={`clay-card p-4 sm:p-5 rounded-2xl border transition-all ${
-                  isEmergency
-                    ? 'border-red-300 bg-red-50/60 dark:bg-red-950/20'
-                    : isDuress
-                    ? 'border-amber-300 bg-amber-50/60 dark:bg-amber-950/20'
-                    : 'border-[#E8DEF3] bg-[#FFFDFB] dark:bg-purple-950/40 hover:bg-white'
-                }`}
+                key={event.id}
+                className="editorial-card p-4 sm:p-5 rounded-3xl border border-[#E9DFD2] dark:border-[#45263F] bg-[#FAF5EF] dark:bg-[#341B2F]/80 hover:bg-[#FFFDF9] dark:hover:bg-[#341B2F] transition-all flex items-start gap-4"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-3.5">
-                    <div
-                      className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 ${
-                        isEmergency
-                          ? 'bg-[#C62845] text-white shadow-md'
-                          : isDuress
-                          ? 'bg-amber-500 text-[#2A1637]'
-                          : isSafety
-                          ? 'bg-gradient-to-br from-[#6C3A82] to-[#55276B] text-white shadow-sm'
-                          : 'bg-purple-100 text-[#6C3A82] dark:bg-purple-900/60 dark:text-purple-300'
-                      }`}
-                    >
-                      {isEmergency ? (
-                        <ShieldAlert className="w-5 h-5 stroke-[2.5]" />
-                      ) : isDuress ? (
-                        <AlertTriangle className="w-5 h-5 stroke-[2.5]" />
-                      ) : isSafety ? (
-                        <ShieldCheck className="w-5 h-5 stroke-[2.5]" />
-                      ) : (
-                        <FileText className="w-5 h-5 stroke-[2.2]" />
-                      )}
-                    </div>
+                <div
+                  className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 border ${
+                    isEmergency
+                      ? 'bg-[#C86650]/15 text-[#C86650] border-[#C86650]/30'
+                      : isSafetyCheck
+                      ? 'bg-[#7E927B]/15 text-[#7E927B] border-[#7E927B]/30'
+                      : 'bg-[#702E46]/10 text-[#702E46] dark:text-[#E99583] border-[#702E46]/20'
+                  }`}
+                >
+                  {isEmergency ? (
+                    <ShieldAlert className="w-5 h-5" />
+                  ) : isSafetyCheck ? (
+                    <ShieldCheck className="w-5 h-5" />
+                  ) : (
+                    <FileText className="w-5 h-5" />
+                  )}
+                </div>
 
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-sm font-bold text-[#2A1637] dark:text-[#FAF4FE] capitalize">
-                          {item.title}
-                        </span>
-                        {isDuress && (
-                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
-                            Duress Protocol
-                          </span>
-                        )}
-                        {isEmergency && (
-                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#C62845] text-white">
-                            Active Dispatch
-                          </span>
-                        )}
-                      </div>
-
-                      <p className="text-xs font-semibold text-[#62566F] dark:text-purple-300 mt-1 leading-relaxed">
-                        {item.details}
-                      </p>
-
-                      {/* If emergency, render notification dispatch badges */}
-                      {isEmergency && (item.raw as any).notificationAttempts && (
-                        <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-                          {(item.raw as any).notificationAttempts.map((attempt: any, idx: number) => (
-                            <div
-                              key={idx}
-                              className={`text-[10px] font-semibold px-2 py-0.5 rounded-md bg-white dark:bg-purple-950 border flex items-center gap-1 ${
-                                attempt.status === 'PROVIDER_UNCONFIGURED'
-                                  ? 'border-amber-300 text-amber-800'
-                                  : 'border-[#E8DEF3] text-[#2A1637] dark:text-purple-200'
-                              }`}
-                            >
-                              <Send className="w-2.5 h-2.5 text-[#6C3A82]" />
-                              <span>{attempt.contactName}:</span>
-                              <span
-                                className={`font-bold ${
-                                  attempt.status === 'PROVIDER_UNCONFIGURED'
-                                    ? 'text-amber-700'
-                                    : 'text-[#6C3A82] dark:text-purple-300'
-                                }`}
-                              >
-                                {attempt.status === 'PROVIDER_UNCONFIGURED'
-                                  ? 'Provider Not Configured'
-                                  : attempt.status}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="shrink-0 text-right">
-                    <span className="text-[11px] font-bold text-[#7A6588] dark:text-purple-300 block whitespace-nowrap">
-                      {new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                    <span className="text-[10px] font-semibold text-[#7A6588] dark:text-purple-400 block">
-                      {new Date(item.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' })}
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                    <h4 className="text-sm font-extrabold text-[#29252D] dark:text-[#FAF5EF] flex items-center gap-2">
+                      <span>{event.title}</span>
+                      <span
+                        className={`text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                          isEmergency
+                            ? 'bg-[#C86650]/20 text-[#C86650]'
+                            : isSafetyCheck
+                            ? 'bg-[#7E927B]/20 text-[#7E927B]'
+                            : 'bg-[#E9DFD2] dark:bg-[#45263F] text-[#625B63] dark:text-[#E9DFD2]'
+                        }`}
+                      >
+                        {event.type}
+                      </span>
+                    </h4>
+                    <span className="text-[11px] font-mono font-bold text-[#625B63] dark:text-[#E9DFD2]/70">
+                      {event.timestamp}
                     </span>
                   </div>
+
+                  <p className="text-xs font-semibold text-[#625B63] dark:text-[#E9DFD2]/80 mt-1 leading-relaxed">
+                    {event.details}
+                  </p>
                 </div>
               </div>
             );

@@ -91,24 +91,24 @@ export const DeleteEvidenceDialog: React.FC<DeleteEvidenceDialogProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-fadeIn select-none">
-      <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-red-300 dark:border-red-900/60 max-h-[92vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#29252D]/80 backdrop-blur-md animate-fadeIn select-none">
+      <div className="glass-panel-elevated w-full max-w-md rounded-[32px] p-6 lg:p-7 shadow-2xl border border-[#C86650]/40 max-h-[92vh] overflow-y-auto bg-[#FAF5EF] dark:bg-[#341B2F]">
         
         {/* Top Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex items-center justify-between pb-3 border-b border-[#E9DFD2] dark:border-[#45263F]">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-red-600/15 text-red-600 flex items-center justify-center border border-red-500/20">
+            <div className="w-10 h-10 rounded-2xl bg-[#C86650]/15 text-[#C86650] flex items-center justify-center border border-[#C86650]/30 shadow-xs">
               <Trash2 className="w-5 h-5 stroke-[2.4]" />
             </div>
             <div>
-              <h3 className="text-base font-black text-slate-900 dark:text-white">Protected Evidence Deletion</h3>
-              <span className="text-[11px] font-bold text-red-600 uppercase tracking-wider">PIN Authentication Required</span>
+              <h3 className="text-base font-extrabold text-[#29252D] dark:text-[#FAF5EF]">Protected Evidence Deletion</h3>
+              <span className="text-[11px] font-extrabold text-[#C86650] uppercase tracking-wider">PIN Authentication Required</span>
             </div>
           </div>
           <button
             onClick={onCancel}
             disabled={isDeleting}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/50 dark:hover:bg-[#45263F] cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -116,31 +116,31 @@ export const DeleteEvidenceDialog: React.FC<DeleteEvidenceDialogProps> = ({
 
         {/* Warning if emergency is currently active */}
         {isEmergencyActive && (
-          <div className="mt-3 p-3.5 rounded-2xl bg-red-100 dark:bg-red-950/60 border border-red-300 dark:border-red-800 text-xs font-bold text-red-700 dark:text-red-300 flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 shrink-0 animate-pulse text-red-600" />
+          <div className="mt-3 p-3.5 rounded-2xl bg-[#C86650]/15 border border-[#C86650]/40 text-xs font-bold text-[#C86650] flex items-center gap-2">
+            <ShieldAlert className="w-5 h-5 shrink-0 animate-pulse text-[#C86650]" />
             <span>Active emergency in progress. Incident evidence cannot be deleted until emergency is safely resolved.</span>
           </div>
         )}
 
         {/* Evidence Card Preview */}
-        <div className="my-4 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center gap-3">
+        <div className="my-4 p-4 rounded-2xl bg-[#FFFDF9] dark:bg-[#45263F]/50 border border-[#E9DFD2] dark:border-[#702E46]/40 flex items-center gap-3">
           {evidence.thumbnailUrl ? (
             <img
               src={evidence.thumbnailUrl}
               alt="Thumbnail"
-              className="w-14 h-14 rounded-xl object-cover shrink-0 border border-slate-300 dark:border-slate-600"
+              className="w-14 h-14 rounded-xl object-cover shrink-0 border border-[#E9DFD2]"
             />
           ) : (
-            <div className="w-14 h-14 rounded-xl bg-indigo-600/15 text-indigo-600 flex items-center justify-center shrink-0">
+            <div className="w-14 h-14 rounded-xl bg-[#702E46]/15 text-[#702E46] dark:text-[#E99583] flex items-center justify-center shrink-0 border border-[#702E46]/20">
               <Lock className="w-6 h-6" />
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <span className="text-[10px] font-black uppercase text-indigo-600 dark:text-indigo-400 block">
+            <span className="text-[10px] font-extrabold uppercase text-[#702E46] dark:text-[#E99583] block tracking-wider">
               {evidence.type.toUpperCase()} EVIDENCE
             </span>
-            <h4 className="text-xs font-black text-slate-900 dark:text-white truncate">{evidence.address}</h4>
-            <span className="text-[10px] font-mono text-slate-600 dark:text-slate-400 block mt-0.5">
+            <h4 className="text-xs font-extrabold text-[#29252D] dark:text-[#FAF5EF] truncate mt-0.5">{evidence.address}</h4>
+            <span className="text-[10px] font-mono font-bold text-[#625B63] dark:text-[#E9DFD2]/80 block mt-0.5">
               {evidence.timestamp} · {evidence.sha256Hash ? `${evidence.sha256Hash.slice(0, 12)}...` : 'Hashed'}
             </span>
           </div>
@@ -148,19 +148,19 @@ export const DeleteEvidenceDialog: React.FC<DeleteEvidenceDialogProps> = ({
 
         {/* Lockout status banner */}
         {lockoutSeconds > 0 ? (
-          <div className="p-4 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-center my-3">
-            <Clock className="w-6 h-6 text-amber-500 mx-auto mb-1 animate-spin" />
-            <span className="text-xs font-black text-amber-800 dark:text-amber-300 block">
+          <div className="p-4 rounded-2xl bg-[#C86650]/15 border border-[#C86650]/40 text-center my-3">
+            <Clock className="w-6 h-6 text-[#C86650] mx-auto mb-1 animate-spin" />
+            <span className="text-xs font-extrabold text-[#C86650] block">
               Brute-Force Lockout Active
             </span>
-            <span className="text-sm font-black text-amber-700 dark:text-amber-400 mt-1 block">
+            <span className="text-sm font-extrabold text-[#702E46] dark:text-[#FAF5EF] mt-1 block">
               Retry available in {lockoutSeconds}s
             </span>
           </div>
         ) : (
           <div>
             <div className="text-center mb-3">
-              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-2">
+              <span className="text-xs font-bold text-[#29252D] dark:text-[#FAF5EF] block mb-2">
                 Enter your 4-digit Security PIN to permanently delete:
               </span>
               <div className="flex justify-center gap-3">
@@ -170,7 +170,7 @@ export const DeleteEvidenceDialog: React.FC<DeleteEvidenceDialogProps> = ({
                     <div
                       key={idx}
                       className={`w-4 h-4 rounded-full transition-all ${
-                        filled ? 'bg-red-600 scale-110 shadow-sm' : 'bg-slate-300 dark:bg-slate-700'
+                        filled ? 'bg-[#C86650] scale-110 shadow-sm' : 'bg-[#E9DFD2] dark:bg-[#45263F]'
                       }`}
                     />
                   );
@@ -179,7 +179,7 @@ export const DeleteEvidenceDialog: React.FC<DeleteEvidenceDialogProps> = ({
             </div>
 
             {errorMsg && (
-              <div className="p-2.5 rounded-xl bg-red-100 dark:bg-red-950/60 border border-red-300 text-xs font-black text-red-700 dark:text-red-300 text-center mb-3">
+              <div className="p-2.5 rounded-xl bg-[#C86650]/15 border border-[#C86650]/40 text-xs font-bold text-[#C86650] text-center mb-3">
                 {errorMsg}
               </div>
             )}
@@ -192,22 +192,10 @@ export const DeleteEvidenceDialog: React.FC<DeleteEvidenceDialogProps> = ({
                   type="button"
                   onClick={() => handleDigit(n)}
                   disabled={lockoutSeconds > 0 || isDeleting}
-                  className="pin-digit-btn h-12 rounded-2xl text-[18px] font-semibold text-[#1E2B5B] bg-[#F0F2FF] border border-[#D8DDF0] hover:bg-[#E2E7FC] active:scale-95 transition cursor-pointer select-none disabled:opacity-40 disabled:cursor-not-allowed"
-                  style={{
-                    backgroundColor: '#F0F2FF',
-                    borderColor: '#D8DDF0',
-                    color: '#1E2B5B',
-                    WebkitTextFillColor: '#1E2B5B',
-                    fontSize: '18px',
-                    fontWeight: 600,
-                    opacity: lockoutSeconds > 0 || isDeleting ? 0.4 : 1,
-                    visibility: 'visible',
-                  }}
+                  className="pin-digit-btn h-12 rounded-2xl text-[18px] font-extrabold text-[#29252D] dark:text-[#FAF5EF] bg-[#FAF5EF] dark:bg-[#45263F] border border-[#E9DFD2] dark:border-[#702E46]/50 hover:bg-[#E9DFD2]/60 active:scale-95 transition cursor-pointer select-none disabled:opacity-40 disabled:cursor-not-allowed shadow-xs"
                   aria-label={`Digit ${n}`}
                 >
-                  <span style={{ color: '#1E2B5B', WebkitTextFillColor: '#1E2B5B', fontWeight: 600, fontSize: '18px' }}>
-                    {n}
-                  </span>
+                  {n}
                 </button>
               ))}
               <button
@@ -218,16 +206,7 @@ export const DeleteEvidenceDialog: React.FC<DeleteEvidenceDialogProps> = ({
                   setErrorMsg(null);
                 }}
                 disabled={lockoutSeconds > 0 || isDeleting}
-                className="pin-control-btn h-12 rounded-2xl text-xs font-bold text-[#1E2B5B] bg-[#F4F6FF] border border-[#D8DDF0] hover:bg-[#E8ECFB] active:scale-95 cursor-pointer select-none disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{
-                  backgroundColor: '#F4F6FF',
-                  borderColor: '#D8DDF0',
-                  color: '#1E2B5B',
-                  WebkitTextFillColor: '#1E2B5B',
-                  fontWeight: 700,
-                  opacity: lockoutSeconds > 0 || isDeleting ? 0.4 : 1,
-                  visibility: 'visible',
-                }}
+                className="pin-control-btn h-12 rounded-2xl text-xs font-extrabold text-[#625B63] dark:text-[#E9DFD2] bg-[#FAF5EF] dark:bg-[#45263F] border border-[#E9DFD2] dark:border-[#702E46]/50 hover:bg-[#E9DFD2]/60 active:scale-95 cursor-pointer select-none disabled:opacity-40 disabled:cursor-not-allowed shadow-xs"
                 aria-label="Clear PIN"
               >
                 Clear
@@ -236,61 +215,40 @@ export const DeleteEvidenceDialog: React.FC<DeleteEvidenceDialogProps> = ({
                 type="button"
                 onClick={() => handleDigit('0')}
                 disabled={lockoutSeconds > 0 || isDeleting}
-                className="pin-digit-btn h-12 rounded-2xl text-[18px] font-semibold text-[#1E2B5B] bg-[#F0F2FF] border border-[#D8DDF0] hover:bg-[#E2E7FC] active:scale-95 transition cursor-pointer select-none disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{
-                  backgroundColor: '#F0F2FF',
-                  borderColor: '#D8DDF0',
-                  color: '#1E2B5B',
-                  WebkitTextFillColor: '#1E2B5B',
-                  fontSize: '18px',
-                  fontWeight: 600,
-                  opacity: lockoutSeconds > 0 || isDeleting ? 0.4 : 1,
-                  visibility: 'visible',
-                }}
+                className="pin-digit-btn h-12 rounded-2xl text-[18px] font-extrabold text-[#29252D] dark:text-[#FAF5EF] bg-[#FAF5EF] dark:bg-[#45263F] border border-[#E9DFD2] dark:border-[#702E46]/50 hover:bg-[#E9DFD2]/60 active:scale-95 transition cursor-pointer select-none disabled:opacity-40 disabled:cursor-not-allowed shadow-xs"
                 aria-label="Digit 0"
               >
-                <span style={{ color: '#1E2B5B', WebkitTextFillColor: '#1E2B5B', fontWeight: 600, fontSize: '18px' }}>
-                  0
-                </span>
+                0
               </button>
               <button
                 type="button"
                 onClick={handleDeleteDigit}
                 disabled={lockoutSeconds > 0 || isDeleting}
-                className="pin-control-btn h-12 rounded-2xl text-xs font-bold text-[#1E2B5B] bg-[#F4F6FF] border border-[#D8DDF0] hover:bg-[#E8ECFB] active:scale-95 cursor-pointer select-none flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{
-                  backgroundColor: '#F4F6FF',
-                  borderColor: '#D8DDF0',
-                  color: '#1E2B5B',
-                  WebkitTextFillColor: '#1E2B5B',
-                  fontWeight: 700,
-                  opacity: lockoutSeconds > 0 || isDeleting ? 0.4 : 1,
-                  visibility: 'visible',
-                }}
+                className="pin-control-btn h-12 rounded-2xl text-xs font-extrabold text-[#625B63] dark:text-[#E9DFD2] bg-[#FAF5EF] dark:bg-[#45263F] border border-[#E9DFD2] dark:border-[#702E46]/50 hover:bg-[#E9DFD2]/60 active:scale-95 cursor-pointer select-none flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed shadow-xs"
                 aria-label="Backspace delete last digit"
               >
-                <Delete className="w-5 h-5 stroke-[2.4]" style={{ color: '#1E2B5B' }} />
+                <Delete className="w-5 h-5 stroke-[2.4] text-[#702E46] dark:text-[#E99583]" />
               </button>
             </div>
           </div>
         )}
 
         {/* Buttons */}
-        <div className="flex gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+        <div className="flex gap-2 pt-2 border-t border-[#E9DFD2] dark:border-[#45263F]">
           <button
             onClick={onCancel}
             disabled={isDeleting}
-            className="flex-1 h-12 rounded-full glass-panel text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer"
+            className="flex-1 h-12 rounded-full border border-[#E9DFD2] dark:border-[#45263F] text-xs font-bold text-[#625B63] dark:text-[#E9DFD2] hover:bg-[#E9DFD2]/40 cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={handleExecuteDelete}
             disabled={lockoutSeconds > 0 || isDeleting || isEmergencyActive || enteredPin.length !== 4}
-            className={`flex-1 h-12 rounded-full text-xs font-black shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer ${
+            className={`flex-1 h-12 rounded-full text-xs font-extrabold shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer ${
               lockoutSeconds > 0 || isEmergencyActive || enteredPin.length !== 4
-                ? 'bg-slate-300 dark:bg-slate-800 text-slate-500 cursor-not-allowed'
-                : 'bg-red-600 text-white hover:bg-red-700 shadow-red-600/30 active:scale-95'
+                ? 'bg-[#E9DFD2] dark:bg-[#45263F] text-[#625B63] cursor-not-allowed'
+                : 'bg-gradient-to-r from-[#C86650] to-[#702E46] text-white hover:opacity-95 shadow-[#C86650]/30 active:scale-95'
             }`}
           >
             <Trash2 className="w-4 h-4" />

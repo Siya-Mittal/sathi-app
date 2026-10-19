@@ -145,9 +145,9 @@ export const SafeSaathi3DShield: React.FC<SafeSaathi3DShieldProps> = ({
     const sCtx = shadowCanvas.getContext('2d');
     if (sCtx) {
       const grad = sCtx.createRadialGradient(64, 64, 0, 64, 64, 60);
-      grad.addColorStop(0, 'rgba(55, 29, 70, 0.28)');
-      grad.addColorStop(0.5, 'rgba(55, 29, 70, 0.08)');
-      grad.addColorStop(1, 'rgba(55, 29, 70, 0)');
+      grad.addColorStop(0, 'rgba(69, 38, 63, 0.35)');
+      grad.addColorStop(0.5, 'rgba(112, 46, 70, 0.12)');
+      grad.addColorStop(1, 'rgba(112, 46, 70, 0)');
       sCtx.fillStyle = grad;
       sCtx.fillRect(0, 0, 128, 128);
     }
@@ -186,17 +186,17 @@ export const SafeSaathi3DShield: React.FC<SafeSaathi3DShieldProps> = ({
     shieldGeometry.center();
 
     const glassMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color('#FAF7FF'),
+      color: new THREE.Color('#FAF5EF'),
       metalness: 0.08,
       roughness: 0.12,
-      transmission: 0.78,
+      transmission: 0.82,
       thickness: 1.5,
       ior: 1.52,
       clearcoat: 1.0,
       clearcoatRoughness: 0.06,
       iridescence: 0.95,
       iridescenceIOR: 1.38,
-      attenuationColor: new THREE.Color('#F3E8FA'),
+      attenuationColor: new THREE.Color('#F4EBE0'),
       attenuationDistance: 1.6,
       transparent: true,
       opacity: 0.95,
@@ -208,7 +208,7 @@ export const SafeSaathi3DShield: React.FC<SafeSaathi3DShieldProps> = ({
     rootGroup.add(shieldMesh);
     glassMeshRef.current = shieldMesh;
 
-    // C. Internal Rose-Gold Filigree Lattice (Protective Arch)
+    // C. Internal Champagne-Gold Filigree Lattice (Protective Arch)
     const innerBorderGeo = new THREE.ExtrudeGeometry(shieldShape, {
       depth: 0.2,
       bevelEnabled: true,
@@ -220,23 +220,23 @@ export const SafeSaathi3DShield: React.FC<SafeSaathi3DShieldProps> = ({
     innerBorderGeo.center();
     innerBorderGeo.scale(0.85, 0.85, 0.85);
 
-    const roseGoldMaterial = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#E6B8C6'),
+    const goldMaterial = new THREE.MeshStandardMaterial({
+      color: new THREE.Color('#C5A36A'),
       metalness: 0.88,
       roughness: 0.22,
     });
 
-    const innerFiligree = new THREE.Mesh(innerBorderGeo, roseGoldMaterial);
+    const innerFiligree = new THREE.Mesh(innerBorderGeo, goldMaterial);
     innerFiligree.renderOrder = 1;
     rootGroup.add(innerFiligree);
     innerFiligreeRef.current = innerFiligree;
 
-    // D. Radiant Faceted Jewel Core (Lotus Heart Octahedron with clearcoat)
+    // D. Radiant Faceted Jewel Core (Deep Berry with Terracotta emissive)
     const coreGeometry = new THREE.OctahedronGeometry(0.36, 1);
     const coreMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color('#FFF5FA'),
-      emissive: new THREE.Color('#9D5BBA'),
-      emissiveIntensity: 0.42,
+      color: new THREE.Color('#702E46'),
+      emissive: new THREE.Color('#C86650'),
+      emissiveIntensity: 0.48,
       metalness: 0.25,
       roughness: 0.1,
       clearcoat: 1.0,
@@ -249,10 +249,10 @@ export const SafeSaathi3DShield: React.FC<SafeSaathi3DShieldProps> = ({
     rootGroup.add(coreMesh);
     coreMeshRef.current = coreMesh;
 
-    // E. Dual Precision Gyroscopic Titanium-Lilac Rings
+    // E. Dual Precision Gyroscopic Champagne & Terracotta Rings
     const ringMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#D8CCE8'),
-      metalness: 0.84,
+      color: new THREE.Color('#C5A36A'),
+      metalness: 0.86,
       roughness: 0.2,
     });
 
@@ -267,7 +267,7 @@ export const SafeSaathi3DShield: React.FC<SafeSaathi3DShieldProps> = ({
     rootGroup.add(ring2);
     ring2Ref.current = ring2;
 
-    // F. Floating Iridescent Guardian Pearl Orbs (Representing the Trusted Circle)
+    // F. Floating Iridescent Guardian Pearl Orbs (Coral & Ivory)
     const pearlsGroup = new THREE.Group();
     const pearlGeo = new THREE.SphereGeometry(0.065, 24, 24);
     const pearlMat = new THREE.MeshPhysicalMaterial({
@@ -421,7 +421,7 @@ export const SafeSaathi3DShield: React.FC<SafeSaathi3DShieldProps> = ({
       shieldGeometry.dispose();
       glassMaterial.dispose();
       innerBorderGeo.dispose();
-      roseGoldMaterial.dispose();
+      goldMaterial.dispose();
       coreGeometry.dispose();
       coreMaterial.dispose();
       shadowGeo.dispose();

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronsRight } from 'lucide-react';
+import { ChevronsRight, ShieldCheck } from 'lucide-react';
 import { soundManager } from '../../utils/audio';
 
 interface SwipeButtonProps {
@@ -10,7 +10,7 @@ interface SwipeButtonProps {
 
 export const SwipeButton: React.FC<SwipeButtonProps> = ({
   onSuccess,
-  label = 'Swipe To Start',
+  label = 'Swipe To Start Journey Guard',
   className = '',
 }) => {
   const [dragProgress, setDragProgress] = useState<number>(0);
@@ -29,7 +29,7 @@ export const SwipeButton: React.FC<SwipeButtonProps> = ({
     const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
     const deltaX = clientX - startXRef.current;
     const trackWidth = trackRef.current.clientWidth;
-    const thumbWidth = 56;
+    const thumbWidth = 54;
     const maxDrag = trackWidth - thumbWidth;
 
     const progress = Math.max(0, Math.min(1, deltaX / maxDrag));
@@ -74,41 +74,46 @@ export const SwipeButton: React.FC<SwipeButtonProps> = ({
   return (
     <div
       ref={trackRef}
-      className={`relative w-full h-15 rounded-full bg-[#FFFDFB] dark:bg-purple-950/80 backdrop-blur-md border border-[#E8DEF3] p-1.5 shadow-lg select-none overflow-hidden ${className}`}
+      className={`relative w-full h-15 rounded-full bg-[#FFFDF9] dark:bg-[#341B2F]/90 backdrop-blur-md border border-[#E9DFD2] dark:border-[#702E46]/50 p-1.5 shadow-[inset_0_2px_4px_rgba(41,37,45,0.06),0_8px_20px_rgba(112,46,70,0.08)] select-none overflow-hidden ${className}`}
       style={{ touchAction: 'none' }}
     >
-      {/* Background completed fill */}
+      {/* Background completed fill with warm terracotta/coral */}
       <div
-        className="absolute left-0 top-0 bottom-0 bg-[#E8DDFB]/60 rounded-full transition-all duration-75"
-        style={{ width: `${Math.max(10, dragProgress * 100)}%` }}
+        className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-[#C86650]/20 via-[#E99583]/30 to-[#7E927B]/30 rounded-full transition-all duration-75"
+        style={{ width: `${Math.max(12, dragProgress * 100)}%` }}
       />
 
-      {/* Center Label */}
+      {/* Center Label with high contrast Deep Ink */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <span
-          className="text-xs font-bold tracking-wider text-[#2A1637] dark:text-[#FAF4FE] transition-opacity duration-200"
+          className="text-xs font-extrabold uppercase tracking-widest text-[#29252D] dark:text-[#FAF5EF] transition-opacity duration-200"
           style={{ opacity: Math.max(0.2, 1 - dragProgress * 1.5) }}
         >
-          {label}
+          {dragProgress >= 0.92 ? 'Activating Escort...' : label}
         </span>
       </div>
 
-      {/* Chevrons background hints */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center text-[#8A5CA8] pointer-events-none">
+      {/* Chevrons subtle hint */}
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center text-[#702E46] dark:text-[#E99583] pointer-events-none opacity-60">
         <ChevronsRight className="w-5 h-5 animate-pulse" />
       </div>
 
-      {/* Draggable Thumb Knob */}
+      {/* Draggable Clay Thumb Knob in Deep Berry with gold/terracotta highlight */}
       <div
         onMouseDown={handleTouchStart}
         onTouchStart={handleTouchStart}
-        className="relative z-10 w-12 h-12 rounded-full bg-gradient-to-r from-[#6C3A82] to-[#55276B] text-white flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing active:scale-95 transition-transform"
+        className="relative z-10 w-12 h-12 rounded-full bg-gradient-to-br from-[#702E46] to-[#45263F] text-white flex items-center justify-center shadow-[0_4px_12px_rgba(112,46,70,0.4),inset_0_1px_2px_rgba(255,255,255,0.3)] cursor-grab active:cursor-grabbing active:scale-95 transition-transform border border-white/20"
         style={{
           transform: `translateX(${thumbOffset}px)`,
-          transition: isDragging ? 'none' : 'transform 0.25s ease-out',
+          transition: isDragging ? 'none' : 'transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)',
         }}
+        aria-label="Swipe to activate journey guard"
       >
-        <ChevronsRight className="w-5 h-5" />
+        {dragProgress >= 0.92 ? (
+          <ShieldCheck className="w-5 h-5 text-[#C5A36A]" />
+        ) : (
+          <ChevronsRight className="w-5 h-5 text-white stroke-[2.5]" />
+        )}
       </div>
     </div>
   );
