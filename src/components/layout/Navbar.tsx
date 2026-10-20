@@ -34,7 +34,7 @@ export const Navbar: React.FC<{ forceShow?: boolean }> = ({ forceShow = false })
     <div className={containerClass}>
       <nav
         aria-label="Mobile Bottom Navigation"
-        className="pointer-events-auto w-full max-w-md glass-nav-dock rounded-[28px] p-1.5 shadow-xl border border-[#E9DFD2] dark:border-[#E99583]/30 transition-all duration-300"
+        className="pointer-events-auto w-full max-w-md clay-tab-dock rounded-[28px] p-1.5 shadow-xl transition-all duration-300"
       >
         <div className="grid grid-cols-6 items-center gap-1">
           {NAV_ITEMS.map((item) => {
@@ -46,17 +46,17 @@ export const Navbar: React.FC<{ forceShow?: boolean }> = ({ forceShow = false })
               <button
                 key={item.id}
                 onClick={() => handleTabClick(item.id)}
-                className={`relative flex flex-col items-center justify-center min-h-[48px] rounded-2xl transition-all duration-200 select-none cursor-pointer ${
+                className={`relative flex flex-col items-center justify-center min-h-[50px] px-1 py-1 clay-tab-btn select-none cursor-pointer ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white shadow-sm'
-                    : 'text-[#29252D] dark:text-[#FAF5EF] hover:text-[#702E46] hover:bg-white/80 dark:hover:bg-[#351A2E]'
+                    ? 'clay-tab-active'
+                    : 'clay-tab-inactive'
                 }`}
                 aria-label={item.label}
               >
                 <div className="relative flex items-center justify-center">
                   <Icon
                     className={`w-4 h-4 transition-transform duration-200 ${
-                      isActive ? 'stroke-[2.5] text-white' : 'stroke-[2] text-[#62566F] dark:text-[#E99583]'
+                      isActive ? 'stroke-[2.5] text-white scale-105' : 'stroke-[2]'
                     }`}
                   />
 

@@ -299,20 +299,21 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
           )}
         </div>
 
-        {/* Auth Method Tabs (Email vs Phone OTP) */}
+        {/* Auth Method Tabs (Tactile Claymorphic Tab Dock) */}
         {!isForgotPassword && (
-          <div className="grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-[#E9DFD2]/50 dark:bg-[#45263F]/50 mb-6 border border-[#E9DFD2] dark:border-[#702E46]/30">
+          <div className="grid grid-cols-2 gap-2 clay-tab-dock mb-6">
             <button
               type="button"
               onClick={() => {
+                soundManager.triggerHaptic(15);
                 setAuthMethod('email');
                 setErrorMessage(null);
                 setInfoMessage(null);
               }}
-              className={`py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              className={`py-2.5 px-3 clay-tab-btn text-xs font-extrabold flex items-center justify-center gap-2 cursor-pointer ${
                 authMethod === 'email'
-                  ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white shadow-xs border border-white/20'
-                  : 'text-[#625B63] dark:text-[#E9DFD2] hover:text-[#702E46]'
+                  ? 'clay-tab-active'
+                  : 'clay-tab-inactive'
               }`}
             >
               <Mail className="w-3.5 h-3.5" />
@@ -322,14 +323,15 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
             <button
               type="button"
               onClick={() => {
+                soundManager.triggerHaptic(15);
                 setAuthMethod('phone');
                 setErrorMessage(null);
                 setInfoMessage(null);
               }}
-              className={`py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              className={`py-2.5 px-3 clay-tab-btn text-xs font-extrabold flex items-center justify-center gap-2 cursor-pointer ${
                 authMethod === 'phone'
-                  ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white shadow-xs border border-white/20'
-                  : 'text-[#625B63] dark:text-[#E9DFD2] hover:text-[#702E46]'
+                  ? 'clay-tab-active'
+                  : 'clay-tab-inactive'
               }`}
             >
               <Smartphone className="w-3.5 h-3.5" />

@@ -231,8 +231,8 @@ export const SafetyMapScreen: React.FC = () => {
 
         {/* ================= DIRECTORY LIST (col-span-12 lg:col-span-4) ================= */}
         <div className="lg:col-span-4 space-y-4">
-          {/* Category Tabs */}
-          <div className="flex flex-wrap gap-1.5">
+          {/* Category Tabs (Claymorphic Tab Selector) */}
+          <div className="flex flex-wrap gap-1.5 p-1 clay-tab-dock">
             {[
               { id: 'all', label: 'All Havens' },
               { id: 'police', label: 'Police' },
@@ -243,10 +243,10 @@ export const SafetyMapScreen: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setSelectedType(tab.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition cursor-pointer ${
+                className={`px-3 py-1.5 clay-tab-btn text-xs font-extrabold cursor-pointer ${
                   selectedType === tab.id
-                    ? 'bg-gradient-to-r from-[#702E46] to-[#C86650] text-white shadow-xs border border-white/20'
-                    : 'editorial-card text-[#625B63] dark:text-[#E9DFD2] hover:text-[#702E46] dark:hover:text-white border border-[#E9DFD2] dark:border-[#45263F]'
+                    ? 'clay-tab-terracotta-active'
+                    : 'clay-tab-inactive'
                 }`}
               >
                 {tab.label}

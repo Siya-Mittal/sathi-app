@@ -535,15 +535,18 @@ export const SafetyToolsScreen: React.FC = () => {
               Set estimated walk duration. If you do not tap "I Arrived" before the timer expires, Journey Guard automatically escalates Emergency SOS.
             </p>
 
-            <div className="grid grid-cols-3 gap-2.5 my-5">
+            <div className="grid grid-cols-3 gap-2 my-5 p-1 clay-tab-dock">
               {[10, 15, 30].map((mins) => (
                 <button
                   key={mins}
-                  onClick={() => setSafeWalkDurationMinutes(mins)}
-                  className={`h-12 rounded-2xl text-xs font-extrabold border transition cursor-pointer ${
+                  onClick={() => {
+                    soundManager.triggerHaptic(15);
+                    setSafeWalkDurationMinutes(mins);
+                  }}
+                  className={`h-12 clay-tab-btn text-xs font-extrabold cursor-pointer ${
                     safeWalkDurationMinutes === mins
-                      ? 'bg-gradient-to-r from-[#702E46] to-[#C86650] text-white border-transparent shadow-md'
-                      : 'bg-[#FFFDF9] dark:bg-[#45263F] text-[#29252D] dark:text-[#FAF5EF] border-[#E9DFD2] dark:border-[#702E46]/40'
+                      ? 'clay-tab-active'
+                      : 'clay-tab-inactive'
                   }`}
                 >
                   {mins} Minutes
@@ -610,15 +613,18 @@ export const SafetyToolsScreen: React.FC = () => {
                 <label className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-1">
                   Delay Before Incoming Call
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-2 p-1 clay-tab-dock">
                   {[5, 15, 30].map((s) => (
                     <button
                       key={s}
-                      onClick={() => setFakeCallDelaySeconds(s)}
-                      className={`h-10 rounded-xl text-xs font-extrabold border transition cursor-pointer ${
+                      onClick={() => {
+                        soundManager.triggerHaptic(15);
+                        setFakeCallDelaySeconds(s);
+                      }}
+                      className={`h-11 clay-tab-btn text-xs font-extrabold cursor-pointer ${
                         fakeCallDelaySeconds === s
-                          ? 'bg-[#C5A36A] text-white border-transparent shadow-xs'
-                          : 'bg-[#FFFDF9] dark:bg-[#45263F] text-[#29252D] dark:text-[#FAF5EF] border-[#E9DFD2]'
+                          ? 'clay-tab-terracotta-active'
+                          : 'clay-tab-inactive'
                       }`}
                     >
                       {s} Seconds

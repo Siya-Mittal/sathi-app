@@ -321,65 +321,97 @@ export const ProfileSettingsScreen: React.FC = () => {
 
             <div className="space-y-4 text-xs">
               <div>
-                <span className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-2">
+                <span className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-2.5">
                   Theme Appearance &amp; Mood
                 </span>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
-                    onClick={() => setTheme('light')}
-                    className={`p-3 rounded-2xl flex items-center gap-2.5 border transition cursor-pointer ${
+                    onClick={() => {
+                      soundManager.triggerHaptic(20);
+                      setTheme('light');
+                    }}
+                    className={`p-3.5 rounded-2xl flex items-center gap-3 transition-all cursor-pointer ${
                       theme === 'light'
-                        ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white border-transparent shadow-md'
-                        : 'bg-[#FFFDF9] dark:bg-[#381B34] text-[#625B63] dark:text-[#E9DFD2] border-[#E9DFD2] dark:border-[#E99583]/30'
+                        ? 'clay-theme-card-active'
+                        : 'clay-theme-card-inactive'
                     }`}
                   >
-                    <Sun className="w-4 h-4 text-[#C5A36A]" />
-                    <span className="font-extrabold">Warm Ivory (Light)</span>
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/20 shrink-0 shadow-xs">
+                      <Sun className="w-4 h-4 text-[#C5A36A]" />
+                    </div>
+                    <div className="text-left">
+                      <span className="font-extrabold block text-xs">Warm Porcelain</span>
+                      <span className="text-[10px] opacity-80 font-bold block">Editorial Light</span>
+                    </div>
                   </button>
                   <button
                     type="button"
-                    onClick={() => setTheme('dark')}
-                    className={`p-3 rounded-2xl flex items-center gap-2.5 border transition cursor-pointer ${
+                    onClick={() => {
+                      soundManager.triggerHaptic(20);
+                      setTheme('dark');
+                    }}
+                    className={`p-3.5 rounded-2xl flex items-center gap-3 transition-all cursor-pointer ${
                       theme === 'dark'
-                        ? 'bg-gradient-to-r from-[#702E46] to-[#C86650] text-white border-transparent shadow-md'
-                        : 'bg-[#FFFDF9] dark:bg-[#381B34] text-[#625B63] dark:text-[#E9DFD2] border-[#E9DFD2] dark:border-[#E99583]/30'
+                        ? 'clay-theme-card-active'
+                        : 'clay-theme-card-inactive'
                     }`}
                   >
-                    <Moon className="w-4 h-4 text-[#E99583]" />
-                    <span className="font-extrabold">Dark Warm Colours</span>
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/20 shrink-0 shadow-xs">
+                      <Moon className="w-4 h-4 text-[#E99583]" />
+                    </div>
+                    <div className="text-left">
+                      <span className="font-extrabold block text-xs">Dark Warm Colours</span>
+                      <span className="text-[10px] opacity-80 font-bold block">Obsidian Plum</span>
+                    </div>
                   </button>
                 </div>
               </div>
 
               <div>
-                <span className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-2">
+                <span className="font-extrabold text-[#29252D] dark:text-[#FAF5EF] block mb-2.5">
                   Device Layout Mode
                 </span>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
-                    onClick={() => setDeviceView('web')}
-                    className={`p-3 rounded-2xl flex items-center gap-2.5 border transition cursor-pointer ${
+                    onClick={() => {
+                      soundManager.triggerHaptic(15);
+                      setDeviceView('web');
+                    }}
+                    className={`p-3.5 rounded-2xl flex items-center gap-3 transition-all cursor-pointer ${
                       deviceView === 'web'
-                        ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white border-transparent shadow-md'
-                        : 'bg-[#FFFDF9] dark:bg-[#45263F]/60 text-[#625B63] dark:text-[#E9DFD2] border-[#E9DFD2] dark:border-[#702E46]/40'
+                        ? 'clay-theme-card-active'
+                        : 'clay-theme-card-inactive'
                     }`}
                   >
-                    <Monitor className="w-4 h-4" />
-                    <span className="font-extrabold">Web Platform</span>
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/20 shrink-0 shadow-xs">
+                      <Monitor className="w-4 h-4" />
+                    </div>
+                    <div className="text-left">
+                      <span className="font-extrabold block text-xs">Web Platform</span>
+                      <span className="text-[10px] opacity-80 font-bold block">Responsive Desktop</span>
+                    </div>
                   </button>
                   <button
                     type="button"
-                    onClick={() => setDeviceView('mobile')}
-                    className={`p-3 rounded-2xl flex items-center gap-2.5 border transition cursor-pointer ${
+                    onClick={() => {
+                      soundManager.triggerHaptic(15);
+                      setDeviceView('mobile');
+                    }}
+                    className={`p-3.5 rounded-2xl flex items-center gap-3 transition-all cursor-pointer ${
                       deviceView === 'mobile'
-                        ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white border-transparent shadow-md'
-                        : 'bg-[#FFFDF9] dark:bg-[#45263F]/60 text-[#625B63] dark:text-[#E9DFD2] border-[#E9DFD2] dark:border-[#702E46]/40'
+                        ? 'clay-theme-card-active'
+                        : 'clay-theme-card-inactive'
                     }`}
                   >
-                    <Smartphone className="w-4 h-4" />
-                    <span className="font-extrabold">Mobile App Simulator</span>
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/20 shrink-0 shadow-xs">
+                      <Smartphone className="w-4 h-4" />
+                    </div>
+                    <div className="text-left">
+                      <span className="font-extrabold block text-xs">Mobile App</span>
+                      <span className="text-[10px] opacity-80 font-bold block">Phone Simulator</span>
+                    </div>
                   </button>
                 </div>
               </div>

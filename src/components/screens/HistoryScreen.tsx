@@ -98,7 +98,7 @@ export const HistoryScreen: React.FC = () => {
 
         {/* Filter Controls & Search */}
         <div className="mt-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pt-4 border-t border-[#E9DFD2] dark:border-[#45263F]">
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 p-1 clay-tab-dock">
             {[
               { id: 'ALL', label: 'All Records' },
               { id: 'EMERGENCY', label: 'Emergency SOS' },
@@ -108,10 +108,10 @@ export const HistoryScreen: React.FC = () => {
               <button
                 key={btn.id}
                 onClick={() => setFilterType(btn.id as typeof filterType)}
-                className={`text-xs font-extrabold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
+                className={`text-xs font-extrabold px-3.5 py-2 clay-tab-btn whitespace-nowrap cursor-pointer ${
                   filterType === btn.id
-                    ? 'bg-gradient-to-r from-[#702E46] to-[#C86650] text-white shadow-xs border border-white/20'
-                    : 'bg-[#FFFDF9] dark:bg-[#45263F]/40 hover:bg-[#E9DFD2]/50 text-[#625B63] dark:text-[#E9DFD2] border border-[#E9DFD2] dark:border-[#45263F]'
+                    ? 'clay-tab-active'
+                    : 'clay-tab-inactive'
                 }`}
               >
                 {btn.label}

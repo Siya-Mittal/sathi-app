@@ -83,8 +83,8 @@ export const Header: React.FC = () => {
             </button>
           </div>
 
-          {/* Zone 2: Navigation Links (Single-Line, High-Contrast) */}
-          <nav className="hidden lg:flex items-center gap-1 p-1 rounded-2xl bg-white/80 dark:bg-[#2C1529]/80 border border-[#E9DFD2] dark:border-[#E99583]/25 shadow-xs">
+          {/* Zone 2: Navigation Links (Single-Line, High-Contrast Claymorphic Tabs) */}
+          <nav className="hidden lg:flex items-center gap-1.5 p-1.5 clay-tab-dock">
             {navLinks.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -97,13 +97,13 @@ export const Header: React.FC = () => {
                     soundManager.triggerHaptic(15);
                     setActiveTab(item.id as typeof activeTab);
                   }}
-                  className={`relative px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap ${
+                  className={`relative px-3.5 py-2 clay-tab-btn text-xs font-extrabold flex items-center gap-2 cursor-pointer whitespace-nowrap ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#702E46] to-[#45263F] text-white shadow-sm'
-                      : 'text-[#29252D] dark:text-[#FAF5EF] hover:text-[#702E46] dark:hover:text-[#E99583] hover:bg-[#FAF5EF] dark:hover:bg-[#45263F]'
+                      ? 'clay-tab-active'
+                      : 'clay-tab-inactive'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#62566F] dark:text-[#E99583]'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : ''}`} />
                   <span className="tracking-wide">{item.label}</span>
                   {hasJourneyIndicator && (
                     <span className="w-2 h-2 rounded-full bg-[#C86650] ring-2 ring-white" />
@@ -116,17 +116,17 @@ export const Header: React.FC = () => {
           {/* Zone 3: Right Controls & Primary Action */}
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
             
-            {/* Dual Web / Mobile View Toggle */}
-            <div className="hidden sm:flex items-center p-1 rounded-2xl clay-card border border-[#E9DFD2] dark:border-[#E9DFD2]/20 shadow-xs">
+            {/* Dual Web / Mobile View Toggle (Tactile Claymorphic Segmented Tabs) */}
+            <div className="hidden sm:flex items-center p-1 clay-tab-dock">
               <button
                 onClick={() => {
                   soundManager.triggerHaptic(15);
                   setDeviceView('web');
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 clay-tab-btn text-xs font-extrabold cursor-pointer whitespace-nowrap ${
                   deviceView === 'web'
-                    ? 'bg-[#702E46] text-white shadow-xs'
-                    : 'text-[#62566F] dark:text-[#FAF5EF] hover:text-[#702E46]'
+                    ? 'clay-tab-active'
+                    : 'clay-tab-inactive'
                 }`}
                 title="Full Web Application"
               >
@@ -138,10 +138,10 @@ export const Header: React.FC = () => {
                   soundManager.triggerHaptic(15);
                   setDeviceView('mobile');
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 clay-tab-btn text-xs font-extrabold cursor-pointer whitespace-nowrap ${
                   deviceView === 'mobile'
-                    ? 'bg-[#702E46] text-white shadow-xs'
-                    : 'text-[#62566F] dark:text-[#FAF5EF] hover:text-[#702E46]'
+                    ? 'clay-tab-active'
+                    : 'clay-tab-inactive'
                 }`}
                 title="Mobile Phone Simulation"
               >
@@ -150,13 +150,13 @@ export const Header: React.FC = () => {
               </button>
             </div>
 
-            {/* Dark/Light Mood Toggle */}
+            {/* Dark/Light Mood Toggle (Tactile 3D Clay Button) */}
             <button
               onClick={() => {
                 soundManager.triggerHaptic(20);
                 setTheme(isDark ? 'light' : 'dark');
               }}
-              className="w-10 h-10 rounded-2xl clay-card flex items-center justify-center text-[#29252D] dark:text-[#FAF5EF] shadow-xs hover:scale-105 transition cursor-pointer border border-[#E9DFD2] dark:border-[#E9DFD2]/20"
+              className="w-10 h-10 clay-theme-btn flex items-center justify-center text-[#29252D] dark:text-[#FAF5EF]"
               title={isDark ? 'Switch to Warm Porcelain Light Mode' : 'Switch to Rich Plum Evening Mode'}
               aria-label="Toggle Theme"
             >
@@ -169,7 +169,7 @@ export const Header: React.FC = () => {
               className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all cursor-pointer border ${
                 isSirenPlaying
                   ? 'bg-[#BA223C] text-white animate-bounce shadow-md border-rose-300'
-                  : 'clay-card text-[#62566F] dark:text-[#FAF5EF] hover:text-[#702E46] border-[#E9DFD2] dark:border-[#E9DFD2]/20'
+                  : 'clay-theme-btn text-[#62566F] dark:text-[#FAF5EF] hover:text-[#702E46]'
               }`}
               title={isSirenPlaying ? 'Mute Siren Alarm' : 'Sound Deterrent Siren'}
               aria-label="Toggle Siren"

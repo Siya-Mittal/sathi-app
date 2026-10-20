@@ -189,24 +189,30 @@ export const DashboardScreen: React.FC = () => {
           <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
             <div className="relative w-full max-w-[390px] flex flex-col items-center justify-center">
               
-              {/* 3D Visual Mode Selector */}
-              <div className="mb-2 flex items-center gap-1 p-1 bg-white/90 dark:bg-[#281324] border border-[#E9DFD2] dark:border-[#E99583]/25 rounded-2xl shadow-xs">
+              {/* 3D Visual Mode Selector (Claymorphic Segmented Tabs) */}
+              <div className="mb-2 flex items-center p-1 clay-tab-dock">
                 <button
-                  onClick={() => setHeroVisualMode('clay3d')}
-                  className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  onClick={() => {
+                    soundManager.triggerHaptic(15);
+                    setHeroVisualMode('clay3d');
+                  }}
+                  className={`px-3.5 py-1.5 clay-tab-btn text-xs font-extrabold cursor-pointer ${
                     heroVisualMode === 'clay3d'
-                      ? 'bg-[#702E46] text-white shadow-xs'
-                      : 'text-[#62566F] dark:text-[#FAF5EF] hover:text-[#45263F]'
+                      ? 'clay-tab-active'
+                      : 'clay-tab-inactive'
                   }`}
                 >
                   Clay 3D Shield
                 </button>
                 <button
-                  onClick={() => setHeroVisualMode('webgl')}
-                  className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  onClick={() => {
+                    soundManager.triggerHaptic(15);
+                    setHeroVisualMode('webgl');
+                  }}
+                  className={`px-3.5 py-1.5 clay-tab-btn text-xs font-extrabold cursor-pointer ${
                     heroVisualMode === 'webgl'
-                      ? 'bg-[#702E46] text-white shadow-xs'
-                      : 'text-[#62566F] dark:text-[#FAF5EF] hover:text-[#45263F]'
+                      ? 'clay-tab-active'
+                      : 'clay-tab-inactive'
                   }`}
                 >
                   Three.js Studio Glass
@@ -348,10 +354,10 @@ export const DashboardScreen: React.FC = () => {
                   setSelectedSafetyMode(mode.id);
                   if (mode.id === 'safe_walk') setActiveTab('tools');
                 }}
-                className={`p-4 rounded-3xl text-left transition-all duration-200 border cursor-pointer ${
+                className={`p-4 rounded-3xl text-left transition-all duration-200 cursor-pointer ${
                   isSelected
-                    ? 'bg-gradient-to-br from-[#702E46] to-[#45263F] text-white border-[#C86650] shadow-md scale-102 ring-2 ring-[#C86650]/40'
-                    : 'clay-card hover:bg-white dark:hover:bg-[#3A1F33] border-[#E9DFD2] dark:border-[#E99583]/25'
+                    ? 'clay-card-plum scale-102 ring-2 ring-[#C86650]/50 shadow-xl'
+                    : 'clay-card hover:bg-white dark:hover:bg-[#3A1F33]'
                 }`}
               >
                 <div

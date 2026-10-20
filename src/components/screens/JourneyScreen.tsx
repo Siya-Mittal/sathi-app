@@ -257,7 +257,7 @@ export const JourneyScreen: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-6 gap-2">
+            <div className="grid grid-cols-6 gap-2 p-1.5 clay-tab-dock">
               {SCHEDULE_DAYS.map((item) => {
                 const isSelected = selectedDayNum === item.num;
                 return (
@@ -267,13 +267,13 @@ export const JourneyScreen: React.FC = () => {
                       soundManager.triggerHaptic(15);
                       setSelectedDayNum(item.num);
                     }}
-                    className={`flex flex-col items-center justify-center py-3 rounded-2xl transition-all duration-200 cursor-pointer ${
+                    className={`flex flex-col items-center justify-center py-3 clay-tab-btn cursor-pointer ${
                       isSelected
-                        ? 'bg-gradient-to-br from-[#702E46] to-[#45263F] text-white shadow-sm font-extrabold scale-102 ring-2 ring-[#C86650]/50'
-                        : 'bg-[#FAF5EF] dark:bg-[#231622] hover:bg-white text-[#29252D] dark:text-[#FAF5EF] border border-[#E9DFD2] dark:border-[#E99583]/25 font-bold'
+                        ? 'clay-tab-active'
+                        : 'clay-tab-inactive'
                     }`}
                   >
-                    <span className="text-[10px] uppercase">{item.day}</span>
+                    <span className="text-[10px] uppercase font-bold tracking-wider">{item.day}</span>
                     <span className="text-sm font-extrabold mt-0.5">{item.num}</span>
                   </button>
                 );
@@ -285,7 +285,7 @@ export const JourneyScreen: React.FC = () => {
               <span className="text-xs font-extrabold text-[#45263F] dark:text-[#FAF5EF] block mb-2">
                 Transit Vehicle Mode
               </span>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 gap-2 p-1.5 clay-tab-dock">
                 {[
                   { id: 'cab', label: 'Solo Cab', icon: Car },
                   { id: 'walk', label: 'Walk', icon: Footprints },
@@ -297,11 +297,14 @@ export const JourneyScreen: React.FC = () => {
                   return (
                     <button
                       key={m.id}
-                      onClick={() => setSelectedTransportMode(m.id as typeof selectedTransportMode)}
-                      className={`py-3 rounded-2xl flex flex-col items-center justify-center border transition cursor-pointer ${
+                      onClick={() => {
+                        soundManager.triggerHaptic(15);
+                        setSelectedTransportMode(m.id as typeof selectedTransportMode);
+                      }}
+                      className={`py-3 clay-tab-btn flex flex-col items-center justify-center cursor-pointer ${
                         isSelected
-                          ? 'bg-gradient-to-br from-[#702E46] to-[#45263F] text-white border-[#702E46] shadow-sm'
-                          : 'bg-[#FAF5EF] dark:bg-[#231622] text-[#29252D] dark:text-[#FAF5EF] border-[#E9DFD2] dark:border-[#E99583]/25 hover:bg-white'
+                          ? 'clay-tab-active'
+                          : 'clay-tab-inactive'
                       }`}
                     >
                       <Icon className="w-4 h-4 mb-1 stroke-[2.2]" />
